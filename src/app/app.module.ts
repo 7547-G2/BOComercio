@@ -6,22 +6,31 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {
   MatButtonModule, MatDialogModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule,
-  MatTableModule, MatToolbarModule,
+  MatTableModule, MatToolbarModule,MatSliderModule, MatSlideToggleModule
 } from '@angular/material';
 import {DataService} from './services/data.service';
+import {AuthenticationService} from './services/authentication.service';
 import {AddDialogComponent} from './dialogs/add/add.dialog.component';
 import {EditDialogComponent} from './dialogs/edit/edit.dialog.component';
 import {DeleteDialogComponent} from './dialogs/delete/delete.dialog.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
+import { HomeComponent } from './home/index';
+import { LoginComponent } from './login/index';
+import { FirstLoginComponent } from './firstLogin/index';
+import { EditProfileComponent } from './editProfile/index';
+import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddDialogComponent,
     EditDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    HomeComponent,
+    LoginComponent,
+    FirstLoginComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +43,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatIconModule,
     MatSortModule,
     MatTableModule,
+    MatSliderModule,
+    MatSlideToggleModule,
     MatToolbarModule,
     MatPaginatorModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    routing
   ],
   entryComponents: [
     AddDialogComponent,
@@ -44,7 +56,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     DeleteDialogComponent
   ],
   providers: [
-    DataService
+    DataService,
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })

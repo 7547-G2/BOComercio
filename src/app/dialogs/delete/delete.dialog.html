@@ -1,18 +1,17 @@
 <div class="container">
-  <h3 mat-dialog-title>Are you sure?</h3>
+  <h3 mat-dialog-title>¿Está seguro de borrar {{data.nombre}}?</h3>
   <div mat-dialog-content>
-    Id: {{data.id}}
+    Plato: {{data.nombre}}
     <p></p>
-    Title: {{data.title}}
+    Precio: {{data.precio}}
     <p></p>
-    State: {{data.state}}
-    <p></p>
-    Url: {{data.url}}
-    <p></p>
+    <p hidden>{{data.id}}</p>
+    <p hidden>{{data.imagen}}</p>
+    <img src={{data.imagen}} width="100px" height="100px"/>
   </div>
 
   <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="1" (click)="confirmDelete()">Delete</button>
-    <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    <button mat-button [mat-dialog-close]="1" (click)="confirmDelete()">Borrar</button>
+    <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
   </div>
 </div>

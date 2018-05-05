@@ -55,3 +55,11 @@
 .mat-header-cell:nth-child(7){
   flex: 0 0 7%;
 }
+
+a {
+  cursor: pointer;
+}
+
+.help-block {
+  font-size: 12px;
+}

@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Issue} from '../models/issue';
+import {Dish} from '../models/Dish';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
 @Injectable()
 export class DataService {
-  private readonly API_URL = 'https://api.github.com/repos/angular/angular/issues';
+  private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api/backofficeComercio/'+JSON.parse(localStorage.getItem('currentUser')).comercioId+'/platos';
 
-  dataChange: BehaviorSubject<Issue[]> = new BehaviorSubject<Issue[]>([]);
+  dataChange: BehaviorSubject<Dish[]> = new BehaviorSubject<Dish[]>([]);
   // Temporarily stores data from dialogs
   dialogData: any;
 
   constructor (private httpClient: HttpClient) {}
 
-  get data(): Issue[] {
+  get data(): Dish[] {
     return this.dataChange.value;
   }
 
@@ -23,7 +23,7 @@ export class DataService {
 
   /** CRUD METHODS */
   getAllIssues(): void {
-    this.httpClient.get<Issue[]>(this.API_URL).subscribe(data => {
+    this.httpClient.get<Dish[]>(this.API_URL).subscribe(data => {
         this.dataChange.next(data);
       },
       (error: HttpErrorResponse) => {
@@ -31,17 +31,40 @@ export class DataService {
       });
   }
 
-  // DEMO ONLY, you can find working methods below
-  addIssue (issue: Issue): void {
-    this.dialogData = issue;
+  // ADD, POST METHOD
+  addIssue(kanbanItem: Dish): void {
+    kanbanItem.platoState = "ACTIVO";
+    this.httpClient.post(this.API_URL, kanbanItem).subscribe(data => {
+      this.dialogData = kanbanItem;
+      //this.toasterService.showToaster('Successfully added', 3000);
+      },
+      (err: HttpErrorResponse) => {
+      //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+    });
+   }
+
+   updateIssue(kanbanItem: Dish): void {
+    kanbanItem.platoState = "ACTIVO";
+    this.httpClient.put(this.API_URL +"/"+ kanbanItem.id, kanbanItem).subscribe(data => {
+        this.dialogData = kanbanItem;
+        //this.toasterService.showToaster('Successfully edited', 3000);
+      },
+      (err: HttpErrorResponse) => {
+        //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+      }
+    );
   }
 
-  updateIssue (issue: Issue): void {
-    this.dialogData = issue;
-  }
-
-  deleteIssue (id: number): void {
-    console.log(id);
+  deleteIssue (dish: Dish): void {
+    dish.platoState = "BORRADO";
+    this.httpClient.put(this.API_URL +"/"+ dish.id, dish).subscribe(data => {
+        this.dialogData = dish;
+        //this.toasterService.showToaster('Successfully edited', 3000);
+      },
+      (err: HttpErrorResponse) => {
+        //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+      }
+    );
   }
 }
 

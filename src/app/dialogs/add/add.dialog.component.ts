@@ -1,8 +1,8 @@
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectorRef} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {FormControl, Validators} from '@angular/forms';
-import {Issue} from '../../models/issue';
+import {Dish} from '../../models/Dish';
 
 @Component({
   selector: 'app-add.dialog',
@@ -11,14 +11,16 @@ import {Issue} from '../../models/issue';
 })
 
 export class AddDialogComponent {
-  constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: Issue,
+  constructor(private changeDetectorRef: ChangeDetectorRef,public dialogRef: MatDialogRef<AddDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: Dish,
               public dataService: DataService) { }
 
   formControl = new FormControl('', [
     Validators.required
     // Validators.email,
   ]);
+
+  public file_srcs: string[] = [];  
 
   getErrorMessage() {
     return this.formControl.hasError('required') ? 'Required field' :
@@ -29,6 +31,36 @@ export class AddDialogComponent {
   submit() {
   // emppty stuff
   }
+  changeListener($event) : void {
+    this.readThis($event.target);
+  }
+  
+  readThis(inputValue: any): void {
+    var file:File = inputValue.files[0];
+    if(file.size > 524288){
+      alert("La imagen no debe pesar más de 512Kb");
+      inputValue.value = "";
+      return;
+    };
+    var myReader:FileReader = new FileReader();
+  
+    myReader.onload = (e) => {
+      var img = new Image();      
+      img.src = myReader.result;
+      var w = img.width;
+      var h = img.height;
+      if (h!=w){
+        alert("La imagen debe ser cuadrada");
+        inputValue.value = "";
+        return;
+      }
+    }
+
+    myReader.onloadend = (e) => {
+      this.data.imagen = myReader.result;
+    }
+    myReader.readAsDataURL(file);
+  }  
 
   onNoClick(): void {
     this.dialogRef.close();

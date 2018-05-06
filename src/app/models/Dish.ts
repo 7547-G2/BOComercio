@@ -3,5 +3,5 @@ export class Dish {
   nombre: string;
   imagen: string;
   precio: number;
-  platoState: string;
+  state: string;
 }

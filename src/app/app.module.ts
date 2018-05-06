@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-
+import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {
@@ -48,7 +47,12 @@ import { routing } from './app.routing';
     MatToolbarModule,
     MatPaginatorModule,
     ReactiveFormsModule,
-    routing
+    routing,
+    AgmCoreModule.forRoot({
+      // please get your own API key here:
+      // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
+      apiKey: 'AIzaSyB-rXXfM8eiiWGeC4ZpBpNslVqsea6i1Cw'
+    })
   ],
   entryComponents: [
     AddDialogComponent,

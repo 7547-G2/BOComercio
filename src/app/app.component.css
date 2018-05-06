@@ -63,3 +63,10 @@ a {
 .help-block {
   font-size: 12px;
 }
+
+
+agm-map{
+  height: 300px;
+  width: 600px;
+
+}

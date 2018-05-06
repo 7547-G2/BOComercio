@@ -1,8 +1,8 @@
 ﻿﻿<div class="container" style="padding-top: 30px;">
   <div>
     <div class="panel-body">
-      <form name="signup" class="register-form" ng-submit="vm.updateComercio()" role="form" style="display: block;" novalidate>
-        <div class="row" style="margin-top: 15px;">
+      <form name="signup" class="register-form" role="form" style="display: block;" novalidate>
+        <!--div class="row" style="margin-top: 15px;">
           <div class="col-lg-4">
             <input type="text" name="email" id="email" tabindex="3" class="form-control" placeholder="email" ng-model="vm.comercio.email"
               required>
@@ -17,22 +17,28 @@
               <option ng-repeat="type in vm.types" ng-selected="vm.comercio.tipo == type.id" value="{{type.id}}">{{type.tipo}}</option>
             </select>
           </div>
-        </div>
+        </div-->
         <div class="row" style="margin-top: 15px;">
           <div class="col-lg-4">
-            <input type="text" name="razonSocial" id="razonSocial" tabindex="3" class="form-control" placeholder="Razón Social" ng-model="vm.comercio.razonSocial"
+            <input type="text" name="razonSocial" id="razonSocial" tabindex="3" class="form-control" placeholder="Razón Social" [(ngModel)]="comercio.razonSocial"
               required>
           </div>
           <div class="col-lg-4">
+            <select id="UserSelector" [(ngModel)]="comercio.tipo" style="width: 20%;" name="tipo">
+              <option value="">--Select --</option>
+              <option *ngFor="let type of tiposDeComida" [selected]="comercio.tipo == type.id" value="{{type.id}}">{{type.tipo}}</option>
+            </select>
+          </div>
+          <!--div class="col-lg-4">
             <input type="text" name="direccion" id="direccion" tabindex="3" class="form-control" placeholder="Dirección" ng-model="vm.comercio.addressDto.street"
               required>
           </div>
           <div class="col-lg-4">
             <input type="text" name="postalCode" id="postalCode" tabindex="3" class="form-control" placeholder="Código Postal" ng-model="vm.comercio.addressDto.postalCode"
               required>
-          </div>
+          </div-->
         </div>
-        <div class="row" style="margin-top: 15px;">
+        <!--div class="row" style="margin-top: 15px;">
           <div class="col-lg-4">
             <input type="text" name="floor" id="floor" tabindex="3" class="form-control" placeholder="Piso" ng-model="vm.comercio.addressDto.floor"
               required>
@@ -51,7 +57,9 @@
               <a ng-click="vm.goBack()" class="form-control btn btn-login">Volver</a>
             </div>
           </div>
-        </div>
+        </div-->
+        <agm-map [latitude]="lat" [longitude]="lng" [zoomControl]="false">
+        </agm-map>
       </form>
     </div>
   </div>

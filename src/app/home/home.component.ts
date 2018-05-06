@@ -22,11 +22,12 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
   styleUrls: ['../app.component.css']
 })
 export class HomeComponent implements OnInit {
-  displayedColumns = ['id', 'description', 'price','actions','activo'];
+  displayedColumns = ['id', 'description', 'price','activo','actions'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;
   id: number;
+  dish: Dish;
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
@@ -136,7 +137,20 @@ export class HomeComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
   }
+
+  public onChange(value, i: number, id: number, imagen: string, nombre: string,precio: number) {
+    this.dish = new Dish();
+    this.dish.id = id;
+    this.dish.imagen = imagen;
+    this.dish.nombre = nombre;
+    this.dish.precio = precio;
+    this.dish.state = value.checked ? 'ACTIVO':'INACTIVO';
+    console.log("this.dish.state:" + this.dish.state);
+    this.dataService.updateIssue(this.dish);
+  }
 }
+
+
 
 
 export class ExampleDataSource extends DataSource<Dish> {

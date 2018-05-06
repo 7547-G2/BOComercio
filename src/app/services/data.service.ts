@@ -1,17 +1,20 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Dish} from '../models/Dish';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Dish } from '../models/Dish';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { TipoComida } from '../models/tipoComida';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DataService {
-  private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api/backofficeComercio/'+JSON.parse(localStorage.getItem('currentUser')).comercioId+'/platos';
+  private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/platos';
 
   dataChange: BehaviorSubject<Dish[]> = new BehaviorSubject<Dish[]>([]);
   // Temporarily stores data from dialogs
   dialogData: any;
+  tiposComidas: BehaviorSubject<TipoComida[]> = new BehaviorSubject<TipoComida[]>([]);
 
-  constructor (private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   get data(): Dish[] {
     return this.dataChange.value;
@@ -24,43 +27,53 @@ export class DataService {
   /** CRUD METHODS */
   getAllIssues(): void {
     this.httpClient.get<Dish[]>(this.API_URL).subscribe(data => {
-        this.dataChange.next(data);
-      },
+      this.dataChange.next(data);
+    },
       (error: HttpErrorResponse) => {
-      console.log (error.name + ' ' + error.message);
+        console.log(error.name + ' ' + error.message);
       });
+  }
+
+  getTiposDeComida(): Observable<TipoComida[]> {
+    console.log("en Get");
+    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/mobileUser/tipoComida')
+      .map((res: any) =>
+        <TipoComida[]>res.map(item => {
+          console.log(item.tipo);
+        return item;
+      })
+    );
   }
 
   // ADD, POST METHOD
   addIssue(kanbanItem: Dish): void {
-    kanbanItem.platoState = "ACTIVO";
+    kanbanItem.state = "INACTIVO";
     this.httpClient.post(this.API_URL, kanbanItem).subscribe(data => {
       this.dialogData = kanbanItem;
       //this.toasterService.showToaster('Successfully added', 3000);
-      },
+    },
       (err: HttpErrorResponse) => {
-      //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
-    });
-   }
+        //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+      });
+  }
 
-   updateIssue(kanbanItem: Dish): void {
-    kanbanItem.platoState = "ACTIVO";
-    this.httpClient.put(this.API_URL +"/"+ kanbanItem.id, kanbanItem).subscribe(data => {
-        this.dialogData = kanbanItem;
-        //this.toasterService.showToaster('Successfully edited', 3000);
-      },
+  updateIssue(kanbanItem: Dish): void {
+    this.httpClient.put(this.API_URL + "/" + kanbanItem.id, kanbanItem).subscribe(data => {
+      this.dialogData = kanbanItem;
+      //this.toasterService.showToaster('Successfully edited', 3000);
+    },
       (err: HttpErrorResponse) => {
         //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
       }
     );
   }
 
-  deleteIssue (dish: Dish): void {
-    dish.platoState = "BORRADO";
-    this.httpClient.put(this.API_URL +"/"+ dish.id, dish).subscribe(data => {
-        this.dialogData = dish;
-        //this.toasterService.showToaster('Successfully edited', 3000);
-      },
+  deleteIssue(dish: Dish): void {
+    dish.state = "BORRADO";
+    this.httpClient.put(this.API_URL + "/" + dish.id, dish).subscribe(data => {
+      this.dialogData = dish;
+      //this.toasterService.showToaster('Successfully edited', 3000);
+    },
       (err: HttpErrorResponse) => {
         //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
       }

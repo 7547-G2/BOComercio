@@ -4,4 +4,6 @@ export class Dish {
   imagen: string;
   precio: number;
   state: string;
+  categoria: number;
+  orden: number;
 }

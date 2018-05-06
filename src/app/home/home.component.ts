@@ -23,7 +23,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
   styleUrls: ['../app.component.css']
 })
 export class HomeComponent implements OnInit {
-  displayedColumns = ['id', 'description', 'price', 'activo', 'categoria', 'actions'];
+  displayedColumns = ['id', 'description', 'price', 'activo', 'categoria', 'actions', 'orden'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;
@@ -138,6 +138,7 @@ export class HomeComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
+      this.dataSource._sort.direction = "desc";
     this.dataService.getTiposDeComida().subscribe(
       result => { this.tiposDeComida = result; }
     );
@@ -221,15 +222,13 @@ export class ExampleDataSource extends DataSource<Dish> {
     }
 
     return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
+      let propertyA: number;
+      let propertyB: number;
 
       switch (this._sort.active) {
-        case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
-        case 'nombre': [propertyA, propertyB] = [a.nombre, b.nombre]; break;
-        case 'precio': [propertyA, propertyB] = [a.precio, b.precio]; break;
+        case 'categoria': [propertyA, propertyB] = [a.categoria, b.categoria]; break;
+        case 'orden': [propertyA, propertyB] = [a.orden, b.orden]; break;
       }
-
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 

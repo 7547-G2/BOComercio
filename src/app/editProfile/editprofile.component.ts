@@ -23,6 +23,7 @@ import { AuthenticationService } from '../services/authentication.service';
 export class EditProfileComponent implements OnInit {
     comercio: any = {};
     tiposDeComida: TipoComida[];
+    comercioId:number;
     constructor(public httpClient: HttpClient,
         public dialog: MatDialog,
         public dataService: DataService,
@@ -31,11 +32,11 @@ export class EditProfileComponent implements OnInit {
 
 
     // google maps zoom level
-    zoom: number = 8;
+    zoom: number = 1000;
 
     // initial center position for the map
-    lat: number = 51.673858;
-    lng: number = 7.815982;
+    lat: number = -34.6175283;
+    lng: number = -58.3683175;
 
 
     ngOnInit() {
@@ -49,8 +50,9 @@ export class EditProfileComponent implements OnInit {
     }
 
     public loadData() {
-        this.comercio.razonSocial = "La Nona";
-        this.comercio.tipo = 5;
+        this.dataService.getComercio().subscribe(
+            result => {this.comercio = result;}
+        );
         this.dataService.getTiposDeComida().subscribe(
             result => {this.tiposDeComida = result;}
         );

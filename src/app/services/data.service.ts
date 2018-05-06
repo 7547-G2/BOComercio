@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DataService {
+
   private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/platos';
 
   dataChange: BehaviorSubject<Dish[]> = new BehaviorSubject<Dish[]>([]);
@@ -35,14 +36,18 @@ export class DataService {
   }
 
   getTiposDeComida(): Observable<TipoComida[]> {
-    console.log("en Get");
     return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/mobileUser/tipoComida')
       .map((res: any) =>
         <TipoComida[]>res.map(item => {
           console.log(item.tipo);
-        return item;
-      })
-    );
+          return item;
+        })
+      );
+  }
+
+  getComercio(): any {
+    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/backofficeComercio/'+JSON.parse(localStorage.getItem('currentUser')).comercioId)
+      .map(user => {return user;});
   }
 
   // ADD, POST METHOD

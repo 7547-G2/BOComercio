@@ -1,20 +1,21 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {DataService} from '../services/data.service';
-import {HttpClient} from '@angular/common/http';
-import {MatDialog, MatPaginator, MatSort} from '@angular/material';
-import {Dish} from '../models/Dish';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {DataSource} from '@angular/cdk/collections';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DataService } from '../services/data.service';
+import { HttpClient } from '@angular/common/http';
+import { MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { Dish } from '../models/Dish';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { DataSource } from '@angular/cdk/collections';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-import {AddDialogComponent} from '../dialogs/add/add.dialog.component';
-import {EditDialogComponent} from '../dialogs/edit/edit.dialog.component';
-import {DeleteDialogComponent} from '../dialogs/delete/delete.dialog.component';
+import { AddDialogComponent } from '../dialogs/add/add.dialog.component';
+import { EditDialogComponent } from '../dialogs/edit/edit.dialog.component';
+import { DeleteDialogComponent } from '../dialogs/delete/delete.dialog.component';
 import { Injectable } from '@angular/core';
+import { TipoComida } from '../models/tipoComida';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 @Component({
@@ -22,17 +23,18 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
   styleUrls: ['../app.component.css']
 })
 export class HomeComponent implements OnInit {
-  displayedColumns = ['id', 'description', 'price','activo','actions'];
+  displayedColumns = ['id', 'description', 'price', 'activo', 'categoria', 'actions'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;
   id: number;
   dish: Dish;
+  tiposDeComida: TipoComida[];
 
   constructor(public httpClient: HttpClient,
-              public dialog: MatDialog,
-              public dataService: DataService,
-              private router: Router) {}
+    public dialog: MatDialog,
+    public dataService: DataService,
+    private router: Router) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -41,11 +43,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
       // logged in so return true
-      
-    this.loadData();
-    return;
-  }
-  this.router.navigate(['/login']);
+
+      this.loadData();
+      return;
+    }
+    this.router.navigate(['/login']);
   }
 
   refresh() {
@@ -54,7 +56,7 @@ export class HomeComponent implements OnInit {
 
   addNew(issue: Dish) {
     const dialogRef = this.dialog.open(AddDialogComponent, {
-      data: {issue: issue }
+      data: { issue: issue }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -68,13 +70,13 @@ export class HomeComponent implements OnInit {
   }
 
   //TODO agregar platoState, cuando este en el get
-  startEdit(i: number, id: number, imagen: string, nombre: string,precio: number) {
+  startEdit(i: number, id: number, imagen: string, nombre: string, precio: number) {
     this.id = id;
     // index row is used just for debugging proposes and can be removed
     this.index = i;
     console.log(this.index);
     const dialogRef = this.dialog.open(EditDialogComponent, {
-      data: {id: id, imagen: imagen, nombre: nombre,precio: precio}
+      data: { id: id, imagen: imagen, nombre: nombre, precio: precio }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -89,11 +91,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  deleteItem(i: number, id: number, imagen: string, nombre: string,precio: number) {
+  deleteItem(i: number, id: number, imagen: string, nombre: string, precio: number) {
     this.index = i;
     this.id = id;
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: {id: id, imagen: imagen, nombre: nombre,precio: precio}
+      data: { id: id, imagen: imagen, nombre: nombre, precio: precio }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -136,15 +138,18 @@ export class HomeComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
+    this.dataService.getTiposDeComida().subscribe(
+      result => { this.tiposDeComida = result; }
+    );
   }
 
-  public onChange(value, i: number, id: number, imagen: string, nombre: string,precio: number) {
+  public onChange(value, i: number, id: number, imagen: string, nombre: string, precio: number) {
     this.dish = new Dish();
     this.dish.id = id;
     this.dish.imagen = imagen;
     this.dish.nombre = nombre;
     this.dish.precio = precio;
-    this.dish.state = value.checked ? 'ACTIVO':'INACTIVO';
+    this.dish.state = value.checked ? 'ACTIVO' : 'INACTIVO';
     console.log("this.dish.state:" + this.dish.state);
     this.dataService.updateIssue(this.dish);
   }
@@ -168,8 +173,8 @@ export class ExampleDataSource extends DataSource<Dish> {
   renderedData: Dish[] = [];
 
   constructor(public _exampleDatabase: DataService,
-              public _paginator: MatPaginator,
-              public _sort: MatSort) {
+    public _paginator: MatPaginator,
+    public _sort: MatSort) {
     super();
     // Reset to the first page when the user changes the filter.
     this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
@@ -190,7 +195,7 @@ export class ExampleDataSource extends DataSource<Dish> {
     return Observable.merge(...displayDataChanges).map(() => {
       // Filter data
       this.filteredData = this._exampleDatabase.data.slice().filter((dish: Dish) => {
-        var dishStr = (dish != null) ? dish.nombre:"";
+        var dishStr = (dish != null) ? dish.nombre : "";
         const searchStr = (dishStr).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });

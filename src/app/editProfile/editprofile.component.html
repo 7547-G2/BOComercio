@@ -20,13 +20,13 @@
         </div-->
         <div class="row" style="margin-top: 15px;">
           <div class="col-lg-4">
-            <input type="text" name="razonSocial" id="razonSocial" tabindex="3" class="form-control" placeholder="Razón Social" [(ngModel)]="comercio.razonSocial"
+            <input type="text" name="razonSocial" id="razonSocial" tabindex="3" class="form-control" placeholder="Razón Social" [(ngModel)]="comercio.razonSocial" readonly
               required>
           </div>
           <div class="col-lg-4">
-            <select id="UserSelector" [(ngModel)]="comercio.tipo" style="width: 20%;" name="tipo">
+            <select id="UserSelector" [(ngModel)]="comercio.tipoComidaId" style="width: 20%;" name="tipo" [disabled]="true">
               <option value="">--Select --</option>
-              <option *ngFor="let type of tiposDeComida" [selected]="comercio.tipo == type.id" value="{{type.id}}">{{type.tipo}}</option>
+              <option *ngFor="let type of tiposDeComida" [selected]="comercio.tipoComidaId == type.id" value="{{type.id}}">{{type.tipo}}</option>
             </select>
           </div>
           <!--div class="col-lg-4">

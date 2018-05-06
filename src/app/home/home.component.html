@@ -35,8 +35,8 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="orden">
-      <mat-header-cell *matHeaderCellDef> Orden </mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.orden}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell [style.display]="'none'" *matCellDef="let row">{{row.categoria}}{{row.orden}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
@@ -51,7 +51,7 @@
         <button mat-icon-button color="primary" (click)="deleteItem(i, row.id, row.imagen, row.nombre, row.precio)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
-        <button mat-icon-button color="primary">
+        <button mat-icon-button color="primary" (click)="increaseOrder(i, row.id, row.imagen, row.nombre, row.precio, row.categoria, row.orden)">
           <i class="material-icons">arrow_upward</i>
         </button>
         <button mat-icon-button color="primary">

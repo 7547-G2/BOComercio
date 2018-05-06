@@ -11,6 +11,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
 import { AddDialogComponent } from '../dialogs/add/add.dialog.component';
 import { EditDialogComponent } from '../dialogs/edit/edit.dialog.component';
 import { DeleteDialogComponent } from '../dialogs/delete/delete.dialog.component';
@@ -23,6 +24,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
   styleUrls: ['../app.component.css']
 })
 export class HomeComponent implements OnInit {
+
   displayedColumns = ['id', 'description', 'price', 'activo', 'categoria', 'actions', 'orden'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
@@ -67,6 +69,22 @@ export class HomeComponent implements OnInit {
         this.refreshTable();
       }
     });
+  }
+
+  increaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria:number, orden:number) {
+    
+      let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < orden && x.categoria === categoria );
+      let maximum = Math.max.apply(Math, dishes.map(function (f) { return f.orden; }));
+      let idOrdenAnterior  = Math.max.apply(Math, dishes.map(function (f) { return f.id; }));
+      this.dataService.updateIssue(maximum);
+      let dish = new Dish();
+      dish.orden = maximum;
+      dish.id = id;
+      this.dataService.updateIssue(dish);
+      dish.orden = orden;
+      dish.id = idOrdenAnterior;
+      this.dataService.updateIssue(dish);
+      this.refreshTable();
   }
 
   //TODO agregar platoState, cuando este en el get
@@ -138,7 +156,7 @@ export class HomeComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-      this.dataSource._sort.direction = "desc";
+    this.dataSource._sort.direction = "desc";
     this.dataService.getTiposDeComida().subscribe(
       result => { this.tiposDeComida = result; }
     );

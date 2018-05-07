@@ -32,15 +32,15 @@ export class FirstLoginComponent implements OnInit {
  
     firstlogin() {
         this.loading = true;
-        this.authenticationService.firstlogin(this.model.email, this.model.hash,this.model.password)
+        this.authenticationService.firstlogin(this.email, this.model.password,this.hash)
             .subscribe(
                 data => {
                     this.router.navigate(['/home']);
                 },
                 error => {
                     this.loading = false;
-                    console.log("error.message: " + error.message);
-                    this.model.error = error.message;
+                    console.log(error);
+                    this.model.error = "error lalalla";
                 });
     }
 }

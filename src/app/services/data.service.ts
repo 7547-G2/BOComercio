@@ -39,7 +39,6 @@ export class DataService {
     return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/mobileUser/tipoComida')
       .map((res: any) =>
         <TipoComida[]>res.map(item => {
-          console.log(item.tipo);
           return item;
         })
       );

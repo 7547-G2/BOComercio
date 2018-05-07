@@ -28,7 +28,7 @@
                       <label for="passwordV">Contraseña</label>
                       <input type="password" class="form-control" name="passwordV" [(ngModel)]="model.passwordV" #password="ngModel" required />
                       <div *ngIf="f.submitted && !passwordv.valid" class="help-block">La contraseña es requerida</div>
-                      <!--div *ngIf="passwordV != password" class="help-block">Las contraseñas no coinciden</div-->
+                      <div *ngIf="model.passwordV != model.password" class="help-block">Las contraseñas no coinciden</div>
                     </div>
                     <span ng-if="model.error != ''" class="help-block">{{model.error}}</span>
                     <div class="form-group">

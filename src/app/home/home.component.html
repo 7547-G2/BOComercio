@@ -4,8 +4,8 @@
       <input matInput #filter placeholder="Filtrar Platos">
     </mat-form-field>
   </div>
-  <mat-table #table [dataSource]="dataSource" matSortActive="orden" matSortDirection="asc"  matSort class="mat-cell">
-    <ng-container matColumnDef="id">
+  <mat-table #table [dataSource]="dataSource" matSortActive="categoria" matSortDirection="asc" matSort class="mat-cell">
+    <ng-container matColumnDef="imagen">
       <mat-header-cell *matHeaderCellDef>Imagen</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <img [attr.src]="element.imagen" alt=" " width="100px" height="100px" /> </mat-cell>
@@ -36,7 +36,7 @@
     </ng-container>
     <ng-container matColumnDef="orden">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell [style.display]="'none'" *matCellDef="let row">{{row.categoria}}{{row.orden}}</mat-cell>
+      <mat-cell *matCellDef="let row">{{row.categoria}}{{row.orden}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
@@ -65,6 +65,6 @@
   <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
     Sin resultados
   </div>
-  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]">
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
 </div>

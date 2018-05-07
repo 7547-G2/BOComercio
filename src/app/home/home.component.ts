@@ -25,7 +25,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns = ['id', 'description', 'price', 'activo', 'categoria', 'actions', 'orden'];
+  displayedColumns = ['imagen','description', 'price', 'activo', 'categoria', 'actions', 'orden'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;
@@ -71,20 +71,26 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  increaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria:number, orden:number) {
-    
-      let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < orden && x.categoria === categoria );
+  increaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
+
+    let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < orden && x.categoria === categoria);
+    if (dishes.length > 0) {
       let maximum = Math.max.apply(Math, dishes.map(function (f) { return f.orden; }));
-      let idOrdenAnterior  = Math.max.apply(Math, dishes.map(function (f) { return f.id; }));
-      this.dataService.updateIssue(maximum);
+      let idOrdenAnterior = dishes.find(x => x.orden === maximum && x.categoria === categoria).id;
       let dish = new Dish();
       dish.orden = maximum;
       dish.id = id;
+      console.log("maximum:" +maximum);
       this.dataService.updateIssue(dish);
-      dish.orden = orden;
-      dish.id = idOrdenAnterior;
-      this.dataService.updateIssue(dish);
-      this.refreshTable();
+      let dish2 = new Dish();
+      dish2.orden = orden;
+      dish2.id = idOrdenAnterior;
+      console.log("orden:" +orden);
+      this.dataService.updateIssue(dish2);
+      this.refresh();
+    } else {
+      alert("No hay un plato de orden mayor para esta categoría.");
+    }
   }
 
   //TODO agregar platoState, cuando este en el get
@@ -156,7 +162,7 @@ export class HomeComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-    this.dataSource._sort.direction = "desc";
+    this.dataSource._sort.direction = "asc";
     this.dataService.getTiposDeComida().subscribe(
       result => { this.tiposDeComida = result; }
     );
@@ -241,16 +247,24 @@ export class ExampleDataSource extends DataSource<Dish> {
 
     return data.sort((a, b) => {
       let propertyA: number;
+      let propertyAA: number;
       let propertyB: number;
+      let propertyBB: number;
 
-      switch (this._sort.active) {
+      /*switch (this._sort.active) {
         case 'categoria': [propertyA, propertyB] = [a.categoria, b.categoria]; break;
         case 'orden': [propertyA, propertyB] = [a.orden, b.orden]; break;
-      }
+      }*/
+      [propertyA, propertyB] = [a.categoria, b.categoria];
+      [propertyAA, propertyBB] = [a.orden, b.orden];
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+      const valueAA = isNaN(+propertyAA) ? propertyAA : +propertyAA;
+      const valueBB = isNaN(+propertyBB) ? propertyBB : +propertyBB;
 
-      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
+      
+      
+      return (valueA < valueB ? -1 : (valueAA < valueBB ? -1:1))*(this._sort.direction === 'asc' ? 1 : -1);
     });
   }
 }

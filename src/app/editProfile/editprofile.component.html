@@ -1,51 +1,62 @@
-﻿﻿<div class="container" style="padding-top: 30px;">
+﻿﻿<div class="container" >
   <div>
     <div class="panel-body">
-      <form name="signup" class="register-form" role="form" style="display: block;" novalidate>
-        <!--div class="row" style="margin-top: 15px;">
+        <form name="form" (ngSubmit)="f.form.valid && updateProfile()" #f="ngForm" novalidate>
+        <div class="row">
           <div class="col-lg-4">
-            <input type="text" name="email" id="email" tabindex="3" class="form-control" placeholder="email" ng-model="vm.comercio.email"
-              required>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" tabindex="3" class="form-control" placeholder="email" [(ngModel)]="comercio.email"
+              readonly required>
           </div>
           <div class="col-lg-4">
-            <input type="text" name="nombre" id="nombre" tabindex="3" class="form-control" placeholder="Nombre" ng-model="vm.comercio.nombre"
-              required>
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" tabindex="3" class="form-control" placeholder="Nombre" [(ngModel)]="comercio.nombre"
+              readonly required>
           </div>
           <div class="col-lg-4">
-            <select id="UserSelector" ng-model="vm.comercio.tipo" style="width: 100%;">
-              <option value="">--Select --</option>
-              <option ng-repeat="type in vm.types" ng-selected="vm.comercio.tipo == type.id" value="{{type.id}}">{{type.tipo}}</option>
-            </select>
-          </div>
-        </div-->
-        <div class="row" style="margin-top: 15px;">
-          <div class="col-lg-4">
-            <input type="text" name="razonSocial" id="razonSocial" tabindex="3" class="form-control" placeholder="Razón Social" [(ngModel)]="comercio.razonSocial" readonly
-              required>
-          </div>
-          <div class="col-lg-4">
-            <select id="UserSelector" [(ngModel)]="comercio.tipoComidaId" style="width: 20%;" name="tipo" [disabled]="true">
-              <option value="">--Select --</option>
+            <label for="UserSelector">Tipo Comercio</label>
+            <select id="UserSelector" [(ngModel)]="comercio.tipoComidaId" width="100%" name="tipo" [disabled]="true">
               <option *ngFor="let type of tiposDeComida" [selected]="comercio.tipoComidaId == type.id" value="{{type.id}}">{{type.tipo}}</option>
             </select>
           </div>
-          <!--div class="col-lg-4">
-            <input type="text" name="direccion" id="direccion" tabindex="3" class="form-control" placeholder="Dirección" ng-model="vm.comercio.addressDto.street"
-              required>
-          </div>
-          <div class="col-lg-4">
-            <input type="text" name="postalCode" id="postalCode" tabindex="3" class="form-control" placeholder="Código Postal" ng-model="vm.comercio.addressDto.postalCode"
-              required>
-          </div-->
         </div>
-        <!--div class="row" style="margin-top: 15px;">
+        <div class="row" style="margin-top: 15px;">
           <div class="col-lg-4">
-            <input type="text" name="floor" id="floor" tabindex="3" class="form-control" placeholder="Piso" ng-model="vm.comercio.addressDto.floor"
-              required>
+            <label for="razonSocial">Razón Social</label>
+            <input type="text" name="razonSocial" id="razonSocial" tabindex="3" class="form-control" placeholder="Razón Social" [(ngModel)]="comercio.razonSocial"
+              readonly required>
           </div>
           <div class="col-lg-4">
+            <label for="direccion">Dirección</label>
+            <input type="text" name="direccion" id="direccion" tabindex="3" class="form-control" placeholder="Dirección" [(ngModel)]="comercio.addressDto.street"
+              readonly required>
+          </div>
+          <div class="col-lg-4">
+            <label for="postalCode">CP</label>
+            <input type="text" name="postalCode" id="postalCode" tabindex="3" class="form-control" placeholder="Código Postal" [(ngModel)]="comercio.addressDto.postalCode"
+              readonly required>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+          <div class="col-lg-4">
+            <label for="floor">Piso</label>
+            <input type="text" name="floor" id="floor" tabindex="3" class="form-control" placeholder="Piso" ng-model="vm.comercio.addressDto.floor"
+            readonly required>
+          </div>
+          <div class="col-lg-4">
+            <label for="department">Departamento</label>
             <input type="text" name="department" id="department" tabindex="3" class="form-control" placeholder="Departamento" ng-model="vm.comercio.addressDto.department"
-              required>
+            readonly required>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+          <div class="col-lg-8" style="align-content: center">
+            <agm-map [latitude]="lat" [longitude]="lng" [zoomControl]="false">
+            </agm-map>
+          </div>
+          <div class="col-lg-4">
+              <img [(ngModel)]="comercio.imagenLogo" [src]="comercio.imagenLogo" alt=" " width="200px" height="200px" />
+              <input id="image" type="file" (change)="changeListener($event)" accept=".png, .jpg, .jpeg" />
           </div>
         </div>
         <div class="form-group">
@@ -57,9 +68,7 @@
               <a ng-click="vm.goBack()" class="form-control btn btn-login">Volver</a>
             </div>
           </div>
-        </div-->
-        <agm-map [latitude]="lat" [longitude]="lng" [zoomControl]="false">
-        </agm-map>
+        </div>
       </form>
     </div>
   </div>

@@ -44,9 +44,31 @@ export class DataService {
       );
   }
 
+  updateProfile(comercio : any): void {
+    ///api/comercios/{comercioId}
+    this.httpClient.put('https://hoy-como-backend.herokuapp.com/api/comercios/' + JSON.parse(localStorage.getItem('currentUser')).comercioId, comercio).subscribe(data => {
+      this.dialogData = comercio;
+      //this.toasterService.showToaster('Successfully edited', 3000);
+    },
+      (err: HttpErrorResponse) => {
+        //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+      }
+    );
+  }
+
+  getTiposDeComercio(): Observable<TipoComida[]> {
+    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/mobileUser/tipoComida')
+      .map((res: any) =>
+        <TipoComida[]>res.map(item => {
+          return item;
+        })
+      );
+  }
+
+
   getComercio(): any {
-    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/backofficeComercio/'+JSON.parse(localStorage.getItem('currentUser')).comercioId)
-      .map(user => {return user;});
+    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId)
+      .map(user => { return user; });
   }
 
   // ADD, POST METHOD

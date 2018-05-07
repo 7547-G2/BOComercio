@@ -49,11 +49,47 @@ export class EditProfileComponent implements OnInit {
         this.router.navigate(['/login']);
     }
 
+    updateProfile(){
+        this.dataService.updateProfile(this.comercio);        
+    }
+
+    changeListener($event) : void {
+        this.readThis($event.target);
+      }
+      
+      readThis(inputValue: any): void {
+        var file:File = inputValue.files[0];
+        if(file.size > 524288){
+          alert("La imagen no debe pesar más de 512Kb");
+          inputValue.value = "";
+          return;
+        };
+        var myReader:FileReader = new FileReader();
+      
+        myReader.onload = (e) => {
+          var img = new Image();      
+          img.src = myReader.result;
+          var w = img.width;
+          var h = img.height;
+          if (h!=w){
+            alert("La imagen debe ser cuadrada");
+            inputValue.value = "";
+            return;
+          }
+        }
+    
+        myReader.onloadend = (e) => {
+          this.comercio.imagenLogo = myReader.result;
+        }
+        myReader.readAsDataURL(file);
+      }  
+    
+
     public loadData() {
         this.dataService.getComercio().subscribe(
             result => {this.comercio = result;}
         );
-        this.dataService.getTiposDeComida().subscribe(
+        this.dataService.getTiposDeComercio().subscribe(
             result => {this.tiposDeComida = result;}
         );
     }

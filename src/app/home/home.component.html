@@ -1,4 +1,4 @@
-<div class="container mat-elevation-z8">
+<div class="mat-elevation-z8">
   <div class="form">
     <mat-form-field floatPlaceholder="never" color="primary">
       <input matInput #filter placeholder="Filtrar Platos">
@@ -36,7 +36,7 @@
     </ng-container>
     <ng-container matColumnDef="orden">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell [style.display]="'none'" *matCellDef="let row">{{row.categoria}}{{row.orden}}</mat-cell>
+      <mat-cell *matCellDef="let row">{{row.categoria}}{{row.orden}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>

@@ -57,9 +57,6 @@ export class HomeComponent implements OnInit {
   }
 
   addNew(issue: Dish) {
-    issue = new Dish();
-    let max = Math.max.apply(Math, this.exampleDatabase.dataChange.value.map(function (f) { return f.orden; }));
-    issue.orden = max + 1;
     const dialogRef = this.dialog.open(AddDialogComponent, {
       data: { issue: issue }
     });

@@ -25,7 +25,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns = ['imagen','description', 'price', 'activo', 'categoria', 'actions', 'orden'];
+  displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions', 'orden'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;
@@ -57,6 +57,9 @@ export class HomeComponent implements OnInit {
   }
 
   addNew(issue: Dish) {
+    issue = new Dish();
+    let max = Math.max.apply(Math, this.exampleDatabase.dataChange.value.map(function (f) { return f.orden; }));
+    issue.orden = max + 1;
     const dialogRef = this.dialog.open(AddDialogComponent, {
       data: { issue: issue }
     });
@@ -76,37 +79,37 @@ export class HomeComponent implements OnInit {
     let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < orden && x.categoria === categoria);
     if (dishes.length > 0) {
       let maximum = Math.max.apply(Math, dishes.map(function (f) { return f.orden; }));
-      let idOrdenAnterior = dishes.find(x => x.orden === maximum && x.categoria === categoria).id;
+      let dishPrevio = dishes.find(x => x.orden === maximum && x.categoria === categoria).id;
+
       let dish = new Dish();
-      dish.orden = maximum;
       dish.id = id;
-      console.log("maximum:" +maximum);
+      dish.orden = maximum;
+
       this.dataService.updateIssue(dish);
+
       let dish2 = new Dish();
+      dish2.id = dishPrevio;
       dish2.orden = orden;
-      dish2.id = idOrdenAnterior;
-      console.log("orden:" +orden);
       this.dataService.updateIssue(dish2);
-      this.refresh();
     } else {
       alert("No hay un plato de orden mayor para esta categoría.");
     }
   }
 
   //TODO agregar platoState, cuando este en el get
-  startEdit(i: number, id: number, imagen: string, nombre: string, precio: number) {
+  startEdit(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
     this.id = id;
     // index row is used just for debugging proposes and can be removed
     this.index = i;
     console.log(this.index);
     const dialogRef = this.dialog.open(EditDialogComponent, {
-      data: { id: id, imagen: imagen, nombre: nombre, precio: precio }
+      data: { id: id, imagen: imagen, nombre: nombre, precio: precio, categoria: categoria, orden: orden }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
         // Then you update that record using data from dialogData (values you enetered)
         this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
@@ -262,9 +265,9 @@ export class ExampleDataSource extends DataSource<Dish> {
       const valueAA = isNaN(+propertyAA) ? propertyAA : +propertyAA;
       const valueBB = isNaN(+propertyBB) ? propertyBB : +propertyBB;
 
-      
-      
-      return (valueA < valueB ? -1 : (valueAA < valueBB ? -1:1))*(this._sort.direction === 'asc' ? 1 : -1);
+
+
+      return (valueA < valueB ? -1 : (valueAA < valueBB ? -1 : 1)) * (this._sort.direction === 'asc' ? 1 : -1);
     });
   }
 }

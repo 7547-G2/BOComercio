@@ -19,7 +19,9 @@
     <p hidden>{{data.id}}</p>
     <p hidden>{{data.imagen}}</p>
     <p hidden>{{data.platoState}}</p>
-    <img src={{data.imagen}} width="100px" height="100px"/>
+    <p hidden>{{data.orden}}</p>
+    <p hidden>{{data.categoria}}</p>
+    <img src={{data.imagen}} alt="" width="100px" height="100px"/>
     <div mat-dialog-actions>
       <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
       <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>

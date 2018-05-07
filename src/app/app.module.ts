@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {
   MatButtonModule, MatDialogModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule,
-  MatTableModule, MatToolbarModule,MatSliderModule, MatSlideToggleModule
+  MatTableModule, MatToolbarModule,MatSliderModule, MatSlideToggleModule, MatFormFieldModule
 } from '@angular/material';
 import {DataService} from './services/data.service';
 import {AuthenticationService} from './services/authentication.service';
@@ -38,6 +38,7 @@ import { routing } from './app.routing';
     MatDialogModule,
     FormsModule,
     MatButtonModule,
+    MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatSortModule,

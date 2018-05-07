@@ -3,6 +3,7 @@ import {Component, Inject, ChangeDetectorRef} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Dish} from '../../models/Dish';
+import { TipoComida } from '../../models/tipoComida';
 
 @Component({
   selector: 'app-add.dialog',
@@ -11,9 +12,14 @@ import {Dish} from '../../models/Dish';
 })
 
 export class AddDialogComponent {
+  tiposDeComida: TipoComida[];
   constructor(private changeDetectorRef: ChangeDetectorRef,public dialogRef: MatDialogRef<AddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Dish,
-              public dataService: DataService) { }
+              public dataService: DataService) { 
+                this.dataService.getTiposDeComida().subscribe(
+                  result => { this.tiposDeComida = result; }
+                );
+              }
 
   formControl = new FormControl('', [
     Validators.required
@@ -23,9 +29,7 @@ export class AddDialogComponent {
   public file_srcs: string[] = [];  
 
   getErrorMessage() {
-    return this.formControl.hasError('required') ? 'Required field' :
-      this.formControl.hasError('email') ? 'Not a valid email' :
-        '';
+    return this.formControl.hasError('required') ? 'Campo requerido':'';
   }
 
   submit() {

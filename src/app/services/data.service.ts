@@ -36,7 +36,7 @@ export class DataService {
   }
 
   getTiposDeComida(): Observable<TipoComida[]> {
-    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/mobileUser/tipoComida')
+    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/backofficeComercio/categoriasComida')
       .map((res: any) =>
         <TipoComida[]>res.map(item => {
           return item;

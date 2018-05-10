@@ -8,7 +8,7 @@
     <ng-container matColumnDef="imagen">
       <mat-header-cell *matHeaderCellDef>Imagen</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <img [attr.src]="element.imagen" alt=" " width="100px" height="100px" /> </mat-cell>
+        <img [attr.src]="element.imagen" alt=" " width="50px" height="50px" /> </mat-cell>
     </ng-container>
     <ng-container matColumnDef="description">
       <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
@@ -54,7 +54,7 @@
         <button mat-icon-button color="primary" (click)="increaseOrder(i, row.id, row.imagen, row.nombre, row.precio, row.categoria, row.orden)">
           <i class="material-icons">arrow_upward</i>
         </button>
-        <button mat-icon-button color="primary">
+        <button mat-icon-button color="primary" (click)="decreaseOrder(i, row.id, row.imagen, row.nombre, row.precio, row.categoria, row.orden)">
           <i class="material-icons">arrow_downward</i>
         </button>
       </mat-cell>

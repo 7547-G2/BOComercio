@@ -13,6 +13,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { TipoComida } from '../models/tipoComida';
+import { Comercio } from '../models/Comercio';
+import { Address } from '../models/Address';
 import { MouseEvent } from '@agm/core';
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -21,7 +23,7 @@ import { AuthenticationService } from '../services/authentication.service';
     styleUrls: ['../app.component.css']
 })
 export class EditProfileComponent implements OnInit {
-    comercio: any = {};
+    comercio: Comercio = new Comercio();
     tiposDeComida: TipoComida[];
     comercioId:number;
     constructor(public httpClient: HttpClient,
@@ -34,6 +36,7 @@ export class EditProfileComponent implements OnInit {
     // google maps zoom level
     zoom: number = 1000;
 
+    //comercio.addressDto = new Address();
     // initial center position for the map
     lat: number = -34.6175283;
     lng: number = -58.3683175;

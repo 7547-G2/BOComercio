@@ -93,6 +93,28 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  decreaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
+
+    let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden > orden && x.categoria === categoria);
+    if (dishes.length > 0) {
+      let maximum = Math.min.apply(Math, dishes.map(function (f) { return f.orden; }));
+      let dishPrevio = dishes.find(x => x.orden === maximum && x.categoria === categoria).id;
+
+      let dish = new Dish();
+      dish.id = id;
+      dish.orden = maximum;
+
+      this.dataService.updateIssue(dish);
+
+      let dish2 = new Dish();
+      dish2.id = dishPrevio;
+      dish2.orden = orden;
+      this.dataService.updateIssue(dish2);
+    } else {
+      alert("No hay un plato de orden mayor para esta categoría.");
+    }
+  }
+
   //TODO agregar platoState, cuando este en el get
   startEdit(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
     this.id = id;

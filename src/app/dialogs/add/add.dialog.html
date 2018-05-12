@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container col-sm-8">
   <h3 mat-dialog-title>Nuevo Plato</h3>
 
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
     <!--Textarea for demo purposes-->
     <div class="form">
       <mat-form-field color="primary">
-        <input matInput #inputstate class="form-control" placeholder="Nombre" [(ngModel)]="data.nombre" name="title" required>
+        <input matInput #inputstate placeholder="Nombre" [(ngModel)]="data.nombre" name="title" required>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
@@ -13,13 +13,13 @@
     <!--Contains mat-hint for characters count and has maxLengt set-->
     <div class="form">
       <mat-form-field color="primary">
-        <input matInput #inputstate class="form-control" placeholder="Precio" [(ngModel)]="data.precio" name="state" maxlength="10"
+        <input matInput #inputstate placeholder="Precio" [(ngModel)]="data.precio" name="state" maxlength="10"
           required>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
     <select id="UserSelector" style="width: 50%;" [(ngModel)]="data.categoria" name="tipo">
-      <option value="">--Select --</option>
+      <option value="" [selected]>--Select --</option>
       <option *ngFor="let type of tiposDeComida" value="{{type.id}}">{{type.tipo}}</option>
     </select>
 

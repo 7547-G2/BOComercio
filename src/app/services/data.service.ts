@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ChangeDetectorRef} from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Dish } from '../models/Dish';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -8,14 +8,14 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class DataService {
 
-  private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/platos';
+  private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api';
 
   dataChange: BehaviorSubject<Dish[]> = new BehaviorSubject<Dish[]>([]);
   // Temporarily stores data from dialogs
-  dialogData: any;
+  dialogData: Dish;
   tiposComidas: BehaviorSubject<TipoComida[]> = new BehaviorSubject<TipoComida[]>([]);
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient){}//, private changeDetectorRefs: ChangeDetectorRef) { }
 
   get data(): Dish[] {
     return this.dataChange.value;
@@ -27,8 +27,9 @@ export class DataService {
 
   /** CRUD METHODS */
   getAllIssues(): void {
-    this.httpClient.get<Dish[]>(this.API_URL).subscribe(data => {
+    this.httpClient.get<Dish[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/platos').subscribe(data => {
       this.dataChange.next(data);
+      //this.changeDetectorRefs.detectChanges();
     },
       (error: HttpErrorResponse) => {
         console.log(error.name + ' ' + error.message);
@@ -36,7 +37,7 @@ export class DataService {
   }
 
   getTiposDeComida(): Observable<TipoComida[]> {
-    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/backofficeComercio/categoriasComida')
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/categoriasComida')
       .map((res: any) =>
         <TipoComida[]>res.map(item => {
           return item;
@@ -46,7 +47,7 @@ export class DataService {
 
   updateProfile(comercio : any): void {
     ///api/comercios/{comercioId}
-    this.httpClient.put('https://hoy-como-backend.herokuapp.com/api/comercios/' + JSON.parse(localStorage.getItem('currentUser')).comercioId, comercio).subscribe(data => {
+    this.httpClient.put(this.API_URL + '/api/comercios/' + JSON.parse(localStorage.getItem('currentUser')).comercioId, comercio).subscribe(data => {
       this.dialogData = comercio;
       //this.toasterService.showToaster('Successfully edited', 3000);
     },
@@ -57,7 +58,7 @@ export class DataService {
   }
 
   getTiposDeComercio(): Observable<TipoComida[]> {
-    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/mobileUser/tipoComida')
+    return this.httpClient.get(this.API_URL + '/mobileUser/tipoComida')
       .map((res: any) =>
         <TipoComida[]>res.map(item => {
           return item;
@@ -67,7 +68,7 @@ export class DataService {
 
 
   getComercio(): any {
-    return this.httpClient.get('https://hoy-como-backend.herokuapp.com/api/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId)
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId)
       .map(user => { return user; });
   }
 
@@ -84,12 +85,10 @@ export class DataService {
   }
 
   updateIssue(kanbanItem: Dish): void {
-    this.httpClient.put(this.API_URL + "/" + kanbanItem.id, kanbanItem).subscribe(data => {
+    this.httpClient.put(this.API_URL + "/backofficeComercio/" + JSON.parse(localStorage.getItem('currentUser')).comercioId +"/platos/" + kanbanItem.id, kanbanItem).subscribe(data => {
       this.dialogData = kanbanItem;
-      //this.toasterService.showToaster('Successfully edited', 3000);
     },
       (err: HttpErrorResponse) => {
-        //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
       }
     );
   }
@@ -106,47 +105,3 @@ export class DataService {
     );
   }
 }
-
-
-
-/* REAL LIFE CRUD Methods I've used in my projects. ToasterService uses Material Toasts for displaying messages:
-
-    // ADD, POST METHOD
-    addItem(kanbanItem: KanbanItem): void {
-    this.httpClient.post(this.API_URL, kanbanItem).subscribe(data => {
-      this.dialogData = kanbanItem;
-      this.toasterService.showToaster('Successfully added', 3000);
-      },
-      (err: HttpErrorResponse) => {
-      this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
-    });
-   }
-
-    // UPDATE, PUT METHOD
-     updateItem(kanbanItem: KanbanItem): void {
-    this.httpClient.put(this.API_URL + kanbanItem.id, kanbanItem).subscribe(data => {
-        this.dialogData = kanbanItem;
-        this.toasterService.showToaster('Successfully edited', 3000);
-      },
-      (err: HttpErrorResponse) => {
-        this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
-      }
-    );
-  }
-
-  // DELETE METHOD
-  deleteItem(id: number): void {
-    this.httpClient.delete(this.API_URL + id).subscribe(data => {
-      console.log(data['']);
-        this.toasterService.showToaster('Successfully deleted', 3000);
-      },
-      (err: HttpErrorResponse) => {
-        this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
-      }
-    );
-  }
-*/
-
-
-
-

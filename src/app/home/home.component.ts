@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort } from '@angular/material';
@@ -9,6 +9,8 @@ import { DataSource } from '@angular/cdk/collections';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
@@ -34,6 +36,7 @@ export class HomeComponent implements OnInit {
   tiposDeComida: TipoComida[];
 
   constructor(public httpClient: HttpClient,
+    //private changeDetectorRefs: ChangeDetectorRef,
     public dialog: MatDialog,
     public dataService: DataService,
     private router: Router) { }
@@ -61,17 +64,18 @@ export class HomeComponent implements OnInit {
       data: { issue: issue }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
         this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
-        this.refreshTable();
+        await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
+        this.refresh();
       }
     });
   }
 
-  increaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
+  async increaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
 
     let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < orden && x.categoria === categoria);
     if (dishes.length > 0) {
@@ -81,19 +85,23 @@ export class HomeComponent implements OnInit {
       let dish = new Dish();
       dish.id = id;
       dish.orden = maximum;
-
+      console.log("maximum: " +maximum);
       this.dataService.updateIssue(dish);
 
+      await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
       let dish2 = new Dish();
       dish2.id = dishPrevio;
       dish2.orden = orden;
+      console.log("orden: " +orden);
       this.dataService.updateIssue(dish2);
+      await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
+      this.refresh();
     } else {
       alert("No hay un plato de orden mayor para esta categoría.");
     }
   }
 
-  decreaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
+  async decreaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
 
     let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden > orden && x.categoria === categoria);
     if (dishes.length > 0) {
@@ -105,11 +113,13 @@ export class HomeComponent implements OnInit {
       dish.orden = maximum;
 
       this.dataService.updateIssue(dish);
-
+      await new Promise(resolve => setTimeout(()=>resolve(), 1000));
       let dish2 = new Dish();
       dish2.id = dishPrevio;
       dish2.orden = orden;
       this.dataService.updateIssue(dish2);
+      await new Promise(resolve => setTimeout(()=>resolve(), 1000));
+      this.refresh();
     } else {
       alert("No hay un plato de orden mayor para esta categoría.");
     }
@@ -125,14 +135,20 @@ export class HomeComponent implements OnInit {
       data: { id: id, imagen: imagen, nombre: nombre, precio: precio, categoria: categoria, orden: orden }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result === 1) {
         // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
+        //const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
+        //const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        //console.log("foundIndex: "+foundIndex);
         // Then you update that record using data from dialogData (values you enetered)
-        this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+        //this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
-        this.refreshTable();
+        //this.refreshTable();
+        //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
+
+        //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
+        this.refresh();
       }
     });
   }
@@ -173,7 +189,7 @@ export class HomeComponent implements OnInit {
   }
 
   public loadData() {
-    this.exampleDatabase = new DataService(this.httpClient);
+    this.exampleDatabase = new DataService(this.httpClient);//, this.changeDetectorRefs);
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
       .debounceTime(150)
@@ -239,7 +255,7 @@ export class ExampleDataSource extends DataSource<Dish> {
 
     this._exampleDatabase.getAllIssues();
 
-    return Observable.merge(...displayDataChanges).map(() => {
+    return Observable.merge(...displayDataChanges).switchMap(() => {
       // Filter data
       this.filteredData = this._exampleDatabase.data.slice().filter((dish: Dish) => {
         var dishStr = (dish != null) ? dish.nombre : "";
@@ -253,7 +269,8 @@ export class ExampleDataSource extends DataSource<Dish> {
       // Grab the page's slice of the filtered sorted data.
       const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
       this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
-      return this.renderedData;
+      //this._paginator._changePageSize(this._paginator.pageSize); 
+      return Observable.of(this.renderedData);
     });
   }
   disconnect() {

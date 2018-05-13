@@ -14,11 +14,12 @@ import {EditDialogComponent} from './dialogs/edit/edit.dialog.component';
 import {DeleteDialogComponent} from './dialogs/delete/delete.dialog.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HomeComponent } from './home/index';
-import { LoginComponent } from './login/index';
-import { FirstLoginComponent } from './firstLogin/index';
-import { EditProfileComponent } from './editProfile/index';
-import { routing } from './app.routing';
+import {HomeComponent} from './home/index';
+import {LoginComponent} from './login/index';
+import {FirstLoginComponent} from './firstLogin/index';
+import {EditProfileComponent} from './editProfile/index';
+import {PedidosComponent} from './pedidos/index'
+import {routing} from './app.routing';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { routing } from './app.routing';
     DeleteDialogComponent,
     HomeComponent,
     LoginComponent,
+    PedidosComponent,
     FirstLoginComponent,
     EditProfileComponent
   ],
@@ -50,8 +52,6 @@ import { routing } from './app.routing';
     ReactiveFormsModule,
     routing,
     AgmCoreModule.forRoot({
-      // please get your own API key here:
-      // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
       apiKey: 'AIzaSyB-rXXfM8eiiWGeC4ZpBpNslVqsea6i1Cw'
     })
   ],

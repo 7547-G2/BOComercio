@@ -4,6 +4,7 @@ import { Dish } from '../models/Dish';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TipoComida } from '../models/tipoComida';
 import { Observable } from 'rxjs/Observable';
+import { Pedido } from '../pedidos';
 
 @Injectable()
 export class DataService {
@@ -13,6 +14,7 @@ export class DataService {
   dataChange: BehaviorSubject<Dish[]> = new BehaviorSubject<Dish[]>([]);
   // Temporarily stores data from dialogs
   dialogData: Dish;
+  pedidoModificado: Pedido;
   tiposComidas: BehaviorSubject<TipoComida[]> = new BehaviorSubject<TipoComida[]>([]);
 
   constructor(private httpClient: HttpClient){}//, private changeDetectorRefs: ChangeDetectorRef) { }
@@ -23,6 +25,10 @@ export class DataService {
 
   getDialogData() {
     return this.dialogData;
+  }
+
+  getPedidoModificadoData() {
+    return this.pedidoModificado;
   }
 
   /** CRUD METHODS */
@@ -91,6 +97,10 @@ export class DataService {
       (err: HttpErrorResponse) => {
       }
     );
+  }
+
+  updatePedido(pedido: Pedido): void {
+    this.pedidoModificado = pedido;
   }
 
   deleteIssue(dish: Dish): void {

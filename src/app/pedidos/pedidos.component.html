@@ -1,28 +1,35 @@
-<div class="mat-elevation-z8">
+<div class="pedidos-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Id</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="monto">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Monto</mat-header-cell>
-      <mat-cell *matCellDef="let element">${{element.monto}}</mat-cell>
-    </ng-container>
     <ng-container matColumnDef="fecha">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Fecha</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.fecha}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="monto">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Monto</mat-header-cell>
+      <mat-cell *matCellDef="let element">${{element.monto}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="estado">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.estado}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.estado}}
+        <button class='btn btn-primary' color="primary" (click)="startEdit(element.id, element.fecha, element.monto, element.estado)">Modificar</button>
+      </mat-cell>
     </ng-container>
-    <!--ng-container matColumnDef="actions">
+    <ng-container matColumnDef="comentario">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Comentarios</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.comentario}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let row; let i=index;">
         <button mat-icon-button color="primary">
           <i class="material-icons">remove_red_eye</i>
         </button>
       </mat-cell>
-    </ng-container-->
+    </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

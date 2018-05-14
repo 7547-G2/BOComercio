@@ -64,6 +64,13 @@ a {
   font-size: 12px;
 }
 
+.pedidos-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+  overflow: auto;
+}
 
 agm-map{
   height: 300px;

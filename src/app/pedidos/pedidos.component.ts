@@ -23,7 +23,7 @@ import { ModifyStateComponent } from '../dialogs/pedidos/modificarEstado/edit.di
 })
 export class PedidosComponent implements OnInit {
 
-  displayedColumns = ['id', 'fecha', 'monto', 'estado', 'comentario','actions'];
+  displayedColumns = ['id', 'fecha', 'monto', 'estado', 'modificarEstado', 'comentario','actions'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   constructor(public httpClient: HttpClient,

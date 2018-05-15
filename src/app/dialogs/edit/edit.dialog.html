@@ -1,30 +1,38 @@
-<div class="container">
-  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
-    <!--Textarea for demo purposes-->
-    <div class="form">
-      <mat-form-field color="primary">
-        <input matInput #inputstate class="form-control" placeholder="Nombre" [(ngModel)]="data.nombre" name="nombre" required >
-        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
-    </div>
+<h4 id="" class="modal-title">Editar plato</h4>
+  <div class="container">
+    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+      <!--Textarea for demo purposes-->
+      <div class="row">
+        <div class="form">
+          <mat-form-field color="primary">
+            <input matInput #inputstate class="form-control" placeholder="Nombre" [(ngModel)]="data.nombre" name="nombre" required >
+            <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <!--Contains mat-hint for characters count and has maxLengt set-->
+        <div class="form">
+          <mat-form-field class="formPrecio" color="primary">
+            <input matInput #inputstate class="form-control" placeholder="Precio" [(ngModel)]="data.precio" name="state" maxlength="4" required >
+            <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <input id="image" type="file" (change)="changeListener($event)" accept=".png, .jpg, .jpeg" />
+      <p hidden>{{data.id}}</p>
+      <p hidden>{{data.imagen}}</p>
+      <p hidden>{{data.platoState}}</p>
+      <p hidden>{{data.orden}}</p>
+      <p hidden>{{data.categoria}}</p>
+      <img src={{data.imagen}} alt="" width="100px" height="100px"/>
+    </form>
 
-    <!--Contains mat-hint for characters count and has maxLengt set-->
-    <div class="form">
-      <mat-form-field color="primary">
-        <input matInput #inputstate class="form-control" placeholder="Precio" [(ngModel)]="data.precio" name="state" maxlength="4" required >
-        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
-    </div>
-    <input id="image" type="file" (change)="changeListener($event)" accept=".png, .jpg, .jpeg" />
-    <p hidden>{{data.id}}</p>
-    <p hidden>{{data.imagen}}</p>
-    <p hidden>{{data.platoState}}</p>
-    <p hidden>{{data.orden}}</p>
-    <p hidden>{{data.categoria}}</p>
-    <img src={{data.imagen}} alt="" width="100px" height="100px"/>
-    <div mat-dialog-actions>
-      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
-      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
-    </div>
-  </form>
+  <div mat-dialog-actions>
+    <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()" class="btn btn-sm btn-primary">Guardar</button>
+    <button mat-button (click)="onNoClick()" tabindex="-1" class="btn btn-sm btn-default">Cancelar</button>
+  </div>
 </div>
+
+
+
+    
+

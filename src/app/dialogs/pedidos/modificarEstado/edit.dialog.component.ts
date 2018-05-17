@@ -11,7 +11,8 @@ import { DataService } from '../../../services/data.service';
 export class ModifyStateComponent {
 
   constructor(public dialogRef: MatDialogRef<ModifyStateComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) {
+               }
 
   formControl = new FormControl('', [
     Validators.required

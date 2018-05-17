@@ -19,7 +19,7 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="modificarEstado">
-      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
         <button class='btn btn-primary' color="primary" (click)="startEdit(element.id, element.fecha, element.monto, element.estado)">Modificar</button>
       </mat-cell>

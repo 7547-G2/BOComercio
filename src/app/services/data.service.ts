@@ -9,12 +9,16 @@ import { Pedido } from '../pedidos';
 @Injectable()
 export class DataService {
 
+  getNuevoEstado(): any {
+    return this.nuevoEstado;
+  }
   private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api';
 
   dataChange: BehaviorSubject<Dish[]> = new BehaviorSubject<Dish[]>([]);
   // Temporarily stores data from dialogs
   dialogData: Dish;
   pedidoModificado: Pedido;
+  nuevoEstado: string;
   tiposComidas: BehaviorSubject<TipoComida[]> = new BehaviorSubject<TipoComida[]>([]);
 
   constructor(private httpClient: HttpClient){}//, private changeDetectorRefs: ChangeDetectorRef) { }
@@ -101,6 +105,7 @@ export class DataService {
 
   updatePedido(pedido: Pedido): void {
     this.pedidoModificado = pedido;
+    this.nuevoEstado = pedido.estado;
   }
 
   deleteIssue(dish: Dish): void {

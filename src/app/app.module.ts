@@ -62,7 +62,8 @@ import { routing } from './app.routing';
   entryComponents: [
     AddDialogComponent,
     EditDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    ModifyStateComponent
   ],
   providers: [
     DataService,

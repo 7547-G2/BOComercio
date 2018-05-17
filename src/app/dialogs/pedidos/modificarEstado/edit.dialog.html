@@ -2,12 +2,12 @@
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
     <!--Textarea for demo purposes-->
     <div class="form">
-        <mat-radio-group>
-            <mat-radio-button value="Ingresado">Ingresado</mat-radio-button>
-            <mat-radio-button value="EnPreparacion">En preparación</mat-radio-button>
-            <mat-radio-button value="Despachado">Despachado</mat-radio-button>
-            <mat-radio-button value="Entregado">Entregado</mat-radio-button>
-            <mat-radio-button value="Cancelado">Cancelado</mat-radio-button>
+        <mat-radio-group [(ngModel)]="data.estado" name="estado">
+            <mat-radio-button value="Ingresado" color="primary">Ingresado</mat-radio-button>
+            <mat-radio-button value="EnPreparacion" color="primary">En preparación</mat-radio-button>
+            <mat-radio-button value="Despachado" color="primary">Despachado</mat-radio-button>
+            <mat-radio-button value="Entregado" color="primary">Entregado</mat-radio-button>
+            <mat-radio-button value="Cancelado" color="primary">Cancelado</mat-radio-button>
           </mat-radio-group>          
     </div>
     <div mat-dialog-actions>

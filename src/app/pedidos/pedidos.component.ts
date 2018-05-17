@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource, MatSortModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataSource } from '@angular/cdk/collections';
@@ -36,8 +36,8 @@ export class PedidosComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
-      this.dataSource.sort = this.sort;
       this.loadData();
+      this.dataSource.sort = this.sort;
       return;
     }
     this.router.navigate(['/login']);
@@ -55,7 +55,7 @@ export class PedidosComponent implements OnInit {
     pedido.fecha = fecha;
     pedido.comentario = comentario;
     const dialogRef = this.dialog.open(ModifyStateComponent, {
-      data: { pedido: pedido }
+      data: { estado: estado }
     });
 
     dialogRef.afterClosed().subscribe(async result => {
@@ -65,7 +65,8 @@ export class PedidosComponent implements OnInit {
         //const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
         //console.log("foundIndex: "+foundIndex);
         // Then you update that record using data from dialogData (values you enetered)
-        this.dataSource.data[foundIndex] = this.dataService.getPedidoModificadoData();
+        pedido.estado = this.dataService.getNuevoEstado();
+        this.dataSource.data[foundIndex] = pedido;//this.dataService.getPedidoModificadoData();
         // And lastly refresh table
         this.refreshTable();
         //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
@@ -81,7 +82,7 @@ export class PedidosComponent implements OnInit {
   // If you don't need a filter or a pagination this can be simplified, you just use code from else block
   private refreshTable() {
     // if there's a paginator active we're using it for refresh
-    if (this.dataSource.paginator.hasNextPage()) {
+    /*if (this.dataSource.paginator.hasNextPage()) {
       this.dataSource.paginator.nextPage();
       this.dataSource.paginator.previousPage();
       // in case we're on last page this if will tick
@@ -89,11 +90,12 @@ export class PedidosComponent implements OnInit {
       this.dataSource.paginator.previousPage();
       this.dataSource.paginator.nextPage();
       // in all other cases including active filter we do it like this
-    } else {
+    } else {*/
       this.dataSource.filter = '';
       //this.dataSource.filter = this.filter.nativeElement.value;
-    }
+    //}
   }
+
 
   public loadData() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);

@@ -1,0 +1,21 @@
+<div class="container">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="Plato">
+      <mat-header-cell *matHeaderCellDef>Plato</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.dishes.Plato}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="opciones">
+      <mat-header-cell *matHeaderCellDef>Opciones</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.dishes.opciones}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="cantidad">
+      <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+      <mat-cell *matCellDef="let element">${{element.dishes.cantidad}}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+  </mat-table>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cerrar</button>
+    </div>
+</div>

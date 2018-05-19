@@ -15,7 +15,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { ModifyStateComponent } from '../dialogs/pedidos/modificarEstado/edit.dialog.component';
+import { viewDishesComponent } from '../dialogs/pedidos/verPlatos/verPlatos.dialog.component';
 
 @Component({
   templateUrl: './pedidos.component.html',
@@ -54,7 +54,7 @@ export class PedidosComponent implements OnInit {
     pedido.monto = monto;
     pedido.fecha = fecha;
     pedido.comentario = comentario;
-    const dialogRef = this.dialog.open(ModifyStateComponent, {
+    const dialogRef = this.dialog.open(PedidosComponent, {
       data: { estado: estado }
     });
 
@@ -69,15 +69,15 @@ export class PedidosComponent implements OnInit {
         this.dataSource.data[foundIndex] = pedido;//this.dataService.getPedidoModificadoData();
         // And lastly refresh table
         this.refreshTable();
-        //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
-
-        //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
-        //this.refresh();
       }
     });
   }
 
-
+  viewDishes(dishes:any[]) {
+    const dialogRef = this.dialog.open(viewDishesComponent, {
+      data: { dishes: dishes }
+    });
+  }
 
   // If you don't need a filter or a pagination this can be simplified, you just use code from else block
   private refreshTable() {
@@ -109,12 +109,13 @@ export class Pedido {
   fecha: string;
   estado: string;
   comentario: string;
+  platos:any[]
 }
 
 const ELEMENT_DATA: Pedido[] = [
-  { id: 1, fecha: "14/05/2018 21:30", monto: 500, estado: 'Cancelado',comentario:'Todos los platos sin sal' },
-  { id: 2, fecha: "14/05/2018 21:31", monto: 1500, estado: 'Despachado',comentario:'' },
-  { id: 3, fecha: "14/05/2018 21:33", monto: 300, estado: 'Ingresado',comentario:'' },
-  { id: 4, fecha: "14/05/2018 21:35", monto: 450, estado: 'Cancelado',comentario:'' },
-  { id: 5, fecha: "14/05/2018 21:41", monto: 250, estado: 'Ingresado',comentario:'La pizza de muzzarella con extra queso' },
+  { id: 1, fecha: "14/05/2018 21:30", monto: 500, estado: 'Cancelado',comentario:'Todos los platos sin sal',platos:[{"Plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":1},{"Plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1}]},
+  { id: 2, fecha: "14/05/2018 21:31", monto: 1500, estado: 'Despachado',comentario:'',platos:[{"Plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":1},{"Plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1}]},
+  { id: 3, fecha: "14/05/2018 21:33", monto: 300, estado: 'Ingresado',comentario:'',platos:[{"Plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":1}]},
+  { id: 4, fecha: "14/05/2018 21:35", monto: 450, estado: 'Cancelado',comentario:'',platos:[{"Plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1}]},
+  { id: 5, fecha: "14/05/2018 21:41", monto: 250, estado: 'Ingresado',comentario:'La pizza de muzzarella con extra queso',platos:[{"Plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1}]},
 ];

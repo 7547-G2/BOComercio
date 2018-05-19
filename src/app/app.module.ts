@@ -21,6 +21,7 @@ import { FirstLoginComponent } from './firstLogin/index';
 import { EditProfileComponent } from './editProfile/index';
 import { PedidosComponent } from './pedidos/index'
 import { ModifyStateComponent } from './dialogs/pedidos/modificarEstado/edit.dialog.component';
+import { viewDishesComponent } from './dialogs/pedidos/verPlatos/verPlatos.dialog.component';
 import { routing } from './app.routing';
 
 @NgModule({
@@ -30,6 +31,7 @@ import { routing } from './app.routing';
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
+    viewDishesComponent,
     HomeComponent,
     LoginComponent,
     PedidosComponent,
@@ -63,7 +65,8 @@ import { routing } from './app.routing';
     AddDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
-    ModifyStateComponent
+    ModifyStateComponent,
+    viewDishesComponent
   ],
   providers: [
     DataService,

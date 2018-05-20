@@ -1,6 +1,6 @@
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Component, Inject} from '@angular/core';
-import {DataService} from '../../services/data.service';
+import {PlatosService} from '../../services/platos.service';
 
 
 @Component({
@@ -11,7 +11,7 @@ import {DataService} from '../../services/data.service';
 export class DeleteDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: PlatosService) { }
 
   onNoClick(): void {
     this.dialogRef.close();

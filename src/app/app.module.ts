@@ -8,7 +8,8 @@ import {
   MatTableModule, MatToolbarModule, MatSliderModule, MatSlideToggleModule, MatFormFieldModule,
   MatRadioModule
 } from '@angular/material';
-import { DataService } from './services/data.service';
+import { OpcionesService } from './services/opciones.service';
+import { PlatosService } from './services/platos.service';
 import { AuthenticationService } from './services/authentication.service';
 import { AddDialogComponent } from './dialogs/add/add.dialog.component';
 import { EditDialogComponent } from './dialogs/edit/edit.dialog.component';
@@ -80,7 +81,8 @@ import { OpcionesComponent } from './opciones';
     DeleteOpcionDialogComponent
   ],
   providers: [
-    DataService,
+    PlatosService,
+    OpcionesService,
     AuthenticationService
   ],
   bootstrap: [AppComponent]

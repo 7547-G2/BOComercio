@@ -19,12 +19,7 @@
     </ng-container>
     <ng-container matColumnDef="categoria">
       <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <select id="UserSelector" style="width: 50%;" [disabled]="true" name="tipo">
-          <option value="">--Select --</option>
-          <option *ngFor="let type of tiposDeComida" [selected]="element.categoria == type.id" value="{{type.id}}">{{type.tipo}}</option>
-        </select>
-      </mat-cell>
+      <mat-cell *matCellDef="let element">{{element.descCategoria}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="price">
       <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>

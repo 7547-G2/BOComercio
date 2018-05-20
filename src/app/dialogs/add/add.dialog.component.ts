@@ -1,6 +1,6 @@
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Component, Inject, ChangeDetectorRef} from '@angular/core';
-import {DataService} from '../../services/data.service';
+import {PlatosService} from '../../services/platos.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Dish} from '../../models/Dish';
 import { TipoComida } from '../../models/tipoComida';
@@ -15,7 +15,7 @@ export class AddDialogComponent {
   tiposDeComida: TipoComida[];
   constructor(private changeDetectorRef: ChangeDetectorRef,public dialogRef: MatDialogRef<AddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Dish,
-              public dataService: DataService) { 
+              public dataService: PlatosService) { 
                 this.dataService.getTiposDeComida().subscribe(
                   result => { this.tiposDeComida = result; }
                 );

@@ -1,6 +1,6 @@
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Component, Inject, ChangeDetectorRef} from '@angular/core';
-import {DataService} from '../../../services/data.service';
+import {OpcionesService} from '../../../services/opciones.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Opcion} from '../../../models/Opcion';
 
@@ -13,7 +13,7 @@ import {Opcion} from '../../../models/Opcion';
 export class AddOpcionDialogComponent {
   constructor(private changeDetectorRef: ChangeDetectorRef,public dialogRef: MatDialogRef<AddOpcionDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Opcion,
-              public dataService: DataService) { 
+              public dataService: OpcionesService) { 
               }
 
   formControl = new FormControl('', [

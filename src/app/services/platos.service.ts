@@ -8,42 +8,9 @@ import { Pedido, Plato } from '../pedidos';
 import { Opcion } from '../models/Opcion';
 
 @Injectable()
-export class DataService {
+export class PlatosService {
 
 
-  deleteOpcion(opcion: Opcion): void {
-    opcion.state = "BORRADO";
-    /*this.httpClient.put(this.API_URL + "/" + dish.id, dish).subscribe(data => {
-      this.dialogData = dish;
-      //this.toasterService.showToaster('Successfully edited', 3000);
-    },
-      (err: HttpErrorResponse) => {
-        //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
-      }
-    );*/
-    
-  }
-  OPCIONES: Opcion[] = [
-    { id: 1, nombre: "Al molde", precio: 0, state: 'ACTIVO'},
-    { id: 2, nombre: "A la piedra", precio: 0, state: 'ACTIVO'},
-  ];
-
-
-  getAllOpciones(): Opcion[] {
-    return this.OPCIONES;/*Observable.of(this.OPCIONES).map((res: any) =>
-    <Opcion[]>res.map(item => {
-      return item;
-    })
-  );*/
-  }
-
- 
-  updateOpcion(opcion: Opcion): Opcion {
-    return opcion;
-  }
-  addOpcion(newOpcion: Opcion): Opcion {
-    return newOpcion;
-  }
   getNuevoEstado(): any {
     return this.nuevoEstado;
   }
@@ -92,7 +59,7 @@ export class DataService {
 
   updateProfile(comercio : any): void {
     ///api/comercios/{comercioId}
-    this.httpClient.put(this.API_URL + '/api/comercios/' + JSON.parse(localStorage.getItem('currentUser')).comercioId, comercio).subscribe(data => {
+    this.httpClient.put(this.API_URL + '/comercios/' + JSON.parse(localStorage.getItem('currentUser')).comercioId, comercio).subscribe(data => {
       this.dialogData = comercio;
       //this.toasterService.showToaster('Successfully edited', 3000);
     },
@@ -141,10 +108,10 @@ export class DataService {
   }
 
   // ADD, POST METHOD
-  addIssue(kanbanItem: Dish): void {
-    kanbanItem.state = "INACTIVO";
-    this.httpClient.post(this.API_URL, kanbanItem).subscribe(data => {
-      this.dialogData = kanbanItem;
+  addIssue(dish: Dish): void {
+    dish.state = "INACTIVO";
+    this.httpClient.post(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + "/platos", dish).subscribe(data => {
+      this.dialogData = dish;
       //this.toasterService.showToaster('Successfully added', 3000);
     },
       (err: HttpErrorResponse) => {
@@ -168,7 +135,7 @@ export class DataService {
 
   deleteIssue(dish: Dish): void {
     dish.state = "BORRADO";
-    this.httpClient.put(this.API_URL + "/" + dish.id, dish).subscribe(data => {
+    this.httpClient.put(this.API_URL + "/backofficeComercio/" + JSON.parse(localStorage.getItem('currentUser')).comercioId +"/platos/" + dish.id, dish).subscribe(data => {
       this.dialogData = dish;
       //this.toasterService.showToaster('Successfully edited', 3000);
     },

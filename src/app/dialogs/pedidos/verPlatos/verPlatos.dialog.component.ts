@@ -1,7 +1,7 @@
 import { MAT_DIALOG_DATA, MatDialogRef, MatRadioModule, MatDialog, MatTableDataSource } from '@angular/material';
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { DataService } from '../../../services/data.service';
+import { PlatosService } from '../../../services/platos.service';
 import { Observable } from 'rxjs/Observable';
 import { Pedido, Plato } from '../../../pedidos';
 
@@ -13,7 +13,7 @@ import { Pedido, Plato } from '../../../pedidos';
 export class viewDishesComponent {
 
   constructor(public dialogRef: MatDialogRef<viewDishesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public dataService: PlatosService) {
       console.log(this.data);
       this.loadData();
   }

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { OpcionesService } from '../services/opciones.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -28,7 +28,7 @@ import { Opcion } from '../models/Opcion';
 export class OpcionesComponent implements OnInit {
 
   displayedColumns = ['description', 'price', 'activo','actions'];
-  exampleDatabase: DataService | null;
+  exampleDatabase: OpcionesService | null;
   dataSource: OpcionesDataSource | null;
   index: number;
   id: number;
@@ -36,7 +36,7 @@ export class OpcionesComponent implements OnInit {
   constructor(public httpClient: HttpClient,
     //private changeDetectorRefs: ChangeDetectorRef,
     public dialog: MatDialog,
-    public dataService: DataService,
+    public dataService: OpcionesService,
     private router: Router) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -138,7 +138,7 @@ export class OpcionesComponent implements OnInit {
   }
 
   public loadData() {
-    this.exampleDatabase = new DataService(this.httpClient);//, this.changeDetectorRefs);
+    this.exampleDatabase = new OpcionesService(this.httpClient);//, this.changeDetectorRefs);
     this.dataSource = new OpcionesDataSource(this.exampleDatabase, this.paginator);//, this.sort);
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
       .debounceTime(150)
@@ -175,7 +175,7 @@ export class OpcionesDataSource extends DataSource<Opcion> {
   filteredData: Opcion[] = [];
   renderedData: Opcion[] = [];
 
-  constructor(public dataService: DataService,
+  constructor(public dataService: OpcionesService,
     public _paginator: MatPaginator){/*,
     public _sort: MatSort) {*/
     super();

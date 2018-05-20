@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { PlatosService } from '../services/platos.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { Dish } from '../models/Dish';
@@ -28,7 +28,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 export class HomeComponent implements OnInit {
 
   displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions', 'orden'];
-  exampleDatabase: DataService | null;
+  exampleDatabase: PlatosService | null;
   dataSource: ExampleDataSource | null;
   index: number;
   id: number;
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   constructor(public httpClient: HttpClient,
     //private changeDetectorRefs: ChangeDetectorRef,
     public dialog: MatDialog,
-    public dataService: DataService,
+    public dataService: PlatosService,
     private router: Router) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -135,7 +135,7 @@ export class HomeComponent implements OnInit {
       data: { id: id, imagen: imagen, nombre: nombre, precio: precio, categoria: categoria, orden: orden }
     });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // When using an edit things are little different, firstly we find record inside DataService by id
         //const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
@@ -144,11 +144,9 @@ export class HomeComponent implements OnInit {
         // Then you update that record using data from dialogData (values you enetered)
         //this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
-        //this.refreshTable();
-        //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
-
-        //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
         this.refresh();
+        //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
+        //this.refresh();
       }
     });
   }
@@ -189,7 +187,7 @@ export class HomeComponent implements OnInit {
   }
 
   public loadData() {
-    this.exampleDatabase = new DataService(this.httpClient);//, this.changeDetectorRefs);
+    this.exampleDatabase = new PlatosService(this.httpClient);//, this.changeDetectorRefs);
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
       .debounceTime(150)
@@ -201,9 +199,6 @@ export class HomeComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
     this.dataSource._sort.direction = "asc";
-    this.dataService.getTiposDeComida().subscribe(
-      result => { this.tiposDeComida = result; }
-    );
   }
 
   public onChange(value, i: number, id: number, imagen: string, nombre: string, precio: number) {
@@ -235,7 +230,7 @@ export class ExampleDataSource extends DataSource<Dish> {
   filteredData: Dish[] = [];
   renderedData: Dish[] = [];
 
-  constructor(public _exampleDatabase: DataService,
+  constructor(public _exampleDatabase: PlatosService,
     public _paginator: MatPaginator,
     public _sort: MatSort) {
     super();

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { PlatosService } from '../services/platos.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -28,7 +28,7 @@ export class EditProfileComponent implements OnInit {
     comercioId:number;
     constructor(public httpClient: HttpClient,
         public dialog: MatDialog,
-        public dataService: DataService,
+        public dataService: PlatosService,
         private authenticationService: AuthenticationService,
         private router: Router) { }
 

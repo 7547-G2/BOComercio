@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { PlatosService } from '../services/platos.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, MatSortModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -29,7 +29,7 @@ export class PedidosComponent implements OnInit {
 
   constructor(public httpClient: HttpClient,
     public dialog: MatDialog,
-    public dataService: DataService,
+    public dataService: PlatosService,
     private router: Router) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

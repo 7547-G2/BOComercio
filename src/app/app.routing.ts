@@ -6,6 +6,7 @@ import { FirstLoginComponent } from './firstLogin/index';
 import { EditProfileComponent } from './editProfile/index';
 import { PedidosComponent } from './pedidos/index';
 import { OpcionesComponent } from './opciones/index'
+import { CategoriasComponent } from './categorias/index';
 
 const appRoutes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -15,6 +16,9 @@ const appRoutes: Routes = [
     { path: 'pedidos', component: PedidosComponent },
     { path: 'opciones', component: OpcionesComponent },
     // otherwise redirect to login
+    { path: 'categorias', component: CategoriasComponent },
+ 
+    // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];
 

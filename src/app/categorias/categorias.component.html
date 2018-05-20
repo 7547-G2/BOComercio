@@ -1,0 +1,46 @@
+<h4>Administración de categorías</h4>
+<div class="pedidos-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="tipo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Valor</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.tipo}}</mat-cell>
+    </ng-container> 
+    <ng-container matColumnDef="cantidad">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>N°Platos</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.cantidadPlatos}}</mat-cell>
+    </ng-container> 
+    <!-- <ng-container matColumnDef="modificar">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button class='btn btn-primary' color="primary" (click)="startEdit(element.id, element.tipo)">Modificar</button>
+      </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addNew()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row; let i=index; let element">
+        <button mat-icon-button color="primary" (click)="viewDishes(element.platos)" *ngIf="element.platos.length">
+          <i class="material-icons">visibility</i>
+        </button>
+        <button mat-icon-button color="primary" *ngIf="!element.platos.length">
+            <i class="material-icons">visibility_off</i>
+          </button>
+      </mat-cell> 
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <div class="no-results" [style.display]="dataSource.length == 0 ? '' : 'none'">
+    Sin categorias
+  </div>
+  <mat-paginator #paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>

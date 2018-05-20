@@ -12,6 +12,7 @@ import { OpcionesService } from './services/opciones.service';
 import { PlatosService } from './services/platos.service';
 import { AuthenticationService } from './services/authentication.service';
 import { AddDialogComponent } from './dialogs/add/add.dialog.component';
+import { AddCategoryDialogComponent } from './dialogs/addCategory/addCategory.dialog.component';
 import { EditDialogComponent } from './dialogs/edit/edit.dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete/delete.dialog.component';
 import { AddOpcionDialogComponent } from './dialogs/opciones/add/add.dialog.component';
@@ -24,8 +25,10 @@ import { LoginComponent } from './login/index';
 import { FirstLoginComponent } from './firstLogin/index';
 import { EditProfileComponent } from './editProfile/index';
 import { PedidosComponent } from './pedidos/index'
+import { CategoriasComponent } from './categorias/index'
 import { ModifyStateComponent } from './dialogs/pedidos/modificarEstado/edit.dialog.component';
 import { viewDishesComponent } from './dialogs/pedidos/verPlatos/verPlatos.dialog.component';
+import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/viewCategoryDishes.dialog.component';
 import { routing } from './app.routing';
 import { OpcionesComponent } from './opciones';
 
@@ -33,6 +36,7 @@ import { OpcionesComponent } from './opciones';
   declarations: [
     AppComponent,
     AddDialogComponent,
+    AddCategoryDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
@@ -40,10 +44,12 @@ import { OpcionesComponent } from './opciones';
     EditOpcionDialogComponent,
     DeleteOpcionDialogComponent,
     viewDishesComponent,
+    viewCategoryDishesComponent,
     HomeComponent,
     LoginComponent,
     PedidosComponent,
     OpcionesComponent,
+    CategoriasComponent,
     FirstLoginComponent,
     EditProfileComponent
   ],
@@ -72,13 +78,15 @@ import { OpcionesComponent } from './opciones';
   ],
   entryComponents: [
     AddDialogComponent,
+    AddCategoryDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
     viewDishesComponent,
     AddOpcionDialogComponent,
     EditOpcionDialogComponent,
-    DeleteOpcionDialogComponent
+    DeleteOpcionDialogComponent,
+    viewCategoryDishesComponent,
   ],
   providers: [
     PlatosService,

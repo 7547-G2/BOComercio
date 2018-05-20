@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Dish } from '../models/Dish';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TipoComida } from '../models/tipoComida';
+import { CategoriaPlatoPost, CategoriaPlato } from '../models/categoriaPlato';
 import { Observable } from 'rxjs/Observable';
 import { Pedido, Plato } from '../pedidos';
 import { Opcion } from '../models/Opcion';
@@ -78,8 +79,6 @@ export class PlatosService {
       );
   }
 
-
-
   ELEMENT_DATA: Pedido[] = [
     { id: 1, fecha: "14/05/2018 21:30", monto: 500, estado: 'Cancelado',platos:[{"plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":1,"observacion":""},{"plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1,"observacion":""}]},
     { id: 2, fecha: "14/05/2018 21:31", monto: 1500, estado: 'Despachado',platos:[{"plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":2,"observacion":""},{"plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":2,"observacion":""}]},
@@ -105,6 +104,16 @@ export class PlatosService {
   getComercio(): any {
     return this.httpClient.get(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId)
       .map(user => { return user; });
+  }
+
+  getCategorias(): any {
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/categoriasComida')
+      .map(data => { return data; });
+  }
+
+  getMenu(): any {
+    return this.httpClient.get<Dish[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/platos')
+      .map(data => { return data; });
   }
 
   // ADD, POST METHOD
@@ -143,5 +152,17 @@ export class PlatosService {
         //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
       }
     );
+  }
+
+  addCategory(kanbanItem: CategoriaPlatoPost): void {
+    console.log(kanbanItem)
+    // kanbanItem.state = "INACTIVO";
+    // this.httpClient.post(this.API_URL, kanbanItem).subscribe(data => {
+    //   this.dialogData = kanbanItem;
+    //   //this.toasterService.showToaster('Successfully added', 3000);
+    // },
+    //   (err: HttpErrorResponse) => {
+    //     //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+    //   });
   }
 }

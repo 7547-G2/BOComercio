@@ -29,6 +29,10 @@ export class AppComponent {
         this.router.navigate(['/opciones']);
     }
 
+    goToCategorias(){
+        this.router.navigate(['/categorias']);
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

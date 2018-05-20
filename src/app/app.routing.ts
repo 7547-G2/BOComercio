@@ -1,20 +1,21 @@
 import { Routes, RouterModule } from '@angular/router';
- 
+
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { FirstLoginComponent } from './firstLogin/index';
 import { EditProfileComponent } from './editProfile/index';
-import {PedidosComponent } from './pedidos/index';
+import { PedidosComponent } from './pedidos/index';
+import { OpcionesComponent } from './opciones/index'
 
 const appRoutes: Routes = [
-    { path: 'home', component: HomeComponent},
+    { path: 'home', component: HomeComponent },
     { path: '', component: LoginComponent },
     { path: 'firstlogin', component: FirstLoginComponent },
     { path: 'editprofile', component: EditProfileComponent },
     { path: 'pedidos', component: PedidosComponent },
- 
-    // otherwise redirect to home
+    { path: 'opciones', component: OpcionesComponent },
+    // otherwise redirect to login
     { path: '**', redirectTo: '' }
 ];
- 
+
 export const routing = RouterModule.forRoot(appRoutes);

@@ -2,6 +2,8 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatRadioModule, MatDialog, MatTableDataS
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
+import { Observable } from 'rxjs/Observable';
+import { Pedido, Plato } from '../../../pedidos';
 
 @Component({
   selector: 'app-baza.dialog',
@@ -11,12 +13,22 @@ import { DataService } from '../../../services/data.service';
 export class viewDishesComponent {
 
   constructor(public dialogRef: MatDialogRef<viewDishesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any[], public dataService: DataService) {
-      
+    @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) {
+      console.log(this.data);
+      this.loadData();
   }
 
-  dataSource = new MatTableDataSource(this.data);
-  displayedColumns = ['Plato', 'opciones', 'cantidad'];
+  dataSource = new MatTableDataSource();
+  displayedColumns = ['Plato', 'opciones', 'cantidad','observacion'];
+  pedidos: Plato[];
+
+  public loadData() {
+    this.dataService.getPlatos(this.data.id).subscribe(
+        result => {this.pedidos = result;}
+    );
+    console.log(this.pedidos);
+    this.dataSource = new MatTableDataSource(this.pedidos);
+}
 
   formControl = new FormControl('', [
     Validators.required

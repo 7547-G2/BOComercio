@@ -13,6 +13,9 @@ import { AuthenticationService } from './services/authentication.service';
 import { AddDialogComponent } from './dialogs/add/add.dialog.component';
 import { EditDialogComponent } from './dialogs/edit/edit.dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete/delete.dialog.component';
+import { AddOpcionDialogComponent } from './dialogs/opciones/add/add.dialog.component';
+import { EditOpcionDialogComponent } from './dialogs/opciones/edit/edit.dialog.component';
+import { DeleteOpcionDialogComponent } from './dialogs/opciones/delete/delete.dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/index';
@@ -23,6 +26,7 @@ import { PedidosComponent } from './pedidos/index'
 import { ModifyStateComponent } from './dialogs/pedidos/modificarEstado/edit.dialog.component';
 import { viewDishesComponent } from './dialogs/pedidos/verPlatos/verPlatos.dialog.component';
 import { routing } from './app.routing';
+import { OpcionesComponent } from './opciones';
 
 @NgModule({
   declarations: [
@@ -31,10 +35,14 @@ import { routing } from './app.routing';
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
+    AddOpcionDialogComponent,
+    EditOpcionDialogComponent,
+    DeleteOpcionDialogComponent,
     viewDishesComponent,
     HomeComponent,
     LoginComponent,
     PedidosComponent,
+    OpcionesComponent,
     FirstLoginComponent,
     EditProfileComponent
   ],
@@ -66,7 +74,10 @@ import { routing } from './app.routing';
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
-    viewDishesComponent
+    viewDishesComponent,
+    AddOpcionDialogComponent,
+    EditOpcionDialogComponent,
+    DeleteOpcionDialogComponent
   ],
   providers: [
     DataService,

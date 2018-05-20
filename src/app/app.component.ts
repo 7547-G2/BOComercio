@@ -25,6 +25,10 @@ export class AppComponent {
         this.router.navigate(['/pedidos']);
     }
 
+    goToOpciones(){
+        this.router.navigate(['/opciones']);
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

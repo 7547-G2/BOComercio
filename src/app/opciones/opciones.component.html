@@ -1,0 +1,47 @@
+<h4>Administración de opciones</h4>
+<div class="mat-elevation-z8">
+  <div class="form">
+    <mat-form-field floatPlaceholder="never" color="primary">
+      <input matInput #filter placeholder="Filtrar Opciones">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+      <mat-cell *matCellDef="let element">${{element.precio}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="activo">
+      <mat-header-cell *matHeaderCellDef> Activo </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-slide-toggle [checked]="row.state=='ACTIVO'" (change)="onChange($event, row)"
+          color="primary"></mat-slide-toggle>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addNew()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="primary" (click)="startEdit(i, row.id, row.imagen, row.nombre, row.precio)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="deleteItem(i, row.id, row.imagen, row.nombre, row.precio)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+    Sin resultados
+  </div>
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>

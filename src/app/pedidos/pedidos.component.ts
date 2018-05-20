@@ -23,8 +23,9 @@ import { viewDishesComponent } from '../dialogs/pedidos/verPlatos/verPlatos.dial
 })
 export class PedidosComponent implements OnInit {
 
-  displayedColumns = ['id', 'fecha', 'monto', 'estado', 'modificarEstado', 'comentario','actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns = ['id', 'fecha', 'monto', 'estado', 'modificarEstado', 'actions'];
+  pedidos: Pedido[];
+  dataSource = new MatTableDataSource(this.pedidos);
 
   constructor(public httpClient: HttpClient,
     public dialog: MatDialog,
@@ -36,6 +37,7 @@ export class PedidosComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
+      this.dataService.getPedidos().subscribe((pedidos: Pedido[]) => this.pedidos = pedidos);
       this.loadData();
       this.dataSource.sort = this.sort;
       return;
@@ -47,13 +49,12 @@ export class PedidosComponent implements OnInit {
     this.loadData();
   }
 
-  startEdit(id: number, fecha: string, monto: number, estado: string,comentario: string) {
+  startEdit(id: number, fecha: string, monto: number, estado: string, comentario: string) {
     let pedido = new Pedido();
     pedido.estado = estado;
     pedido.id = id;
     pedido.monto = monto;
     pedido.fecha = fecha;
-    pedido.comentario = comentario;
     const dialogRef = this.dialog.open(PedidosComponent, {
       data: { estado: estado }
     });
@@ -73,9 +74,9 @@ export class PedidosComponent implements OnInit {
     });
   }
 
-  viewDishes(dishes:any[]) {
+  viewDishes(id: number) {
     const dialogRef = this.dialog.open(viewDishesComponent, {
-      data: { dishes: dishes }
+      data: { id: id }
     });
   }
 
@@ -91,15 +92,16 @@ export class PedidosComponent implements OnInit {
       this.dataSource.paginator.nextPage();
       // in all other cases including active filter we do it like this
     } else {*/
-      this.dataSource.filter = '';
-      //this.dataSource.filter = this.filter.nativeElement.value;
+    this.dataSource.filter = '';
+    //this.dataSource.filter = this.filter.nativeElement.value;
     //}
   }
 
 
   public loadData() {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.dataSource = new MatTableDataSource(this.pedidos);
   }
+
 
 }
 
@@ -108,14 +110,13 @@ export class Pedido {
   monto: number;
   fecha: string;
   estado: string;
-  comentario: string;
-  platos:any[]
+  platos: Plato[]
 }
 
-const ELEMENT_DATA: Pedido[] = [
-  { id: 1, fecha: "14/05/2018 21:30", monto: 500, estado: 'Cancelado',comentario:'Todos los platos sin sal',platos:[{"Plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":1},{"Plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1}]},
-  { id: 2, fecha: "14/05/2018 21:31", monto: 1500, estado: 'Despachado',comentario:'',platos:[{"Plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":1},{"Plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1}]},
-  { id: 3, fecha: "14/05/2018 21:33", monto: 300, estado: 'Ingresado',comentario:'',platos:[{"Plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":1}]},
-  { id: 4, fecha: "14/05/2018 21:35", monto: 450, estado: 'Cancelado',comentario:'',platos:[{"Plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1}]},
-  { id: 5, fecha: "14/05/2018 21:41", monto: 250, estado: 'Ingresado',comentario:'La pizza de muzzarella con extra queso',platos:[{"Plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1}]},
-];
+export class Plato {
+  plato: string;
+  opciones: string;
+  cantidad: number;
+  observacion: string;
+}
+

@@ -24,14 +24,10 @@
         <button class='btn btn-primary' color="primary" (click)="startEdit(element.id, element.fecha, element.monto, element.estado)">Modificar</button>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="comentario">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Comentarios</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{(element.comentario)?element.comentario:'Sin comentarios'}}</mat-cell>
-    </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary" (click)="viewDishes(row.platos)">
+        <button mat-icon-button color="primary" (click)="viewDishes(row.id)">
           <i class="material-icons">remove_red_eye</i>
         </button>
       </mat-cell>

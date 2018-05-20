@@ -16,6 +16,7 @@ import 'rxjs/add/operator/filter';
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { viewDishesComponent } from '../dialogs/pedidos/verPlatos/verPlatos.dialog.component';
+import { ModifyStateComponent } from '../dialogs/pedidos/modificarEstado/edit.dialog.component';
 
 @Component({
   templateUrl: './pedidos.component.html',
@@ -55,7 +56,7 @@ export class PedidosComponent implements OnInit {
     pedido.id = id;
     pedido.monto = monto;
     pedido.fecha = fecha;
-    const dialogRef = this.dialog.open(PedidosComponent, {
+    const dialogRef = this.dialog.open(ModifyStateComponent, {
       data: { estado: estado }
     });
 

@@ -1,4 +1,4 @@
-<h4 id="" class="modal-title">Editar plato</h4>
+<h4 id="" class="modal-title">Editar Opción</h4>
   <div class="container">
     <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
       <!--Textarea for demo purposes-->
@@ -17,13 +17,7 @@
           </mat-form-field>
         </div>
       </div>
-      <input id="image" type="file" (change)="changeListener($event)" accept=".png, .jpg, .jpeg" />
       <p hidden>{{data.id}}</p>
-      <p hidden>{{data.imagen}}</p>
-      <p hidden>{{data.platoState}}</p>
-      <p hidden>{{data.orden}}</p>
-      <p hidden>{{data.categoria}}</p>
-      <img src={{data.imagen}} alt="" width="100px" height="100px"/>
     </form>
 
   <div mat-dialog-actions>

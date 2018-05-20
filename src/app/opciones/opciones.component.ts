@@ -112,6 +112,7 @@ export class OpcionesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        console.log(id + " - " + foundIndex);
         // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();

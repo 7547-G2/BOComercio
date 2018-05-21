@@ -1,7 +1,7 @@
 import {MAT_DIALOG_DATA, MatDialogRef, MatRadioModule, MatDialog} from '@angular/material';
 import {Component, Inject} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {PlatosService} from '../../../services/platos.service';
+import {PedidosService} from '../../../services/pedidos.service';
 
 @Component({
   selector: 'app-baza.dialog',
@@ -11,7 +11,7 @@ import {PlatosService} from '../../../services/platos.service';
 export class ModifyStateComponent {
 
   constructor(public dialogRef: MatDialogRef<ModifyStateComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: PlatosService) {
+              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: PedidosService) {
                }
 
   formControl = new FormControl('', [

@@ -4,7 +4,6 @@ import { Dish } from '../models/Dish';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TipoComida } from '../models/tipoComida';
 import { Observable } from 'rxjs/Observable';
-import { Pedido, Plato } from '../pedidos';
 import { Opcion } from '../models/Opcion';
 
 @Injectable()
@@ -19,7 +18,6 @@ export class PlatosService {
   dataChange: BehaviorSubject<Dish[]> = new BehaviorSubject<Dish[]>([]);
   // Temporarily stores data from dialogs
   dialogData: Dish;
-  pedidoModificado: Pedido;
   nuevoEstado: string;
   tiposComidas: BehaviorSubject<TipoComida[]> = new BehaviorSubject<TipoComida[]>([]);
 
@@ -31,10 +29,6 @@ export class PlatosService {
 
   getDialogData() {
     return this.dialogData;
-  }
-
-  getPedidoModificadoData() {
-    return this.pedidoModificado;
   }
 
   /** CRUD METHODS */
@@ -78,30 +72,6 @@ export class PlatosService {
       );
   }
 
-
-
-  ELEMENT_DATA: Pedido[] = [
-    { id: 1, fecha: "14/05/2018 21:30", monto: 500, estado: 'Cancelado',platos:[{"plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":1,"observacion":""},{"plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":1,"observacion":""}]},
-    { id: 2, fecha: "14/05/2018 21:31", monto: 1500, estado: 'Despachado',platos:[{"plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":2,"observacion":""},{"plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":2,"observacion":""}]},
-    { id: 3, fecha: "14/05/2018 21:33", monto: 300, estado: 'Ingresado',platos:[{"plato":"Pizza de Muzarella","opciones":"Al molde","cantidad":3,"observacion":""}]},
-    { id: 4, fecha: "14/05/2018 21:35", monto: 450, estado: 'Cancelado',platos:[{"plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":4,"observacion":""}]},
-    { id: 5, fecha: "14/05/2018 21:41", monto: 250, estado: 'Ingresado',platos:[{"plato":"Docena Empanadas Carne Cuchillo","opciones":"","cantidad":5,"observacion":"Sin huevos, ni aceitunas, ni nada de esas cosas asquerosas que ustedes suelen ponerle a las empanadas. Entendieron?"}]},
-  ];
-
-
-  getPedidos(): Observable<Pedido[]> {
-    return Observable.of(this.ELEMENT_DATA).map((res: any) =>
-    <Pedido[]>res.map(item => {
-      return item;
-    })
-  );
-  }
-
-  getPlatos(id: number): Observable<Plato[]> {
-    return Observable.of(this.ELEMENT_DATA.find(x => x.id == id)).map((res: any) =>
-    <Plato[]>res.platos);
-  }
-
   getComercio(): any {
     return this.httpClient.get(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId)
       .map(user => { return user; });
@@ -126,11 +96,6 @@ export class PlatosService {
       (err: HttpErrorResponse) => {
       }
     );
-  }
-
-  updatePedido(pedido: Pedido): void {
-    this.pedidoModificado = pedido;
-    this.nuevoEstado = pedido.estado;
   }
 
   deleteIssue(dish: Dish): void {

@@ -30,9 +30,6 @@ export class HomeComponent implements OnInit {
   displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions', 'orden'];
   exampleDatabase: PlatosService | null;
   dataSource: ExampleDataSource | null;
-  index: number;
-  id: number;
-  dish: Dish;
   tiposDeComida: TipoComida[];
 
   constructor(public httpClient: HttpClient,
@@ -127,10 +124,6 @@ export class HomeComponent implements OnInit {
 
   //TODO agregar platoState, cuando este en el get
   startEdit(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
-    this.id = id;
-    // index row is used just for debugging proposes and can be removed
-    this.index = i;
-    console.log(this.index);
     const dialogRef = this.dialog.open(EditDialogComponent, {
       data: { id: id, imagen: imagen, nombre: nombre, precio: precio, categoria: categoria, orden: orden }
     });
@@ -152,15 +145,13 @@ export class HomeComponent implements OnInit {
   }
 
   deleteItem(i: number, id: number, imagen: string, nombre: string, precio: number) {
-    this.index = i;
-    this.id = id;
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { id: id, imagen: imagen, nombre: nombre, precio: precio }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === id);
         // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
@@ -202,14 +193,13 @@ export class HomeComponent implements OnInit {
   }
 
   public onChange(value, i: number, id: number, imagen: string, nombre: string, precio: number) {
-    this.dish = new Dish();
-    this.dish.id = id;
-    this.dish.imagen = imagen;
-    this.dish.nombre = nombre;
-    this.dish.precio = precio;
-    this.dish.state = value.checked ? 'ACTIVO' : 'INACTIVO';
-    console.log("this.dish.state:" + this.dish.state);
-    this.dataService.updateIssue(this.dish);
+    let dish = new Dish();
+    dish.id = id;
+    dish.imagen = imagen;
+    dish.nombre = nombre;
+    dish.precio = precio;
+    dish.state = value.checked ? 'ACTIVO' : 'INACTIVO';
+    this.dataService.updateIssue(dish);
   }
 }
 

@@ -102,11 +102,11 @@ export class OpcionesComponent implements OnInit {
     });
   }
 
-  deleteItem(i: number, id: number, imagen: string, nombre: string, precio: number) {
+  deleteItem(i: number, id: number, nombre: string, precio: number) {
     this.index = i;
     this.id = id;
     const dialogRef = this.dialog.open(DeleteOpcionDialogComponent, {
-      data: { id: id, imagen: imagen, nombre: nombre, precio: precio }
+      data: { id: id, nombre: nombre, precio: precio }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -200,7 +200,7 @@ export class OpcionesDataSource extends DataSource<Opcion> {
 
       console.log("Merge");
       // Filter data
-      this.filteredData = this.dataService.getAllOpciones().slice().filter((opcion: Opcion) => {
+      this.filteredData = this.dataService.data.slice().filter((opcion: Opcion) => {
         var dishStr = (opcion != null) ? opcion.nombre : "";
         const searchStr = (dishStr).toLowerCase();
         console.log("this.filteredData:" + this.filteredData);

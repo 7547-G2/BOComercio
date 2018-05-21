@@ -28,6 +28,7 @@ import { ModifyStateComponent } from './dialogs/pedidos/modificarEstado/edit.dia
 import { viewDishesComponent } from './dialogs/pedidos/verPlatos/verPlatos.dialog.component';
 import { routing } from './app.routing';
 import { OpcionesComponent } from './opciones';
+import { PedidosService } from './services/pedidos.service';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { OpcionesComponent } from './opciones';
   providers: [
     PlatosService,
     OpcionesService,
+    PedidosService,
     AuthenticationService
   ],
   bootstrap: [AppComponent]

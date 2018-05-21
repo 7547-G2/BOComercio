@@ -33,7 +33,7 @@ export class AddDialogComponent {
   }
 
   submit() {
-  // emppty stuff
+  // emppty stuff 
   }
   changeListener($event) : void {
     this.readThis($event.target);

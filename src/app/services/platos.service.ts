@@ -111,6 +111,11 @@ export class PlatosService {
       .map(data => { return data; });
   }
 
+  getCategoriasFromComercio(): any {
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/categoriasComida')
+      .map(data => { return data; });
+  }
+
   getMenu(): any {
     return this.httpClient.get<Dish[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/platos')
       .map(data => { return data; });
@@ -155,6 +160,18 @@ export class PlatosService {
   }
 
   addCategory(kanbanItem: CategoriaPlatoPost): void {
+    console.log(kanbanItem)
+    // kanbanItem.state = "INACTIVO";
+    // this.httpClient.post(this.API_URL, kanbanItem).subscribe(data => {
+    //   this.dialogData = kanbanItem;
+    //   //this.toasterService.showToaster('Successfully added', 3000);
+    // },
+    //   (err: HttpErrorResponse) => {
+    //     //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+    //   });
+  }
+
+  editCategory(kanbanItem: CategoriaPlatoPost): void {
     console.log(kanbanItem)
     // kanbanItem.state = "INACTIVO";
     // this.httpClient.post(this.API_URL, kanbanItem).subscribe(data => {

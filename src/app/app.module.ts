@@ -13,6 +13,7 @@ import { PlatosService } from './services/platos.service';
 import { AuthenticationService } from './services/authentication.service';
 import { AddDialogComponent } from './dialogs/add/add.dialog.component';
 import { AddCategoryDialogComponent } from './dialogs/addCategory/addCategory.dialog.component';
+import { EditCategoryDialogComponent } from './dialogs/categorias/edit/editCategory.dialog.component';
 import { EditDialogComponent } from './dialogs/edit/edit.dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete/delete.dialog.component';
 import { AddOpcionDialogComponent } from './dialogs/opciones/add/add.dialog.component';
@@ -37,6 +38,7 @@ import { OpcionesComponent } from './opciones';
     AppComponent,
     AddDialogComponent,
     AddCategoryDialogComponent,
+    EditCategoryDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
@@ -79,6 +81,7 @@ import { OpcionesComponent } from './opciones';
   entryComponents: [
     AddDialogComponent,
     AddCategoryDialogComponent,
+    EditCategoryDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,

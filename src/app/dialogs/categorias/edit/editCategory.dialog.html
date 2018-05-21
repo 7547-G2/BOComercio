@@ -1,5 +1,5 @@
 <div class="container col-sm-8">
-  <h3 mat-dialog-title>Nueva categoría</h3>
+  <h3 mat-dialog-title>Editar categoría</h3>
 
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
     <!--Textarea for demo purposes-->
@@ -10,7 +10,7 @@
       </mat-form-field>
     </div>
     <div mat-dialog-actions>
-      <button mat-button class='btn btn-success' [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
+      <button mat-button class='btn btn-success' [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmEdit()">Save</button>
       <button mat-button class='btn btn-primary' (click)="onNoClick()" tabindex="-1">Cancel</button>
     </div>
   </form>

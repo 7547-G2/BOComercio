@@ -19,8 +19,18 @@
         <button class='btn btn-primary' color="primary" (click)="startEdit(element.id, element.tipo)">Modificar</button>
       </mat-cell>
     </ng-container> -->
+    <ng-container matColumnDef="actionsEdit">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row; let i=index; let element">
+          <button mat-icon-button color="primary" (click)="startEdit(element.id,element.tipo)">
+            <i class="material-icons">create</i>
+          </button>
+        </mat-cell> 
+      </ng-container>
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>
+      <mat-header-cell style="width: 10%;" *matHeaderCellDef>
         <button mat-icon-button color="primary" (click)="addNew()">
           <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
         </button>

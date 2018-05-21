@@ -16,6 +16,7 @@ import 'rxjs/add/operator/filter';
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { viewCategoryDishesComponent } from '../dialogs/categorias/verPlatos/viewCategoryDishes.dialog.component';
+import { EditCategoryDialogComponent } from '../dialogs/categorias/edit/editCategory.dialog.component';
 import { AddCategoryDialogComponent } from '../dialogs/addCategory/addCategory.dialog.component';
 import { Dish } from '../models/Dish';
 import { CategoriaPlato } from '../models/categoriaPlato';
@@ -23,12 +24,12 @@ import { CategoriaPlato } from '../models/categoriaPlato';
 
 @Component({
   templateUrl: './categorias.component.html',
-  styleUrls: ['../app.component.css']
+  styleUrls: ['../app.component.css','categorias.component.css']
 })
 export class CategoriasComponent implements OnInit {
   categorias: CategoriaConPlatos[];
   dataSource = new MatTableDataSource();
-  displayedColumns = ['id', 'tipo','cantidad','actions'];
+  displayedColumns = ['id', 'tipo','cantidad','actionsEdit','actions'];
 
   constructor(public httpClient: HttpClient,
     public dialog: MatDialog,
@@ -70,21 +71,9 @@ export class CategoriasComponent implements OnInit {
 
 
   startEdit(id: number, tipo: string) {
-    // let categoria = new Categoria();
-    // categoria.id = id;
-    // categoria.tipo = tipo;
-    // const dialogRef = this.dialog.open(CategoriasComponent, {
-    //   data: { tipo: tipo }
-    // });
-
-    // dialogRef.afterClosed().subscribe(async result => {
-    //   if (result === 1) {
-    //     const foundIndex = this.dataSource.data.findIndex(x => x.id === id);
-    //     // categoria.estado = this.dataService.getNuevoEstado();
-    //     this.dataSource.data[foundIndex] = categoria;//this.dataService.getPedidoModificadoData();
-    //     this.refreshTable();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
+      data: {id: id, tipo: tipo}
+    });
   }
 
   viewDishes(dishes:any[]) {
@@ -115,10 +104,9 @@ export class CategoriasComponent implements OnInit {
     this.dataService.getMenu().subscribe(
       dishes => {
         console.log(dishes)
-        this.dataService.getCategorias().subscribe(
+        this.dataService.getCategoriasFromComercio().subscribe(
           result => {
-            this.categorias = result;
-            console.log(this.categorias)
+            this.categorias = result.filter(category => category.comercioId == JSON.parse(localStorage.getItem('currentUser')).comercioId);
             this.categorias.map(function (category) {
               category.platos = [];
               category.cantidadPlatos = 0;

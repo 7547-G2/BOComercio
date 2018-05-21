@@ -19,8 +19,8 @@ export class PlatosService {
   dataChange: BehaviorSubject<Dish[]> = new BehaviorSubject<Dish[]>([]);
   // Temporarily stores data from dialogs
   dialogData: Dish;
-  nuevoEstado: string;
   dialogCategory: string;
+  nuevoEstado: string;
   tiposComidas: BehaviorSubject<TipoComida[]> = new BehaviorSubject<TipoComida[]>([]);
 
   constructor(private httpClient: HttpClient) { }//, private changeDetectorRefs: ChangeDetectorRef) { }

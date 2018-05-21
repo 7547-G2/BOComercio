@@ -8,4 +8,6 @@ export class Comercio {
     imagenLogo:string;
     estado:string;
     addressDto:Address =  new Address();
+    latitud: string;
+    longitud: string;
 }

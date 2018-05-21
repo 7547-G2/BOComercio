@@ -1,0 +1,30 @@
+<div class="container">
+    <h3>Platos asociados a la categoría</h3>
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="imagen">
+        <mat-header-cell *matHeaderCellDef>Imagen</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <img [attr.src]="element.imagen" alt=" " width="50px" height="50px" ng-style="{
+            'border-radius': '50px'
+          }" /> </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef>Plato</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.nombre}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="precio">
+        <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.precio}}</mat-cell>
+      </ng-container>
+      <!-- <ng-container matColumnDef="cantidad">
+        <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+        <mat-cell *matCellDef="let element">${{element.dishes.cantidad}}</mat-cell>
+      </ng-container> -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+    </mat-table>
+      <div mat-dialog-actions>
+        <button class='btn btn-primary' mat-button (click)="onNoClick()" tabindex="-1">Cerrar</button>
+      </div>
+  </div>
+  

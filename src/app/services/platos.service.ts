@@ -1,8 +1,9 @@
-import { Injectable, ChangeDetectorRef} from '@angular/core';
+import { Injectable, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Dish } from '../models/Dish';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TipoComida } from '../models/tipoComida';
+import { CategoriaPlatoPost, CategoriaPlato } from '../models/categoriaPlato';
 import { Observable } from 'rxjs/Observable';
 import { Opcion } from '../models/Opcion';
 
@@ -21,7 +22,7 @@ export class PlatosService {
   nuevoEstado: string;
   tiposComidas: BehaviorSubject<TipoComida[]> = new BehaviorSubject<TipoComida[]>([]);
 
-  constructor(private httpClient: HttpClient){}//, private changeDetectorRefs: ChangeDetectorRef) { }
+  constructor(private httpClient: HttpClient) { }//, private changeDetectorRefs: ChangeDetectorRef) { }
 
   get data(): Dish[] {
     return this.dataChange.value;
@@ -51,7 +52,7 @@ export class PlatosService {
       );
   }
 
-  updateProfile(comercio : any): void {
+  updateProfile(comercio: any): void {
     ///api/comercios/{comercioId}
     this.httpClient.put(this.API_URL + '/comercios/' + JSON.parse(localStorage.getItem('currentUser')).comercioId, comercio).subscribe(data => {
       this.dialogData = comercio;
@@ -90,7 +91,7 @@ export class PlatosService {
   }
 
   updateIssue(kanbanItem: Dish): void {
-    this.httpClient.put(this.API_URL + "/backofficeComercio/" + JSON.parse(localStorage.getItem('currentUser')).comercioId +"/platos/" + kanbanItem.id, kanbanItem).subscribe(data => {
+    this.httpClient.put(this.API_URL + "/backofficeComercio/" + JSON.parse(localStorage.getItem('currentUser')).comercioId + "/platos/" + kanbanItem.id, kanbanItem).subscribe(data => {
       this.dialogData = kanbanItem;
     },
       (err: HttpErrorResponse) => {
@@ -100,7 +101,7 @@ export class PlatosService {
 
   deleteIssue(dish: Dish): void {
     dish.state = "BORRADO";
-    this.httpClient.put(this.API_URL + "/backofficeComercio/" + JSON.parse(localStorage.getItem('currentUser')).comercioId +"/platos/" + dish.id, dish).subscribe(data => {
+    this.httpClient.put(this.API_URL + "/backofficeComercio/" + JSON.parse(localStorage.getItem('currentUser')).comercioId + "/platos/" + dish.id, dish).subscribe(data => {
       this.dialogData = dish;
       //this.toasterService.showToaster('Successfully edited', 3000);
     },
@@ -108,5 +109,26 @@ export class PlatosService {
         //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
       }
     );
+  }
+
+  getCategorias(): any {
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/categoriasComida')
+      .map(data => { return data; });
+  }
+
+  getMenu(): any {
+    return this.httpClient.get<Dish[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/platos')
+      .map(data => { return data; });
+  }
+  addCategory(kanbanItem: CategoriaPlatoPost): void {
+    console.log(kanbanItem)
+    // kanbanItem.state = "INACTIVO";
+    // this.httpClient.post(this.API_URL, kanbanItem).subscribe(data => {
+    //   this.dialogData = kanbanItem;
+    //   //this.toasterService.showToaster('Successfully added', 3000);
+    // },
+    //   (err: HttpErrorResponse) => {
+    //     //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+    //   });
   }
 }

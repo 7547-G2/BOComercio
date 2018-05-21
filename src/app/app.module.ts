@@ -29,11 +29,16 @@ import { viewDishesComponent } from './dialogs/pedidos/verPlatos/verPlatos.dialo
 import { routing } from './app.routing';
 import { OpcionesComponent } from './opciones';
 import { PedidosService } from './services/pedidos.service';
+import { PedidosPlatosService } from './services/pedidosPlatos.service';
+import { AddCategoryDialogComponent } from './dialogs/addCategory/addCategory.dialog.component';
+import { CategoriasComponent } from './categorias/index';
+import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/viewCategoryDishes.dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddDialogComponent,
+    AddCategoryDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
@@ -41,10 +46,12 @@ import { PedidosService } from './services/pedidos.service';
     EditOpcionDialogComponent,
     DeleteOpcionDialogComponent,
     viewDishesComponent,
+    viewCategoryDishesComponent,
     HomeComponent,
     LoginComponent,
     PedidosComponent,
     OpcionesComponent,
+    CategoriasComponent,
     FirstLoginComponent,
     EditProfileComponent
   ],
@@ -73,16 +80,19 @@ import { PedidosService } from './services/pedidos.service';
   ],
   entryComponents: [
     AddDialogComponent,
+    AddCategoryDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
     viewDishesComponent,
     AddOpcionDialogComponent,
     EditOpcionDialogComponent,
-    DeleteOpcionDialogComponent
+    DeleteOpcionDialogComponent,
+    viewCategoryDishesComponent,
   ],
   providers: [
     PlatosService,
+    PedidosPlatosService,
     OpcionesService,
     PedidosService,
     AuthenticationService

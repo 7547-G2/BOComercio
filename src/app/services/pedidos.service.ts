@@ -11,12 +11,18 @@ import { Opcion } from '../models/Opcion';
 export class PedidosService {
 
 
+  getDialogData() {
+    return this.dialogData;
+  }
+
   getNuevoEstado(): any {
     return this.nuevoEstado;
   }
   private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api';
 
   dataChange: BehaviorSubject<Pedido[]> = new BehaviorSubject<Pedido[]>([]);
+  // Temporarily stores data from dialogs
+  dialogData: Pedido;
   platos: BehaviorSubject<Plato[]> = new BehaviorSubject<Plato[]>([]);
   // Temporarily stores data from dialogs
   pedidoModificado: Pedido;
@@ -34,23 +40,18 @@ export class PedidosService {
   }
 
  
-  getPedidos(): Pedido[] {/*
-    return Observable.of(this.ELEMENT_DATA).map((res: any) =>
-    <Pedido[]>res.map(item => {
-      return item;
-    })
-  );*/
-  this.httpClient.get<Pedido[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/pedidos').subscribe(data => {
-    this.dataChange.next(data);
-    //this.changeDetectorRefs.detectChanges();
-  },
-    (error: HttpErrorResponse) => {
-      console.log(error.name + ' ' + error.message);
-    });
-    return this.dataChange.value;
+  getPedidos(): void {
+    this.httpClient.get<Pedido[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/pedidos').subscribe(data => {
+      this.dataChange.next(data);
+      //this.changeDetectorRefs.detectChanges();
+    },
+      (error: HttpErrorResponse) => {
+        console.log(error.name + ' ' + error.message);
+      });
   }
 
-  getPlatos(id: number): Observable<Plato[]> {
+
+  getPlatos(id: number): void {
     /*return Observable.of(this.dataChange.value.find(x => x.id == id)).map((res: any) =>
     <Plato[]>res.platos);
 */
@@ -61,18 +62,14 @@ export class PedidosService {
       (error: HttpErrorResponse) => {
         console.log(error.name + ' ' + error.message);
       });
-      return this.platos;
     }
   
-  
-  updatePedido(pedido: Pedido): void {
-    this.pedidoModificado = pedido;
-    this.nuevoEstado = pedido.estado;
-    this.httpClient.put(this.API_URL + "/backofficeComercio/pedidos/" +pedido.id, pedido.estado).subscribe(data => {
-      
-    },
-      (err: HttpErrorResponse) => {
-      }
-    );
-  }
+    updatePedido(pedido: Pedido): void {
+      this.httpClient.put(this.API_URL + "/backofficeComercio/pedidos/" +pedido.id, pedido.estado).subscribe(data => {
+        this.dialogData = pedido;
+      },
+        (err: HttpErrorResponse) => {
+        }
+      );
+    }
 }

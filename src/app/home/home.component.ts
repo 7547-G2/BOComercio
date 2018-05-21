@@ -189,7 +189,6 @@ export class HomeComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-    this.dataSource._sort.direction = "asc";
   }
 
   public onChange(value, i: number, id: number, imagen: string, nombre: string, precio: number) {
@@ -265,20 +264,20 @@ export class ExampleDataSource extends DataSource<Dish> {
 
   /** Returns a sorted copy of the database data. */
   sortData(data: Dish[]): Dish[] {
-    if (!this._sort.active || this._sort.direction === '') {
-      return data;
-    }
 
+    this._sort.active = 'categoria';
+    this._sort.direction = "asc";
+    console.log("fuera del if");
     return data.sort((a, b) => {
       let propertyA: number;
       let propertyAA: number;
       let propertyB: number;
       let propertyBB: number;
 
-      /*switch (this._sort.active) {
+      switch (this._sort.active) {
         case 'categoria': [propertyA, propertyB] = [a.categoria, b.categoria]; break;
         case 'orden': [propertyA, propertyB] = [a.orden, b.orden]; break;
-      }*/
+      }
       [propertyA, propertyB] = [a.categoria, b.categoria];
       [propertyAA, propertyBB] = [a.orden, b.orden];
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
@@ -288,7 +287,7 @@ export class ExampleDataSource extends DataSource<Dish> {
 
 
 
-      return (valueA < valueB ? -1 : (valueAA < valueBB ? -1 : 1)) * (this._sort.direction === 'asc' ? 1 : -1);
+      return (valueA < valueB ? -1 : (valueAA < valueBB ? -1 : 1));
     });
   }
 }

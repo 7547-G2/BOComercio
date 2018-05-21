@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
     moduleId: module.id,
     selector: 'app',
@@ -8,25 +8,29 @@ import { Router} from '@angular/router';
 
 export class AppComponent {
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) { }
     get isLoggedIn() {
         return localStorage.getItem('currentUser');
     }
 
-    goToMenu(){
+    goToMenu() {
         this.router.navigate(['/home']);
     }
 
-    goToEditProfile(){
+    goToEditProfile() {
         this.router.navigate(['/editprofile']);
     }
 
-    goToPedidos(){
+    goToPedidos() {
         this.router.navigate(['/pedidos']);
     }
 
-    goToOpciones(){
+    goToOpciones() {
         this.router.navigate(['/opciones']);
+    }
+
+    goToCategorias() {
+        this.router.navigate(['/categorias']);
     }
 
     logout() {

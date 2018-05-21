@@ -52,8 +52,8 @@
         </div>
         <div class="row" style="margin-top: 15px;">
           <div class="col-lg-8" style="align-content: center">
-            <agm-map [latitude]="lat" [longitude]="lng"  [zoom]="15" [zoomControl]="false">
-              <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            <agm-map [latitude]="comercio.latitud" [longitude]="comercio.longitud"  [zoom]="15" [zoomControl]="false">
+              <agm-marker [latitude]="comercio.latitud" [longitude]="comercio.longitud"></agm-marker>
                 <agm-info-window>
                   <strong>InfoWindow content</strong>
                 </agm-info-window>

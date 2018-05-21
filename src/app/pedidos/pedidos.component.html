@@ -10,11 +10,11 @@
       <mat-cell *matCellDef="let element">{{element.fecha}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="monto">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Monto</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Monto</mat-header-cell>
       <mat-cell *matCellDef="let element">${{element.monto}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="estado">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.estado}}
       </mat-cell>
     </ng-container>

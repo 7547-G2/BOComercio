@@ -115,6 +115,7 @@ export class PedidosDataSource extends DataSource<Pedido> {
     public _paginator: MatPaginator,
     public _sort: MatSort) {
     super();
+    this._sort.active = 'id';
     // Reset to the first page when the user changes the filter.
     this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
   }
@@ -150,15 +151,10 @@ export class PedidosDataSource extends DataSource<Pedido> {
 
   /** Returns a sorted copy of the database data. */
   sortData(data: Pedido[]): Pedido[] {
-    if (!this._sort.active || this._sort.direction === '') {
-      return data;
-    }
-
+    
     return data.sort((a, b) => {
       let propertyA: number;
-      let propertyAA: number;
       let propertyB: number;
-      let propertyBB: number;
 
       switch (this._sort.active) {
         case 'id': [propertyA, propertyB] = [a.id, b.id]; break;

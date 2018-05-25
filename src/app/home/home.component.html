@@ -49,7 +49,7 @@
         <button mat-icon-button color="primary" (click)="deleteItem(i, row.id, row.imagen, row.nombre, row.precio)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="increaseOrder(i, row.id, row.imagen, row.nombre, row.precio, row.categoria, row.orden)">
+        <button mat-icon-button color="primary" (click)="increaseOrder(row)">
           <i class="material-icons">arrow_upward</i>
         </button>
         <button mat-icon-button color="primary" (click)="decreaseOrder(i, row.id, row.imagen, row.nombre, row.precio, row.categoria, row.orden)">

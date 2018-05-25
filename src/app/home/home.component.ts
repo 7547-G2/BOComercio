@@ -72,14 +72,32 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  async increaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
+  /*async*/ increaseOrder(dish:Dish) {
 
-    let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < orden && x.categoria === categoria);
+    let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < dish.orden && x.categoria === dish.categoria);
     if (dishes.length > 0) {
       let maximum = Math.max.apply(Math, dishes.map(function (f) { return f.orden; }));
-      let dishPrevio = dishes.find(x => x.orden === maximum && x.categoria === categoria).id;
+      let dishPrevio = dishes.find(x => x.orden === maximum && x.categoria === dish.categoria);
+      dishPrevio.orden = dish.orden;
+      dish.orden = maximum;
+      this.dataService.updateIssue(dish);
 
-      let dish = new Dish();
+      //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
+      
+
+      this.dataService.updateIssue(dishPrevio);
+      //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
+      
+      const IndexDish = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dish.id);
+      const IndexDishPrevio = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dishPrevio.id);
+        //console.log("foundIndex: "+foundIndex);
+        // Then you update that record using data from dialogData (values you enetered)
+      this.exampleDatabase.dataChange.value[IndexDish] = dishPrevio;
+      this.exampleDatabase.dataChange.value[IndexDishPrevio] = dish;
+        // And lastly refresh table
+        this.refreshTable();
+      
+    /*let dish = new Dish();
       dish.id = id;
       dish.orden = maximum;
       console.log("maximum: " +maximum);
@@ -92,7 +110,7 @@ export class HomeComponent implements OnInit {
       console.log("orden: " +orden);
       this.dataService.updateIssue(dish2);
       await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
-      this.refresh();
+      this.refresh();*/
     } else {
       alert("No hay un plato de orden mayor para esta categoría.");
     }
@@ -274,20 +292,17 @@ export class ExampleDataSource extends DataSource<Dish> {
       let propertyB: number;
       let propertyBB: number;
 
-      switch (this._sort.active) {
-        case 'categoria': [propertyA, propertyB] = [a.categoria, b.categoria]; break;
-        case 'orden': [propertyA, propertyB] = [a.orden, b.orden]; break;
-      }
+    
       [propertyA, propertyB] = [a.categoria, b.categoria];
       [propertyAA, propertyBB] = [a.orden, b.orden];
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      /*const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
       const valueAA = isNaN(+propertyAA) ? propertyAA : +propertyAA;
       const valueBB = isNaN(+propertyBB) ? propertyBB : +propertyBB;
+*/
 
 
-
-      return (valueA < valueB ? -1 : (valueAA < valueBB ? -1 : 1));
+      return (propertyA < propertyB ? -1 : (propertyAA < propertyBB ? -1 : 1));
     });
   }
 }

@@ -117,7 +117,7 @@ export class CategoriasComponent implements OnInit {
         console.log(dishes)
         this.dataService.getCategorias().subscribe(
           result => {
-            this.categorias = result;
+            this.categorias = result.filter(x => x.comercioId == JSON.parse(localStorage.getItem('currentUser')).comercioId);
             console.log(this.categorias)
             this.categorias.map(function (category) {
               category.platos = [];

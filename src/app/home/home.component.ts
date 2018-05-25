@@ -285,7 +285,6 @@ export class ExampleDataSource extends DataSource<Dish> {
 
     this._sort.active = 'categoria';
     this._sort.direction = "asc";
-    console.log("fuera del if");
     return data.sort((a, b) => {
       let propertyA: number;
       let propertyAA: number;
@@ -302,7 +301,8 @@ export class ExampleDataSource extends DataSource<Dish> {
 */
 
 
-      return (propertyA < propertyB ? -1 : (propertyAA < propertyBB ? -1 : 1));
+      return ((propertyA == propertyB) ? (propertyAA < propertyBB ? -1 : 1) : 
+      ((propertyA < propertyB) ? -1 :1));
     });
   }
 }

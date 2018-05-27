@@ -25,8 +25,8 @@
 
     <input id="image" type="file" (change)="changeListener($event)" accept=".png, .jpg, .jpeg" />
     <div mat-dialog-actions>
-      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
-      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+      <button mat-button class='btn btn-success' [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Guardar</button>
+      <button mat-button class='btn btn-primary' (click)="onNoClick()" tabindex="-1">Cancelar</button>
     </div>
   </form>
 </div>

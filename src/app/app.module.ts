@@ -35,6 +35,7 @@ import { PedidosPlatosService } from './services/pedidosPlatos.service';
 import { AddCategoryDialogComponent } from './dialogs/addCategory/addCategory.dialog.component';
 import { CategoriasComponent } from './categorias/index';
 import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/viewCategoryDishes.dialog.component';
+import { ManageOpcionesDialogComponent } from './dialogs/manageOpciones/manageOpciones.dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/view
     OpcionesComponent,
     CategoriasComponent,
     FirstLoginComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ManageOpcionesDialogComponent
   ],
   imports: [
     AngularDualListBoxModule,
@@ -94,6 +96,7 @@ import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/view
     EditOpcionDialogComponent,
     DeleteOpcionDialogComponent,
     viewCategoryDishesComponent,
+    ManageOpcionesDialogComponent
   ],
   providers: [
     PlatosService,

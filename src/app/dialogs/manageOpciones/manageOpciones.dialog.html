@@ -4,10 +4,7 @@
     <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
       <!--Textarea for demo purposes-->
       <div class="form">
-        <mat-form-field color="primary">
-          <input matInput #inputstate placeholder="Nombre categoría" [(ngModel)]="data.tipo" name="title" required>
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
+          <dual-list [source]="opciones" [(destination)]="destination" key="id" display="nombre"></dual-list>
       </div>
       <div mat-dialog-actions>
         <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>

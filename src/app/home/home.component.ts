@@ -20,6 +20,7 @@ import { DeleteDialogComponent } from '../dialogs/delete/delete.dialog.component
 import { Injectable } from '@angular/core';
 import { TipoComida } from '../models/tipoComida';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ManageOpcionesDialogComponent } from '../dialogs/manageOpciones/manageOpciones.dialog.component';
 
 @Component({
   templateUrl: './home.component.html',
@@ -145,6 +146,27 @@ export class HomeComponent implements OnInit {
     const dialogRef = this.dialog.open(EditDialogComponent, {
       data: { id: id, imagen: imagen, nombre: nombre, precio: precio, categoria: categoria, orden: orden }
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        // When using an edit things are little different, firstly we find record inside DataService by id
+        //const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
+        //const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        //console.log("foundIndex: "+foundIndex);
+        // Then you update that record using data from dialogData (values you enetered)
+        //this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+        // And lastly refresh table
+        this.refresh();
+        //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
+        //this.refresh();
+      }
+    });
+  }
+
+
+  //TODO agregar platoState, cuando este en el get
+  openOptions() {
+    const dialogRef = this.dialog.open(ManageOpcionesDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {

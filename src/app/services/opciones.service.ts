@@ -29,14 +29,23 @@ export class OpcionesService {
   ];
 
 
-  getAllOpciones(): void {
+  /*getAllOpciones(): void {
     Observable.of(this.OPCIONES).map((res: any) => {
       this.dataChange.next(res);
-    }
+    }*/
       /*<Opcion[]>res.map(item => {
         return item;
       })*/
-    );
+   /* );
+}*/
+
+  getAllOpciones(): Observable<Opcion[]> {
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/opcion')
+      .map((res: any) =>
+        <Opcion[]>res.map(item => {
+          return item;
+        })
+      );
   }
 
   getAllIssues(): void {

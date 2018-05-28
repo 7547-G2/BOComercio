@@ -1,4 +1,5 @@
 import { Address } from "./Address";
+    
 
 export class Comercio {
     id:number;
@@ -8,6 +9,9 @@ export class Comercio {
     imagenLogo:string;
     estado:string;
     addressDto:Address =  new Address();
-    latitud: string;
-    longitud: string;
+    latitud: number;
+    longitud: number;
+    nombreEncargado: string;
+    dniEncargado: number;
+    telefonoEncargado: number;
 }

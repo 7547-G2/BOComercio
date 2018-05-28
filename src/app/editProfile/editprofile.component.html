@@ -51,6 +51,23 @@
           </div>
         </div>
         <div class="row" style="margin-top: 15px;">
+          <div class="col-lg-4">
+            <label for="nombreEncargado">Nombre Encargado</label>
+            <input type="text" name="nombreEncargado" id="nombreEncargado" tabindex="3" class="form-control" placeholder="Nombre Encargado" name="NombreEncargado" [(ngModel)]="comercio.nombreEncargado"
+              readonly>
+          </div>
+          <div class="col-lg-4">
+            <label for="dniEncargado">Dni Encargado</label>
+            <input type="text" name="dniEncargado" id="dniEncargado" tabindex="3" class="form-control" placeholder="Dni Encargado" name="DniEncargado" [(ngModel)]="comercio.dniEncargado"
+              readonly>
+          </div>
+          <div class="col-lg-4">
+            <label for="telefonoEncargado">Teléfono Encargado</label>
+            <input type="text" name="telefonoEncargado" id="telefonoEncargado" tabindex="3" class="form-control" placeholder="TelefonoEncargado" name="TelefonoEncargado" [(ngModel)]="comercio.telefonoEncargado"
+              readonly>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
           <div class="col-lg-8" style="align-content: center">
             <agm-map [latitude]="comercio.latitud" [longitude]="comercio.longitud"  [zoom]="15" [zoomControl]="false">
               <agm-marker [latitude]="comercio.latitud" [longitude]="comercio.longitud"></agm-marker>

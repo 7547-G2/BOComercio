@@ -17,6 +17,9 @@ const appRoutes: Routes = [
     { path: 'opciones', component: OpcionesComponent },
     { path: 'categorias', component: CategoriasComponent },
     // otherwise redirect to login
+    { path: 'categorias', component: CategoriasComponent },
+ 
+    // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];
 

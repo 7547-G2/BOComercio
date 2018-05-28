@@ -7,8 +7,11 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent {
-
-    constructor(private router: Router) { }
+    nombre: string;
+    constructor(private router: Router) {
+        this.nombre = JSON.parse(localStorage.getItem('currentUser')).name    
+    }
+    
     get isLoggedIn() {
         return localStorage.getItem('currentUser');
     }

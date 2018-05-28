@@ -65,8 +65,8 @@ export class HomeComponent implements OnInit {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
-        this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
-        await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
+        //this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+        //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
         this.refresh();
       }
     });
@@ -116,25 +116,25 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async decreaseOrder(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
+  decreaseOrder(dish: Dish) {
 
-    let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden > orden && x.categoria === categoria);
+    let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden > dish.orden && x.categoria === dish.categoria);
     if (dishes.length > 0) {
       let maximum = Math.min.apply(Math, dishes.map(function (f) { return f.orden; }));
-      let dishPrevio = dishes.find(x => x.orden === maximum && x.categoria === categoria).id;
+      let dishPrevio = dishes.find(x => x.orden === maximum && x.categoria === dish.categoria);
 
-      let dish = new Dish();
-      dish.id = id;
+      dishPrevio.orden = dish.orden;
       dish.orden = maximum;
-
       this.dataService.updateIssue(dish);
-      await new Promise(resolve => setTimeout(()=>resolve(), 1000));
-      let dish2 = new Dish();
-      dish2.id = dishPrevio;
-      dish2.orden = orden;
-      this.dataService.updateIssue(dish2);
-      await new Promise(resolve => setTimeout(()=>resolve(), 1000));
-      this.refresh();
+
+      this.dataService.updateIssue(dishPrevio);
+      const IndexDish = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dish.id);
+      const IndexDishPrevio = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dishPrevio.id);
+        //console.log("foundIndex: "+foundIndex);
+        // Then you update that record using data from dialogData (values you enetered)
+      this.exampleDatabase.dataChange.value[IndexDish] = dishPrevio;
+      this.exampleDatabase.dataChange.value[IndexDishPrevio] = dish;
+      this.refreshTable();
     } else {
       alert("No hay un plato de orden mayor para esta categoría.");
     }

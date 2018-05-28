@@ -8,6 +8,7 @@ import {
   MatTableModule, MatToolbarModule, MatSliderModule, MatSlideToggleModule, MatFormFieldModule,
   MatRadioModule
 } from '@angular/material';
+import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { OpcionesService } from './services/opciones.service';
 import { PlatosService } from './services/platos.service';
 import { AuthenticationService } from './services/authentication.service';
@@ -56,6 +57,7 @@ import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/view
     EditProfileComponent
   ],
   imports: [
+    AngularDualListBoxModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

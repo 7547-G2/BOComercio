@@ -53,8 +53,15 @@ export class OpcionesService {
     return opcion;
   }
 
-  addOpcion(newOpcion: Opcion): Opcion {
-    return newOpcion;
+  addOpcion(newOpcion: Opcion): void {
+    newOpcion.state = "ACTIVO";
+    this.httpClient.post(this.API_URL + '/backofficeComercio/comercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + "/opcion", newOpcion).subscribe(data => {
+      this.dialogData = newOpcion;
+      //this.toasterService.showToaster('Successfully added', 3000);
+    },
+      (err: HttpErrorResponse) => {
+        //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+      });
   }
 
   private readonly API_URL = 'https://hoy-como-backend.herokuapp.com/api';

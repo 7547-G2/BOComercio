@@ -11,13 +11,14 @@ import { Opcion } from '../../models/Opcion';
 })
 
 export class ManageOpcionesDialogComponent {
-  opciones: Opcion[];
-  destination: Opcion[];
+  source = [];
+  target = [];
+  format = { add: 'Agregar', remove:'Quitar', all: 'Todos', none: 'Ninguno'}
   constructor(private changeDetectorRef: ChangeDetectorRef, public dialogRef: MatDialogRef<ManageOpcionesDialogComponent>,
     public dataService: OpcionesService) {
     this.dataService.getAllOpciones().subscribe(
       result => {
-      this.opciones = result;
+      this.source = result;
       }
     );
   }
@@ -41,7 +42,7 @@ export class ManageOpcionesDialogComponent {
     this.dialogRef.close();
   }
 
-  /*public confirmAdd(): void {
-    this.dataService.addCategory(this.data);
-  }*/
+  public confirmAdd(): void {
+    console.log(this.target);
+  }
 }

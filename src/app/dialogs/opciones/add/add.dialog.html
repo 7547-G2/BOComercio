@@ -13,14 +13,14 @@
     <!--Contains mat-hint for characters count and has maxLengt set-->
     <div class="form">
       <mat-form-field color="primary">
-        <input matInput #inputstate placeholder="Precio" [(ngModel)]="data.precio" name="state" maxlength="10"
-          required>
+        <input matInput #inputstate placeholder="Precio" [(ngModel)]="data.precio" name="state" maxlength="10" required>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
-    <div mat-dialog-actions>
-      <button mat-button class='btn btn-success' [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Guardar</button>
-      <button mat-button class='btn btn-primary' (click)="onNoClick()" tabindex="-1">Cancelar</button>
-    </div>
   </form>
+  <div mat-dialog-actions>
+    <button mat-button class='btn btn-sm btn-primary' [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1"
+      (click)="confirmAdd()">Guardar</button>
+    <button mat-button class='btn btn-sm btn-default' (click)="onNoClick()" tabindex="-1">Cancelar</button>
+  </div>
 </div>

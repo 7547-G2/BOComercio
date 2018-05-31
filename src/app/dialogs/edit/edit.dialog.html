@@ -1,18 +1,16 @@
 <h4 id="" class="modal-title">Editar plato</h4>
   <div class="container">
     <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
-      <!--Textarea for demo purposes-->
       <div class="row">
         <div class="form">
           <mat-form-field color="primary">
-            <input matInput #inputstate class="form-control" placeholder="Nombre" [(ngModel)]="data.nombre" name="nombre" required >
+            <input matInput #inputstate placeholder="Nombre" [(ngModel)]="data.nombre" name="nombre" required >
             <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
         </div>
-        <!--Contains mat-hint for characters count and has maxLengt set-->
         <div class="form">
           <mat-form-field class="formPrecio" color="primary">
-            <input matInput #inputstate class="form-control" placeholder="Precio" [(ngModel)]="data.precio" name="state" maxlength="4" required >
+            <input matInput #inputstate  placeholder="Precio" [(ngModel)]="data.precio" name="state" maxlength="4" required >
             <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
         </div>

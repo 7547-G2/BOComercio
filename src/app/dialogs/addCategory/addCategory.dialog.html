@@ -10,8 +10,8 @@
         </mat-form-field>
       </div>
       <div mat-dialog-actions>
-        <button mat-button class='btn btn-success' [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Guardar</button>
-        <button mat-button class='btn btn-primary' (click)="onNoClick()" tabindex="-1">Cancelar</button>
+        <button mat-button class='btn btn-sm btn-primary' [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Guardar</button>
+        <button mat-button class='btn btn-sm btn-default' (click)="onNoClick()" tabindex="-1">Cancelar</button>
       </div>
     </form>
   </div>

@@ -1,14 +1,13 @@
 <div class="container col-sm-8">
-    <h3 mat-dialog-title>Nueva categoría</h3>
-  
-    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
-      <!--Textarea for demo purposes-->
-      <div class="form">
-          <dual-list [source]="opciones" [(destination)]="destination" key="id" display="nombre"></dual-list>
-      </div>
-      <div mat-dialog-actions>
-        <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
-        <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
-      </div>
-    </form>
+  <h3 mat-dialog-title>Administrar opciones</h3>
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <div class="form">
+      <dual-list [source]="source" width="100%" [(destination)]="target" key="id" display="nombre" [format]="format"></dual-list>
+    </div>
+  </form>
+  <div mat-dialog-actions>
+    <button mat-button class='btn btn-sm btn-primary' [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1"
+      (click)="confirmAdd()">Guardar</button>
+    <button mat-button class='btn btn-sm btn-default' (click)="onNoClick()" tabindex="-1">Cancelar</button>
   </div>
+</div>

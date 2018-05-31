@@ -1,12 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  min-width: 450px;
+  width: 950px;
 }
 
-.container > * {
+/*.container > * {
   width: 100%;
-}
+}*/
 
 .form {
   display: flex;

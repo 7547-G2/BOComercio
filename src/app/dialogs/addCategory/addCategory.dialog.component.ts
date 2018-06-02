@@ -1,9 +1,9 @@
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Component, Inject, ChangeDetectorRef} from '@angular/core';
-import {PlatosService} from '../../services/platos.service';
 import {FormControl, Validators} from '@angular/forms';
 import {Dish} from '../../models/Dish';
 import { CategoriaPlato, CategoriaPlatoPost } from '../../models/categoriaPlato';
+import { CategoriaService } from '../../services/categorias.service';
 
 @Component({
   selector: 'app-add.dialog',
@@ -15,10 +15,7 @@ export class AddCategoryDialogComponent {
   categorias: CategoriaPlato[];
   constructor(private changeDetectorRef: ChangeDetectorRef,public dialogRef: MatDialogRef<AddCategoryDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: CategoriaPlatoPost,
-              public dataService: PlatosService) { 
-                this.dataService.getCategorias().subscribe(
-                  result => { this.categorias = result; }
-                );
+              public dataService: CategoriaService) { 
               }
 
   formControl = new FormControl('', [

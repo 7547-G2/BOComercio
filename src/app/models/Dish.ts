@@ -6,4 +6,5 @@ export class Dish {
   state: string;
   categoria: number;
   orden: number;
+  descCategoria: string;
 }

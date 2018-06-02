@@ -26,3 +26,9 @@
 .mat-column-actionsEdit{
   max-width: 5%;
 }
+
+.mat-cell:nth-child(2),
+.mat-header-cell:nth-child(2),
+{
+flex: 0 0 15%;
+}

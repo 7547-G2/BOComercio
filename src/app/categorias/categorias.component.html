@@ -1,34 +1,41 @@
 <h4>Administración de categorías</h4>
-<div class="pedidos-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
-    </ng-container>
+<div class="container mat-elevation-z8">
+  <div class="form">
+    <mat-form-field floatPlaceholder="never" color="primary">
+      <input matInput #filter placeholder="Filtrar categorías">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource" matSort matSortActive="orderPriority" matSortDirection="asc">
     <ng-container matColumnDef="tipo">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Valor</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Categoría</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.tipo}}</mat-cell>
-    </ng-container> 
-    <ng-container matColumnDef="cantidad">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>N°Platos</mat-header-cell>
+    </ng-container>
+    <!--<ng-container matColumnDef="cantidad">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>N° Platos</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.cantidadPlatos}}</mat-cell>
-    </ng-container> 
-    <!-- <ng-container matColumnDef="modificar">
+    </ng-container>
+    <ng-container matColumnDef="modificar">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
         <button class='btn btn-primary' color="primary" (click)="startEdit(element.id, element.tipo)">Modificar</button>
       </mat-cell>
     </ng-container> -->
     <ng-container matColumnDef="actionsEdit">
-        <mat-header-cell *matHeaderCellDef>
-        </mat-header-cell>
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let row; let i=index; let element">
-          <button mat-icon-button color="primary" (click)="startEdit(element.id,element.tipo)">
-            <i class="material-icons">create</i>
-          </button>
-        </mat-cell> 
-      </ng-container>
+      <mat-header-cell *matHeaderCellDef>
+      </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="startEdit(element)">
+          <i class="material-icons">create</i>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="activo">
+      <mat-header-cell *matHeaderCellDef> Activo </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-slide-toggle [checked]="row.active==true" color="primary" (change)="onChange($event, row.id)"></mat-slide-toggle>
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell style="width: 10%;" *matHeaderCellDef>
         <button mat-icon-button color="primary" (click)="addNew()">
@@ -36,14 +43,24 @@
         </button>
       </mat-header-cell>
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let row; let i=index; let element">
-        <button mat-icon-button color="primary" (click)="viewDishes(element.platos)" *ngIf="element.platos.length">
+      <mat-cell *matCellDef="let i=index; let element">
+        <!--button mat-icon-button color="primary" (click)="viewDishes(element.platos)" *ngIf="element.platos.length">
           <i class="material-icons">visibility</i>
         </button>
         <button mat-icon-button color="primary" *ngIf="!element.platos.length">
-            <i class="material-icons">visibility_off</i>
-          </button>
-      </mat-cell> 
+          <i class="material-icons">visibility_off</i>
+        </button-->
+        <button mat-icon-button color="primary" (click)="increaseOrder(element)">
+          <i class="material-icons">arrow_upward</i>
+        </button>
+        <button mat-icon-button color="primary" (click)="decreaseOrder(element)">
+          <i class="material-icons">arrow_downward</i>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="orderPriority">
+        <mat-header-cell *matHeaderCellDef>Orden</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.orderPriority}}</mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -51,6 +68,6 @@
   <div class="no-results" [style.display]="dataSource.length == 0 ? '' : 'none'">
     Sin categorias
   </div>
-  <mat-paginator #paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
 </div>

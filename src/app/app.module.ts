@@ -36,6 +36,7 @@ import { AddCategoryDialogComponent } from './dialogs/addCategory/addCategory.di
 import { CategoriasComponent } from './categorias/index';
 import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/viewCategoryDishes.dialog.component';
 import { ManageOpcionesDialogComponent } from './dialogs/manageOpciones/manageOpciones.dialog.component';
+import { CategoriaService } from './services/categorias.service';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { ManageOpcionesDialogComponent } from './dialogs/manageOpciones/manageOp
   ],
   providers: [
     PlatosService,
+    CategoriaService,
     PedidosPlatosService,
     OpcionesService,
     PedidosService,

@@ -133,26 +133,26 @@ export class HomeComponent implements OnInit {
       this.exampleDatabase.dataChange.value[IndexDishPrevio] = dish;
       this.refreshTable();
     } else {
-      alert("No hay un plato de orden mayor para esta categoría.");
+      alert("No hay un plato de orden menor para esta categoría.");
     }
   }
 
   //TODO agregar platoState, cuando este en el get
-  startEdit(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
+  startEdit(dish:Dish) {
     const dialogRef = this.dialog.open(EditDialogComponent, {
-      data: { id: id, imagen: imagen, nombre: nombre, precio: precio, categoria: categoria, orden: orden }
+      data: { id: dish.id, imagen: dish.imagen, nombre: dish.nombre, precio: dish.precio, categoria: dish.categoria, orden: dish.orden }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // When using an edit things are little different, firstly we find record inside DataService by id
         //const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
-        //const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
         //console.log("foundIndex: "+foundIndex);
         // Then you update that record using data from dialogData (values you enetered)
-        //this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dish.id);
+        this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
-        this.refresh();
+        this.refreshTable();
         //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
         //this.refresh();
       }

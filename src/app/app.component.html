@@ -35,7 +35,12 @@
 <div class="jumbotron">
     <div class="container">
         <div class="col-sm-12">
-            <router-outlet></router-outlet>
+            <router-outlet>
+                <div class="alert alert-danger" role="alert" *ngIf="isLoggedIn && (estado == 'deshabilitado')">
+                    <strong>Su comercio se encuentra deshabilitado, comuniquese con el administrador de Hoy Como</strong> <br>
+                    <strong>Motivo: </strong>{{motivo}}
+                </div>
+            </router-outlet>
         </div>
     </div>
 </div>

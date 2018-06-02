@@ -8,8 +8,19 @@ import { Router } from '@angular/router';
 
 export class AppComponent {
     nombre: string;
+    motivo: string;
+    estado: string;
     constructor(private router: Router) {
-        this.nombre = JSON.parse(localStorage.getItem('currentUser')).name    
+        if(JSON.parse(localStorage.getItem('currentUser'))){
+            let currentUser = JSON.parse(localStorage.getItem('currentUser'))    
+            this.nombre = currentUser.name
+            this.motivo = currentUser.motivoDeshabilitacion
+            this.estado = currentUser.estado
+        } else {
+            this.nombre = ''
+            this.motivo = ''
+            this.estado = ''
+        }
     }
     
     get isLoggedIn() {

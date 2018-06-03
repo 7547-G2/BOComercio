@@ -11,11 +11,12 @@ export class AppComponent {
     motivo: string;
     estado: string;
     constructor(private router: Router) {
-        if(JSON.parse(localStorage.getItem('currentUser'))){
+        console.log(localStorage.getItem('currentUser'));
+        if(localStorage.getItem('currentUser')){
             let currentUser = JSON.parse(localStorage.getItem('currentUser'))    
             this.nombre = currentUser.name
             this.motivo = currentUser.motivoDeshabilitacion
-            this.estado = currentUser.estado
+            this.estado = currentUser.estadoComercio
         } else {
             this.nombre = ''
             this.motivo = ''

@@ -25,7 +25,7 @@ import { ModifyStateComponent } from '../dialogs/pedidos/modificarEstado/edit.di
 })
 export class PedidosComponent implements OnInit {
 
-  displayedColumns = ['id', 'fecha', 'monto', 'estado', 'modificarEstado', 'actions'];
+  displayedColumns = ['id', 'fecha', 'monto', 'estado', 'modificarEstado', 'actions','direccion', 'telefono'];
   pedidos: Pedido[];
   dataSource: PedidosDataSource | null;
   pedidoService: PedidosService | null;
@@ -60,13 +60,28 @@ export class PedidosComponent implements OnInit {
     const dialogRef = this.dialog.open(ModifyStateComponent, {
       data: { estado: estado, id: id }  
     });
-
-    dialogRef.afterClosed().subscribe(async result => {
+    pedido.estado = this.dataService.getNuevoEstado();
+    dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.refresh();
       }
     });
   }
+/*
+  private refreshTable() {
+    // if there's a paginator active we're using it for refresh
+    if (this.dataSource._paginator.hasNextPage()) {
+      this.dataSource._paginator.nextPage();
+      this.dataSource._paginator.previousPage();
+      // in case we're on last page this if will tick
+    } else if (this.dataSource._paginator.hasPreviousPage()) {
+      this.dataSource._paginator.previousPage();
+      this.dataSource._paginator.nextPage();
+      // in all other cases including active filter we do it like this
+    } else {
+      this.dataSource.filter = '';
+    }
+  }*/
 
   viewDishes(id: number) {
     const dialogRef = this.dialog.open(viewDishesComponent, {
@@ -87,7 +102,8 @@ export class Pedido {
   monto: number;
   fecha: string;
   estado: string;
-  platos: Plato[]
+  platos: Plato[];
+  address: string;
 }
 
 export class Plato {
@@ -165,7 +181,7 @@ export class PedidosDataSource extends DataSource<Pedido> {
       
 
 
-      return (valueA < valueB ? -1 :1) * (this._sort.direction === 'asc' ? 1 : -1);
+      return (valueA < valueB ? -1 :1) * (this._sort.direction === 'desc' ? 1 : -1);
     });
   }
 }

@@ -11,45 +11,21 @@ import { Opcion } from '../models/Opcion';
 export class OpcionesService {
 
 
+  target = [];
   deleteOpcion(opcion: Opcion): void {
     opcion.state = "BORRADO";
-    /*this.httpClient.put(this.API_URL + "/" + dish.id, dish).subscribe(data => {
-      this.dialogData = dish;
-      //this.toasterService.showToaster('Successfully edited', 3000);
+    this.httpClient.put(this.API_URL  + '/backofficeComercio/comercio/opcion/' + opcion.id
+      , opcion).subscribe(data => {
+        
     },
       (err: HttpErrorResponse) => {
         //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
-      }
-    );*/
-
-  }
-  OPCIONES: Opcion[] = [
-    { id: 1, nombre: "Al molde", precio: 0, state: 'ACTIVO' },
-    { id: 2, nombre: "A la piedra", precio: 0, state: 'INACTIVO' },
-  ];
-
-
-  /*getAllOpciones(): void {
-    Observable.of(this.OPCIONES).map((res: any) => {
-      this.dataChange.next(res);
-    }*/
-      /*<Opcion[]>res.map(item => {
-        return item;
-      })*/
-   /* );
-}*/
-
-  getAllOpciones(): Observable<Opcion[]> {
-    return this.httpClient.get(this.API_URL + '/backofficeComercio/opcion')
-      .map((res: any) =>
-        <Opcion[]>res.map(item => {
-          return item;
-        })
-      );
+      });
+      this.dialogData = opcion;
   }
 
-  getAllIssues(): void {
-    this.httpClient.get<Dish[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/platos').subscribe(data => {
+  getAllOpciones(): void {
+    this.httpClient.get<Opcion[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/opciones').subscribe(data => {
       this.dataChange.next(data);
       //this.changeDetectorRefs.detectChanges();
     },
@@ -58,8 +34,26 @@ export class OpcionesService {
       });
   }
 
-  updateOpcion(opcion: Opcion): Opcion {
-    return opcion;
+
+
+  getOpciones(): Observable<Opcion[]> {
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/opciones')
+      .map((res: any) =>
+        <Opcion[]>res.map(item => {
+          return item;
+        })
+      );
+  }
+
+  updateOpcion(opcion: Opcion): void {
+    this.httpClient.put(this.API_URL  + '/backofficeComercio/comercio/opcion/' + opcion.id
+      , opcion).subscribe(data => {
+        
+    },
+      (err: HttpErrorResponse) => {
+        //this.toasterService.showToaster('Error occurred. Details: ' + err.name + ' ' + err.message, 8000);
+      });
+      this.dialogData = opcion;
   }
 
   addOpcion(newOpcion: Opcion): void {
@@ -88,5 +82,13 @@ export class OpcionesService {
 
   getDialogData() {
     return this.dialogData;
+  }
+
+  getSelected(){
+    return this.target;
+  }
+
+  updateDishOptions(selected:any){
+    this.target = selected;
   }
 }

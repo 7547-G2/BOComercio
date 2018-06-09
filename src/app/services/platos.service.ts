@@ -20,7 +20,7 @@ export class PlatosService {
   // Temporarily stores data from dialogs
   dialogData: Dish;
   nuevoEstado: string;
-  tiposComidas: BehaviorSubject<TipoComida[]> = new BehaviorSubject<TipoComida[]>([]);
+  tiposComidas: TipoComida[];
 
   constructor(private httpClient: HttpClient) { }//, private changeDetectorRefs: ChangeDetectorRef) { }
 
@@ -44,9 +44,10 @@ export class PlatosService {
   }
 
   getTiposDeComida(): Observable<TipoComida[]> {
-    return this.httpClient.get(this.API_URL + '/backofficeComercio/categoriasComida')
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/'+ JSON.parse(localStorage.getItem('currentUser')).comercioId +'/categoriasComida')
       .map((res: any) =>
         <TipoComida[]>res.map(item => {
+          this.tiposComidas.push(item);
           return item;
         })
       );
@@ -82,6 +83,7 @@ export class PlatosService {
   addIssue(dish: Dish): void {
     dish.state = "INACTIVO";
     this.httpClient.post(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + "/platos", dish).subscribe(data => {
+      dish.descCategoria = this.tiposComidas.find(x=> x.id == dish.categoria).tipo;
       this.dialogData = dish;
       //this.toasterService.showToaster('Successfully added', 3000);
     },

@@ -21,14 +21,15 @@ import { Injectable } from '@angular/core';
 import { TipoComida } from '../models/tipoComida';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ManageOpcionesDialogComponent } from '../dialogs/manageOpciones/manageOpciones.dialog.component';
+import { OpcionesService } from '../services/opciones.service';
 
 @Component({
   templateUrl: './home.component.html',
-  styleUrls: ['../app.component.css']
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions', 'orden'];
+  displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions'];
   exampleDatabase: PlatosService | null;
   dataSource: ExampleDataSource | null;
   tiposDeComida: TipoComida[];
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit {
     //private changeDetectorRefs: ChangeDetectorRef,
     public dialog: MatDialog,
     public dataService: PlatosService,
+    public opcionesService: OpcionesService,
     private router: Router) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -62,14 +64,15 @@ export class HomeComponent implements OnInit {
       data: { issue: issue }
     });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        this.refresh();
+        this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+        this.refreshTable();
       }
     });
   }
 
-  /*async*/ increaseOrder(dish:Dish) {
+    increaseOrder(dish:Dish) {
 
     let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < dish.orden && x.categoria === dish.categoria);
     if (dishes.length > 0) {
@@ -138,31 +141,33 @@ export class HomeComponent implements OnInit {
   }
 
   //TODO agregar platoState, cuando este en el get
-  startEdit(dish:Dish) {
+  startEdit(issue :Dish) {
     const dialogRef = this.dialog.open(EditDialogComponent, {
-      data: { id: dish.id, imagen: dish.imagen, nombre: dish.nombre, precio: dish.precio, categoria: dish.categoria, orden: dish.orden }
+      data: { issue: issue }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // When using an edit things are little different, firstly we find record inside DataService by id
-        //const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === issue.id);
         //console.log("foundIndex: "+foundIndex);
         // Then you update that record using data from dialogData (values you enetered)
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dish.id);
+        //const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dish.id);
         this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
-        this.refreshTable();
+        //this.refreshTable();
         //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
-        //this.refresh();
+        this.refreshTable();
       }
     });
   }
 
 
   //TODO agregar platoState, cuando este en el get
-  openOptions() {
-    const dialogRef = this.dialog.open(ManageOpcionesDialogComponent);
+  openOptions(dish:Dish) {
+    const dialogRef = this.dialog.open(ManageOpcionesDialogComponent,{
+      data:dish
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
@@ -173,7 +178,11 @@ export class HomeComponent implements OnInit {
         // Then you update that record using data from dialogData (values you enetered)
         //this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
-        this.refresh();
+        let target = [];
+        target =  this.opcionesService.getSelected();
+        dish.opcionalIds = target.map(function(a) {return a["id"];});
+        console.log(dish.opcionalIds);
+        this.dataService.updateIssue(dish);
         //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
         //this.refresh();
       }

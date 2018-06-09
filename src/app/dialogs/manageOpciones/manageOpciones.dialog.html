@@ -1,8 +1,8 @@
 <div class="container col-sm-8">
-  <h3 mat-dialog-title>Administrar opciones</h3>
+  <h3 mat-dialog-title>Administrar opciones: {{data.nombre}}</h3>
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
-    <div class="form">
-      <dual-list [source]="source" width="100%" [(destination)]="target" key="id" display="nombre" [format]="format"></dual-list>
+    <div>
+      <dual-list [source]="source" [filter]="true" width="100%" [(destination)]="target" key="id" display="nombre" [format]="format"></dual-list>
     </div>
   </form>
   <div mat-dialog-actions>

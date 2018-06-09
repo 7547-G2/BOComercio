@@ -1,8 +1,8 @@
-<h4>Administración de opciones</h4>
+<h4>Administración de adicionales</h4>
 <div class="mat-elevation-z8">
   <div class="form">
     <mat-form-field floatPlaceholder="never" color="primary">
-      <input matInput #filter placeholder="Filtrar Opciones">
+      <input matInput #filter placeholder="Filtrar adicionales">
     </mat-form-field>
   </div>
   <mat-table #table [dataSource]="dataSource">
@@ -28,12 +28,12 @@
         </button>
       </mat-header-cell>
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary" (click)="startEdit(i, row.id, row.imagen, row.nombre, row.precio)">
+        <button mat-icon-button color="primary" (click)="startEdit(row)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="deleteItem(i, row.id, row.imagen, row.nombre, row.precio)">
+        <!--button mat-icon-button color="primary" (click)="deleteItem(i, row.id, row.imagen, row.nombre, row.precio)">
           <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
+        </button-->
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

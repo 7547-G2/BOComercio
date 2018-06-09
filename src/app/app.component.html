@@ -1,21 +1,23 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <!-- main app container -->
 <mat-toolbar color="primary" *ngIf="isLoggedIn">
     <a class="navbar-left">
         <img class="img-responsive center-block" src='../../assets/Logo.png' style="height: 60px;">
     </a>
-    <a class="navbar-brand">
-        <i>Hoy Como</i>
-    </a>
+    <a class="navbar-brand">Hoy Como</a>
     <button mat-button (click)="goToMenu()">Menú
         <i class="material-icons">restaurant_menu</i>
+    </button>
+    <button mat-button (click)="goToDashboard()">Dashboard
+        <i class="material-icons">dashboard</i>
     </button>
     <button mat-button (click)="goToPedidos()">Pedidos
         <i class="material-icons">list</i>
     </button>
-    <button mat-button (click)="goToOpciones()">Opciones
+    <button mat-button (click)="goToOpciones()">Adicionales
         <i class="material-icons">format_list_numbered</i>
     </button>
     <button mat-button (click)="goToCategorias()">Categorias

@@ -37,6 +37,7 @@ import { CategoriasComponent } from './categorias/index';
 import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/viewCategoryDishes.dialog.component';
 import { ManageOpcionesDialogComponent } from './dialogs/manageOpciones/manageOpciones.dialog.component';
 import { CategoriaService } from './services/categorias.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CategoriaService } from './services/categorias.service';
     EditDialogComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
+    DashboardComponent,
     AddOpcionDialogComponent,
     EditOpcionDialogComponent,
     DeleteOpcionDialogComponent,
@@ -72,7 +74,7 @@ import { CategoriaService } from './services/categorias.service';
     MatRadioModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule,
+    MatIconModule,    
     MatSortModule,
     MatTableModule,
     MatSliderModule,

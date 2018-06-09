@@ -7,6 +7,7 @@ import { EditProfileComponent } from './editProfile/index';
 import { PedidosComponent } from './pedidos/index';
 import { OpcionesComponent } from './opciones/index'
 import { CategoriasComponent } from './categorias/index';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const appRoutes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -17,7 +18,7 @@ const appRoutes: Routes = [
     { path: 'opciones', component: OpcionesComponent },
     { path: 'categorias', component: CategoriasComponent },
     // otherwise redirect to login
-    { path: 'categorias', component: CategoriasComponent },
+    { path: 'dashboard', component: DashboardComponent },
  
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

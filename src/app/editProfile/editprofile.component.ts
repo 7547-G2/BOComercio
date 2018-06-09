@@ -17,6 +17,7 @@ import { Comercio } from '../models/Comercio';
 import { Address } from '../models/Address';
 import { MouseEvent } from '@agm/core';
 import { AuthenticationService } from '../services/authentication.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
     templateUrl: './editprofile.component.html',
@@ -25,6 +26,7 @@ import { AuthenticationService } from '../services/authentication.service';
 export class EditProfileComponent implements OnInit {
     comercio: Comercio = new Comercio();
     tiposDeComida: TipoComida[];
+    descuentoControl = new FormControl("", [Validators.max(100), Validators.min(0)])
     comercioId:number;
     constructor(public httpClient: HttpClient,
         public dialog: MatDialog,
@@ -35,12 +37,6 @@ export class EditProfileComponent implements OnInit {
 
     // google maps zoom level
     zoom: number = 1000;
-
-    //comercio.addressDto = new Address();
-    // initial center position for the map
-    lat: number = -34.6175283;
-    lng: number = -58.3683175;
-
 
     ngOnInit() {
         if (localStorage.getItem('currentUser')) {
@@ -53,14 +49,21 @@ export class EditProfileComponent implements OnInit {
     }
 
     updateProfile(){
-        this.dataService.updateProfile(this.comercio);        
+        this.dataService.updateProfile(this.comercio);
+        alert("Los cambios han sido guardados exitosamente.");        
     }
 
-    changeListener($event) : void {
-        this.readThis($event.target);
+    changeListener($event,imagen:string) : void {
+        this.readThis($event.target, true);
       }
+
+      changeImagenComercio($event,imagen:string) : void {
+        this.readThis($event.target, false);
+      }
+
       
-      readThis(inputValue: any): void {
+      
+      readThis(inputValue: any, esLogo:boolean): void {
         var file:File = inputValue.files[0];
         if(file.size > 524288){
           alert("La imagen no debe pesar más de 512Kb");
@@ -70,19 +73,23 @@ export class EditProfileComponent implements OnInit {
         var myReader:FileReader = new FileReader();
       
         myReader.onload = (e) => {
-          var img = new Image();      
-          img.src = myReader.result;
+          var img = new Image();
           var w = img.width;
           var h = img.height;
-          if (h!=w){
+          if (h!=w && esLogo){
             alert("La imagen debe ser cuadrada");
             inputValue.value = "";
             return;
           }
+          img.src = myReader.result;
         }
     
         myReader.onloadend = (e) => {
-          this.comercio.imagenLogo = myReader.result;
+            if (esLogo){
+                this.comercio.imagenLogo = myReader.result;
+            } else {
+                this.comercio.imagenComercio = myReader.result;
+            }
         }
         myReader.readAsDataURL(file);
       }  
@@ -95,5 +102,10 @@ export class EditProfileComponent implements OnInit {
         this.dataService.getTiposDeComercio().subscribe(
             result => {this.tiposDeComida = result;}
         );
+    }
+
+    goBack(){
+        alert("volver");
+        this.router.navigate(['/home']);
     }
 }

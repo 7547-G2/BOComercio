@@ -23,7 +23,7 @@ import { Opcion } from '../models/Opcion';
 
 @Component({
   templateUrl: './opciones.component.html',
-  styleUrls: ['../app.component.css']
+  styleUrls: ['./opciones.component.css']
 })
 export class OpcionesComponent implements OnInit {
 
@@ -62,7 +62,7 @@ export class OpcionesComponent implements OnInit {
       data: { issue: issue }
     });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
@@ -75,29 +75,25 @@ export class OpcionesComponent implements OnInit {
 
   
   //TODO agregar platoState, cuando este en el get
-  startEdit(i: number, id: number, imagen: string, nombre: string, precio: number, categoria: number, orden: number) {
-    this.id = id;
-    // index row is used just for debugging proposes and can be removed
-    this.index = i;
-    console.log(this.index);
+  startEdit(opcion:Opcion) {
     const dialogRef = this.dialog.open(EditOpcionDialogComponent, {
-      data: { id: id, imagen: imagen, nombre: nombre, precio: precio, categoria: categoria, orden: orden }
+      data: {id: opcion.id,nombre: opcion.nombre,precio:opcion.precio,state:opcion.state}
     });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // When using an edit things are little different, firstly we find record inside DataService by id
         //const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
-        //const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === opcion.id);
         //console.log("foundIndex: "+foundIndex);
         // Then you update that record using data from dialogData (values you enetered)
-        //this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+        this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
-        //this.refreshTable();
+        this.refreshTable();
         //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
 
         //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
-        this.refresh();
+        //this.refresh();
       }
     });
   }
@@ -197,8 +193,6 @@ export class OpcionesDataSource extends DataSource<Opcion> {
     this.dataService.getAllOpciones();
 
     return Observable.merge(...displayDataChanges).switchMap(() => {
-
-      console.log("Merge");
       // Filter data
       this.filteredData = this.dataService.data.slice().filter((opcion: Opcion) => {
         var dishStr = (opcion != null) ? opcion.nombre : "";

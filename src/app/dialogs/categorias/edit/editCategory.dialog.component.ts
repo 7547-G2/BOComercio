@@ -6,7 +6,7 @@ import { CategoriaPlato} from '../../../models/categoriaPlato';
 import { CategoriaService } from '../../../services/categorias.service';
 
 @Component({
-  selector: 'app-add.dialog',
+  selector: 'app-editCategory.dialog',
   templateUrl: 'editCategory.dialog.html',
   styleUrls: ['editCategory.dialog.css']
 })

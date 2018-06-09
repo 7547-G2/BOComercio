@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 @Component({
     moduleId: module.id,
     selector: 'app',
-    templateUrl: 'app.component.html'
+    templateUrl: 'app.component.html',
+    styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
@@ -12,8 +13,8 @@ export class AppComponent {
     estado: string;
     constructor(private router: Router) {
         console.log(localStorage.getItem('currentUser'));
-        if(localStorage.getItem('currentUser')){
-            let currentUser = JSON.parse(localStorage.getItem('currentUser'))    
+        if (localStorage.getItem('currentUser')) {
+            let currentUser = JSON.parse(localStorage.getItem('currentUser'))
             this.nombre = currentUser.name
             this.motivo = currentUser.motivoDeshabilitacion
             this.estado = currentUser.estadoComercio
@@ -23,7 +24,7 @@ export class AppComponent {
             this.estado = ''
         }
     }
-    
+
     get isLoggedIn() {
         return localStorage.getItem('currentUser');
     }
@@ -46,6 +47,10 @@ export class AppComponent {
 
     goToCategorias() {
         this.router.navigate(['/categorias']);
+    }
+
+    goToDashboard() {
+        this.router.navigate(['/dashboard']);
     }
 
     logout() {

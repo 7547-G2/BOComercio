@@ -90,8 +90,8 @@ export class CategoriaService {
     let editedCat = {
       "firstCategoriaComidaId": Categoria1.id,
       "orderOfFirstCategoria": Categoria1.orderPriority,
-      "orderOfSecondCategoria": Categoria2.id,
-      "secondCategoriaComidaId": Categoria2.orderPriority
+      "orderOfSecondCategoria": Categoria2.orderPriority,
+      "secondCategoriaComidaId": Categoria2.id
     };
     this.httpClient.put(this.API_URL  + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/categoriasComida/swap'
       , editedCat).subscribe(data => {

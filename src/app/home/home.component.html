@@ -32,10 +32,6 @@
           color="primary"></mat-slide-toggle>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="orden">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.categoria}}{{row.orden}}</mat-cell>
-    </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
         <button mat-icon-button color="primary" (click)="addNew()">
@@ -55,7 +51,7 @@
         <button mat-icon-button color="primary" (click)="decreaseOrder(row)">
           <i class="material-icons">arrow_downward</i>
         </button>
-        <button mat-icon-button color="primary" (click)="openOptions()">
+        <button mat-icon-button color="primary" (click)="openOptions(row)">
           <i class="material-icons">format_list_numbered</i>
         </button>
       </mat-cell>

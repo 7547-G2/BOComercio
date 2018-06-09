@@ -29,13 +29,13 @@
           </div>
           <div class="col-lg-4">
             <label for="direccion">Dirección</label>
-            <input type="text" name="direccion" id="direccion" tabindex="3" class="form-control" placeholder="Dirección" name="Direccion"[(ngModel)]="comercio.addressDto.street"
-              readonly required>
+            <input type="text" name="direccion" id="direccion" tabindex="3" class="form-control" placeholder="Dirección" name="Direccion"
+              [(ngModel)]="comercio.addressDto.street" readonly required>
           </div>
           <div class="col-lg-4">
             <label for="postalCode">CP</label>
-            <input type="text" name="postalCode" id="postalCode" tabindex="3" class="form-control" placeholder="Código Postal" name="CP"[(ngModel)]="comercio.addressDto.postalCode"
-              readonly required>
+            <input type="text" name="postalCode" id="postalCode" tabindex="3" class="form-control" placeholder="Código Postal" name="CP"
+              [(ngModel)]="comercio.addressDto.postalCode" readonly required>
           </div>
         </div>
         <div class="row" style="margin-top: 15px;">
@@ -46,48 +46,64 @@
           </div>
           <div class="col-lg-4">
             <label for="department">Departamento</label>
-            <input type="text" name="department" id="department" tabindex="3" class="form-control" placeholder="Departamento" name="Depto" [(ngModel)]="comercio.addressDto.department"
-              readonly>
+            <input type="text" name="department" id="department" tabindex="3" class="form-control" placeholder="Departamento" name="Depto"
+              [(ngModel)]="comercio.addressDto.department" readonly>
           </div>
         </div>
         <div class="row" style="margin-top: 15px;">
           <div class="col-lg-4">
             <label for="nombreEncargado">Nombre Encargado</label>
-            <input type="text" name="nombreEncargado" id="nombreEncargado" tabindex="3" class="form-control" placeholder="Nombre Encargado" name="NombreEncargado" [(ngModel)]="comercio.nombreEncargado"
-              readonly>
+            <input type="text" name="nombreEncargado" id="nombreEncargado" tabindex="3" class="form-control" placeholder="Nombre Encargado"
+              name="NombreEncargado" [(ngModel)]="comercio.nombreEncargado" readonly>
           </div>
           <div class="col-lg-4">
             <label for="dniEncargado">Dni Encargado</label>
-            <input type="text" name="dniEncargado" id="dniEncargado" tabindex="3" class="form-control" placeholder="Dni Encargado" name="DniEncargado" [(ngModel)]="comercio.dniEncargado"
-              readonly>
+            <input type="text" name="dniEncargado" id="dniEncargado" tabindex="3" class="form-control" placeholder="Dni Encargado" name="DniEncargado"
+              [(ngModel)]="comercio.dniEncargado" readonly>
           </div>
           <div class="col-lg-4">
             <label for="telefonoEncargado">Teléfono Encargado</label>
-            <input type="text" name="telefonoEncargado" id="telefonoEncargado" tabindex="3" class="form-control" placeholder="TelefonoEncargado" name="TelefonoEncargado" [(ngModel)]="comercio.telefonoEncargado"
-              readonly>
+            <input type="text" name="telefonoEncargado" id="telefonoEncargado" tabindex="3" class="form-control" placeholder="TelefonoEncargado"
+              name="TelefonoEncargado" [(ngModel)]="comercio.telefonoEncargado" readonly>
           </div>
         </div>
         <div class="row" style="margin-top: 15px;">
-          <div class="col-lg-8" style="align-content: center">
-            <agm-map [latitude]="comercio.latitud" [longitude]="comercio.longitud"  [zoom]="15" [zoomControl]="false">
-              <agm-marker [latitude]="comercio.latitud" [longitude]="comercio.longitud"></agm-marker>
-                <agm-info-window>
-                  <strong>InfoWindow content</strong>
-                </agm-info-window>
-            </agm-map>
+          <div class="col-lg-4">
+            <label for="telefonoEncargado">Logo</label>
+            <img [(ngModel)]="comercio.imagenLogo" name="imagenLogo" ngDefaultControl [src]="comercio.imagenLogo" alt=" " width="150px"
+              height="150px" />
+            <input id="image" type="file" (change)="changeListener($event, comercio.imagenLogo)" accept=".png, .jpg, .jpeg" />
           </div>
           <div class="col-lg-4">
-            <img [(ngModel)]="comercio.imagenLogo" name="imagenLogo" ngDefaultControl [src]="comercio.imagenLogo" alt=" " width="200px" height="200px" />
-            <input id="image" type="file" (change)="changeListener($event)" accept=".png, .jpg, .jpeg" />
+            <label for="telefonoEncargado">Imagen Comercio</label>
+            <img [(ngModel)]="comercio.imagenComercio" name="imagenComercio" ngDefaultControl [src]="comercio.imagenComercio" alt=" "
+              width="150px" height="150px" />
+            <input id="imagenComercio" type="file" (change)="changeImagenComercio($event, comercio.imagenComercio)" accept=".png, .jpg, .jpeg"/>
+          </div>
+          <div class="col-lg-4">
+              <label for="descuento">Descuento</label>
+              <input type="number" min="0" max="100" name="descuento" id="descuento" tabindex="3" placeholder="Descuento"
+                [(ngModel)]="comercio.descuento"/>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+          <div class="col-lg-4" style="align-content: center">
+            <agm-map [latitude]="comercio.latitud" [longitude]="comercio.longitud" [zoom]="15" [zoomControl]="false">
+              <agm-marker [latitude]="comercio.latitud" [longitude]="comercio.longitud"></agm-marker>
+              <agm-info-window>
+                <strong>InfoWindow content</strong>
+              </agm-info-window>
+            </agm-map>
           </div>
         </div>
         <div class="form-group">
           <div class="row" style="margin-top: 15px;">
             <div class="col-xs-6">
-              <input type="submit" name="register-submit" id="register-submit" tabindex="5" class="form-control btn btn-sm btn-primary" value="Actualizar">
+              <input type="submit" name="register-submit" id="register-submit" tabindex="5" class="form-control btn btn-sm btn-primary"
+                value="Actualizar">
             </div>
             <div class="col-xs-6">
-              <a ng-click="goBack()"  class='form-control btn btn-sm btn-default'>Volver</a>
+              <a ng-click="goBack()" class='form-control btn btn-sm btn-default'>Volver</a>
             </div>
           </div>
         </div>

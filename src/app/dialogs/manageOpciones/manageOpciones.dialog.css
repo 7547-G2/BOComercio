@@ -1,7 +1,15 @@
-.container {
+  div.dual-list div.listbox button[name=addBtn],
+  div.dual-list div.listbox button[name=removeBtn],
+  div.dual-list div.listbox button.btn.btn-primary.btn-block.point-left
+  {
+    display: none !important;
+  }
+  
+  .container {
     display: flex;
     flex-direction: column;
-    width: 450px;
+    width: 650px;
+    height: 400px;
   }
   
   /*
@@ -21,4 +29,4 @@
   
   .mat-dialog-content{
     min-height: 150px;
-  } 
+  }

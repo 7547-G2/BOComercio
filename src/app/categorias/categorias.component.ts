@@ -66,7 +66,7 @@ export class CategoriasComponent implements OnInit {
       data: { categoria: categoria }
     });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
@@ -82,7 +82,7 @@ export class CategoriasComponent implements OnInit {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       data: { id: cat.id, tipo: cat.tipo, active: cat.active, orderPriority: cat.orderPriority }
     });
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         const foundIndex = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === cat.id);
         this.categoriaDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
@@ -97,16 +97,16 @@ export class CategoriasComponent implements OnInit {
     if (categorias.length > 0) {
       let maximum = Math.max.apply(Math, categorias.map(function (f) { return f.orderPriority; }));
       let catPrevia = categorias.find(x => x.orderPriority === maximum);
-      this.dataService.swapCategories(categoria, catPrevia);
 
-      const IndexCategoria = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === categoria.id);
-      const IndexCatPrevia = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === catPrevia.id);
+      //const IndexCategoria = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === categoria.id);
+      //const IndexCatPrevia = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === catPrevia.id);
+      this.dataService.swapCategories(categoria, catPrevia);
         //console.log("foundIndex: "+foundIndex);
         // Then you update that record using data from dialogData (values you enetered)
-      this.categoriaDatabase.dataChange.value[IndexCategoria] = catPrevia;
-      this.categoriaDatabase.dataChange.value[IndexCatPrevia] = categoria;
+      //this.categoriaDatabase.dataChange.value[IndexCategoria] = catPrevia;
+      //this.categoriaDatabase.dataChange.value[IndexCatPrevia] = categoria;
         // And lastly refresh table
-        this.refreshTable();
+        this.refresh();
       
     } else {
       alert("No hay una categoría de orden mayor.");
@@ -121,14 +121,14 @@ export class CategoriasComponent implements OnInit {
       let catPrevia = categorias.find(x => x.orderPriority === min);
       this.dataService.swapCategories(categoria, catPrevia);
 
-      const IndexCategoria = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === categoria.id);
-      const IndexCatPrevia = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === catPrevia.id);
+      //const IndexCategoria = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === categoria.id);
+      //const IndexCatPrevia = this.categoriaDatabase.dataChange.value.findIndex(x => x.id === catPrevia.id);
         //console.log("foundIndex: "+foundIndex);
         // Then you update that record using data from dialogData (values you enetered)
-      this.categoriaDatabase.dataChange.value[IndexCategoria] = catPrevia;
-      this.categoriaDatabase.dataChange.value[IndexCatPrevia] = categoria;
+      //this.categoriaDatabase.dataChange.value[IndexCategoria] = catPrevia;
+      //this.categoriaDatabase.dataChange.value[IndexCatPrevia] = categoria;
         // And lastly refresh table
-        this.refreshTable();
+        this.refresh();
       
     } else {
       alert("No hay una categoría de orden menor.");

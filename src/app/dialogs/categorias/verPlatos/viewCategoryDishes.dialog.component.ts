@@ -12,8 +12,6 @@ export class viewCategoryDishesComponent {
 
   constructor(public dialogRef: MatDialogRef<viewCategoryDishesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any[], public dataService: PlatosService) {
-      console.log('llego')
-      console.log(this.data)
   }
 
   dataSource = new MatTableDataSource(this.data);

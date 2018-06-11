@@ -30,7 +30,6 @@ export class OpcionesService {
       //this.changeDetectorRefs.detectChanges();
     },
       (error: HttpErrorResponse) => {
-        console.log(error.name + ' ' + error.message);
       });
   }
 

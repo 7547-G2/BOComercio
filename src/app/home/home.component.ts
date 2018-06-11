@@ -181,7 +181,6 @@ export class HomeComponent implements OnInit {
         let target = [];
         target =  this.opcionesService.getSelected();
         dish.opcionalIds = target.map(function(a) {return a["id"];});
-        console.log(dish.opcionalIds);
         this.dataService.updateIssue(dish);
         //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
         //this.refresh();

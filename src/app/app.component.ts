@@ -12,7 +12,6 @@ export class AppComponent {
     motivo: string;
     estado: string;
     constructor(private router: Router) {
-        console.log(localStorage.getItem('currentUser'));
         if (localStorage.getItem('currentUser')) {
             let currentUser = JSON.parse(localStorage.getItem('currentUser'))
             this.nombre = currentUser.name

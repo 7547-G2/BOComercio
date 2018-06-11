@@ -15,7 +15,6 @@ export class EditCategoryDialogComponent {
   constructor(private changeDetectorRef: ChangeDetectorRef,public dialogRef: MatDialogRef<EditCategoryDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               public dataService: CategoriaService) { 
-                console.log(data);
               }
 
   formControl = new FormControl('', [

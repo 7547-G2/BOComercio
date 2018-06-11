@@ -19,7 +19,6 @@ export class viewDishesComponent {
   constructor(public dialogRef: MatDialogRef<viewDishesComponent>,
     public httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any, public platosService: PedidosPlatosService) {
-      console.log(this.data);
       this.loadData();
   }
 

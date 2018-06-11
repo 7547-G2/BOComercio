@@ -46,7 +46,6 @@ export class PedidosService {
       //this.changeDetectorRefs.detectChanges();
     },
       (error: HttpErrorResponse) => {
-        console.log(error.name + ' ' + error.message);
       });
   }
 
@@ -60,7 +59,6 @@ export class PedidosService {
       //this.changeDetectorRefs.detectChanges();
     },
       (error: HttpErrorResponse) => {
-        console.log(error.name + ' ' + error.message);
       });
     }
   

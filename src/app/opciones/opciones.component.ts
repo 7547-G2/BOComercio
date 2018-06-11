@@ -108,7 +108,6 @@ export class OpcionesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        console.log(id + " - " + foundIndex);
         // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
@@ -197,7 +196,6 @@ export class OpcionesDataSource extends DataSource<Opcion> {
       this.filteredData = this.dataService.data.slice().filter((opcion: Opcion) => {
         var dishStr = (opcion != null) ? opcion.nombre : "";
         const searchStr = (dishStr).toLowerCase();
-        console.log("this.filteredData:" + this.filteredData);
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
 

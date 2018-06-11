@@ -22,7 +22,6 @@ export class ManageOpcionesDialogComponent {
       result => {
       this.source = result;
       this.target = this.source.filter(item => data.opcionalIds.indexOf(item.id) > -1);
-      console.log(this.target);
       }
     );
   }

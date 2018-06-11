@@ -31,7 +31,6 @@ export class PedidosComponent implements OnInit {
   pedidoService: PedidosService | null;
 
   constructor(public httpClient: HttpClient,
-    private changeDetector: ChangeDetectorRef,
     public dialog: MatDialog,
     public dataService: PedidosService,
     private router: Router) { }

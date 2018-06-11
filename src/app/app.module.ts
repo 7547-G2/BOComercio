@@ -38,6 +38,7 @@ import { viewCategoryDishesComponent } from './dialogs/categorias/verPlatos/view
 import { ManageOpcionesDialogComponent } from './dialogs/manageOpciones/manageOpciones.dialog.component';
 import { CategoriaService } from './services/categorias.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashBoardService } from './services/dashboard.service';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     PedidosPlatosService,
     OpcionesService,
     PedidosService,
+    DashBoardService,
     AuthenticationService
   ],
   bootstrap: [AppComponent]

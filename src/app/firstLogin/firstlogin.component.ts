@@ -39,7 +39,6 @@ export class FirstLoginComponent implements OnInit {
                 },
                 error => {
                     this.loading = false;
-                    console.log(error);
                     this.model.error = "error";
                 });
     }

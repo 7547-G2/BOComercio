@@ -47,7 +47,6 @@ export class CategoriaService {
       this.dataChange.next(data);
     },
       (error: HttpErrorResponse) => {
-        console.log(error.name + ' ' + error.message);
       });
   }
   changeStatus(id: number): void {
@@ -62,7 +61,6 @@ export class CategoriaService {
 
 
   addCategory(kanbanItem: CategoriaPlatoPost): void {
-    console.log(kanbanItem)
     let nuevaCategoria = kanbanItem.tipo//new CategoriaPlatoPost(kanbanItem.id,kanbanItem.tipo,JSON.parse(localStorage.getItem('currentUser')).comercioId);
     this.httpClient.post(this.API_URL  + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/categoriasComida'
       , nuevaCategoria).subscribe(data => {

@@ -76,8 +76,17 @@ export class PlatosService {
 
   getComercio(): any {
     return this.httpClient.get(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId)
-      .map(user => { return user; });
+      .map(user => { 
+        return user; });
   }
+
+  //  localStorage.setItem('estadoComercio', JSON.stringify(user.estado));
+
+  checkEstadoComercio(): void {
+    this.httpClient.get<any>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId)
+      .map(user => { localStorage.setItem('estadoComercio', JSON.stringify(user.estadoComercio));});
+  }
+
 
   // ADD, POST METHOD
   addIssue(dish: Dish): void {

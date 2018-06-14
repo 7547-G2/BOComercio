@@ -99,6 +99,8 @@ export class EditProfileComponent implements OnInit {
         this.dataService.getComercio().subscribe(
             result => {this.comercio = result;}
         );
+
+      this.dataService.checkEstadoComercio();
         this.dataService.getTiposDeComercio().subscribe(
             result => {this.tiposDeComida = result;}
         );

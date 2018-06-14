@@ -48,8 +48,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
       // logged in so return true
-
       this.loadData();
+      this.dataService.checkEstadoComercio();
       return;
     }
     this.router.navigate(['/login']);

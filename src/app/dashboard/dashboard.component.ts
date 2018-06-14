@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashBoardService } from '../services/dashboard.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { PlatosService } from '../services/platos.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,7 @@ export class DashboardComponent implements OnInit {
   starList = [];
   conDecimal: boolean;
   dashInfo: DashBoardInfo = new DashBoardInfo();
-
+  platoService: PlatosService;
 
   constructor(public httpClient: HttpClient,
     public dataService: DashBoardService,
@@ -21,6 +22,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
       this.loadData();
+      this.platoService.checkEstadoComercio();
       return;
     }
     this.router.navigate(['/login']);

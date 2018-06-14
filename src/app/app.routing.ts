@@ -8,6 +8,7 @@ import { PedidosComponent } from './pedidos/index';
 import { OpcionesComponent } from './opciones/index'
 import { CategoriasComponent } from './categorias/index';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ComentariosComponent } from './comentarios/index';
 
 const appRoutes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
     { path: 'categorias', component: CategoriasComponent },
     // otherwise redirect to login
     { path: 'dashboard', component: DashboardComponent },
+    { path: 'comentarios', component: ComentariosComponent },
  
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

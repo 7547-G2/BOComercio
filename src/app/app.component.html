@@ -38,7 +38,7 @@
     <div class="container">
         <div class="col-sm-12">
             <router-outlet>
-                <div class="alert alert-danger" role="alert" *ngIf="isLoggedIn && (estado == 'deshabilitado')">
+                <div class="alert alert-danger" role="alert" *ngIf="isLoggedIn && isBanned">
                     <strong>Su comercio se encuentra deshabilitado, comuniquese con el administrador de Hoy Como</strong> <br>
                     <strong>Motivo: </strong>{{motivo}}
                 </div>

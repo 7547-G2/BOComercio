@@ -39,6 +39,7 @@ import { ManageOpcionesDialogComponent } from './dialogs/manageOpciones/manageOp
 import { CategoriaService } from './services/categorias.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashBoardService } from './services/dashboard.service';
+import { ComentariosComponent } from './comentarios';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { DashBoardService } from './services/dashboard.service';
     AddCategoryDialogComponent,
     EditCategoryDialogComponent,
     EditDialogComponent,
+    ComentariosComponent,
     DeleteDialogComponent,
     ModifyStateComponent,
     DashboardComponent,

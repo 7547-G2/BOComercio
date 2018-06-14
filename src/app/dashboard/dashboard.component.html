@@ -113,7 +113,8 @@
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">rate_review</i>22 comentarios sin réplicas
+                            <i class="material-icons">rate_review</i>
+                            <a routerLink="/comentarios" routerLinkActive="active">22 comentarios sin réplicas</a>
                         </div>
                     </div>
                 </div>
@@ -125,13 +126,18 @@
                             <i class="material-icons">star</i>
                         </div>
                         <p class="card-category">Calificación</p>
-                        <h3 class="card-title">{{dashInfo.rating}}
-                            <i class="material-icons yellow-icon">star</i>
+                        <h3 class="card-title left">
+                            <i *ngIf="dashInfo.rating == 1" class="material-icons md-18">star star_border star_border star_border star_border</i>
+                            <i *ngIf="(2 >  dashInfo.rating) && (dashInfo.rating > 1)" class="material-icons md-18">star star_half star_border star_border star_border</i>
+                            <i *ngIf="dashInfo.rating == 2" class="material-icons md-18">star star star_border star_border star_border</i>
+                            <i *ngIf="(3 > dashInfo.rating) && (dashInfo.rating > 3)" class="material-icons md-18">star star star_half star_border star_border</i>
+                            <i *ngIf="dashInfo.rating == 3" class="material-icons md-18">star star star star_border star_border</i>
+                            <i *ngIf="(4 > dashInfo.rating) && (dashInfo.rating > 3)" class="material-icons md-18">star star star star_half star_border</i>
+                            <i *ngIf="dashInfo.rating == 4" class="material-icons md-18">star star star star star_border</i>
+                            <i *ngIf="(5 > dashInfo.rating) && (dashInfo.rating > 4)" class="material-icons md-18">star star star star star_half</i>
+                            <i *ngIf="5 == dashInfo.rating" class="material-icons md-18">star star star star star</i>
                         </h3>
-                        <!--a *ngFor="let item of starList; let i=index ">
-                            <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
-                        </a>
-                        <i *ngIf={{conDecimal}} class="material-icons yellow-icon">star_half</i>
+                        <!--i *ngIf={{conDecimal}} class="material-icons yellow-icon">star_half</i>
                         <i class="material-icons yellow-icon">star</i>
                         <i class="material-icons yellow-icon">star_half</i>
                             <h3 class="card-title">{{dashInfo.rating}}</h3-->

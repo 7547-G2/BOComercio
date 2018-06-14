@@ -15,26 +15,34 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { viewDishesComponent } from '../dialogs/pedidos/verPlatos/verPlatos.dialog.component';
-import { ModifyStateComponent } from '../dialogs/pedidos/modificarEstado/edit.dialog.component';
 import { PlatosService } from '../services/platos.service';
+import { ComentariosService } from '../services/comentarios.service';
 
 @Component({
-  templateUrl: './pedidos.component.html',
+  templateUrl: './comentarios.component.html',
   styleUrls: ['../app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PedidosComponent implements OnInit {
+export class ComentariosComponent implements OnInit {
 
-  displayedColumns = ['id', 'fecha', 'monto', 'estado', 'modificarEstado', 'actions','direccion', 'telefono'];
-  pedidos: Pedido[];
-  dataSource: PedidosDataSource | null;
+  id: number;
+  usuario: string;
+  fecha: string;
+  puntaje: number;
+  comentario: string;
+  replica: string;
+
+  displayedColumns = ['id', 'usuario', 'fecha', 'puntaje', 'comentario'];
+  comentarios: Comentario[];
+  dataSource: ComentariosDataSource | null;
   pedidoService: PedidosService | null;
   platoService: PlatosService;
+  comentariosService: ComentariosService | null;
+  isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
+  expandedElement: any;
 
   constructor(public httpClient: HttpClient,
     public dialog: MatDialog,
-    public dataService: PedidosService,
     private router: Router) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -53,70 +61,26 @@ export class PedidosComponent implements OnInit {
     this.loadData();
   }
 
-  startEdit(id: number, fecha: string, monto: number, estado: string, comentario: string) {
-    let pedido = new Pedido();
-    pedido.estado = estado;
-    pedido.id = id;
-    pedido.monto = monto;
-    pedido.fecha = fecha;
-    const dialogRef = this.dialog.open(ModifyStateComponent, {
-      data: { estado: estado, id: id }  
-    });
-    pedido.estado = this.dataService.getNuevoEstado();
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.refresh();
-      }
-    });
-  }
-/*
-  private refreshTable() {
-    // if there's a paginator active we're using it for refresh
-    if (this.dataSource._paginator.hasNextPage()) {
-      this.dataSource._paginator.nextPage();
-      this.dataSource._paginator.previousPage();
-      // in case we're on last page this if will tick
-    } else if (this.dataSource._paginator.hasPreviousPage()) {
-      this.dataSource._paginator.previousPage();
-      this.dataSource._paginator.nextPage();
-      // in all other cases including active filter we do it like this
-    } else {
-      this.dataSource.filter = '';
-    }
-  }*/
-
-  viewDishes(id: number) {
-    const dialogRef = this.dialog.open(viewDishesComponent, {
-      data: { id: id }
-    });
-  }
-
   public loadData() {
-    this.pedidoService = new PedidosService(this.httpClient);//, this.changeDetectorRefs);
-    this.dataSource = new PedidosDataSource(this.pedidoService, this.paginator, this.sort);
+    this.pedidoService = new PedidosService(this.httpClient);
+    this.comentariosService = new ComentariosService(this.httpClient);
+    this.dataSource = new ComentariosDataSource(this.comentariosService, this.paginator, this.sort);
     this.dataSource._sort.direction = "asc";
   }
 
 }
 
-export class Pedido {
+export class Comentario {
   id: number;
-  monto: number;
+  usuario: string;
   fecha: string;
-  estado: string;
-  platos: Plato[];
-  address: string;
-}
-
-export class Plato {
-  nombre: string;
-  opciones: string;
-  cantidad: number;
-  observacion: string;
+  puntaje: number;
+  comentario: string;
+  replica: string;
 }
 
 
-export class PedidosDataSource extends DataSource<Pedido> {
+export class ComentariosDataSource extends DataSource<Comentario> {
   _filterChange = new BehaviorSubject('');
 
   get filter(): string {
@@ -127,9 +91,9 @@ export class PedidosDataSource extends DataSource<Pedido> {
     this._filterChange.next(filter);
   }
 
-  renderedData: Pedido[] = [];
+  renderedData: Comentario[] = [];
 
-  constructor(public pedidoDatabase: PedidosService,
+  constructor(public comentariosDatabase: ComentariosService,
     public _paginator: MatPaginator,
     public _sort: MatSort) {
     super();
@@ -139,21 +103,24 @@ export class PedidosDataSource extends DataSource<Pedido> {
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<Pedido[]> {
+  connect(): Observable<Comentario[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
-      this.pedidoDatabase.dataChange,
+      this.comentariosDatabase.dataChange,
       this._sort.sortChange,
       this._filterChange,
       this._paginator.page
     ];
 
-    this.pedidoDatabase.getPedidos();
+    this.comentariosDatabase.getComentarios();
 
     return Observable.merge(...displayDataChanges).switchMap(() => {
 
+
+      const sortedData = [];
       // Sort filtered data
-      const sortedData = this.sortData(this.pedidoDatabase.data.slice());
+      this.comentariosDatabase.data.slice().forEach(element => sortedData.push(element, { detailRow: true, element }));
+      
 
       // Grab the page's slice of the filtered sorted data.
       const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
@@ -168,22 +135,21 @@ export class PedidosDataSource extends DataSource<Pedido> {
 
 
   /** Returns a sorted copy of the database data. */
-  sortData(data: Pedido[]): Pedido[] {
-    
+  sortData(data: Comentario[]): Comentario[] {
+
     return data.sort((a, b) => {
       let propertyA: number;
       let propertyB: number;
 
       switch (this._sort.active) {
         case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
-        case 'monto': [propertyA, propertyB] = [a.monto, b.monto]; break;
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-      
 
 
-      return (valueA < valueB ? -1 :1) * (this._sort.direction === 'desc' ? 1 : -1);
+
+      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'desc' ? 1 : -1);
     });
   }
 }

@@ -24,8 +24,16 @@ export class AppComponent {
         }
     }
 
+    /*getNombre(){
+        return JSON.parse(localStorage.getItem('currentUser')).nombre;
+    }*/
+
     get isLoggedIn() {
         return localStorage.getItem('currentUser');
+    }
+
+    get isBanned() {
+        return JSON.parse(localStorage.getItem('estadoComercio')) == "deshabilitado";
     }
 
     goToMenu() {

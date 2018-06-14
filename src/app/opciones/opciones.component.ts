@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 import { TipoComida } from '../models/tipoComida';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Opcion } from '../models/Opcion';
+import { PlatosService } from '../services/platos.service';
 
 @Component({
   templateUrl: './opciones.component.html',
@@ -29,6 +30,7 @@ export class OpcionesComponent implements OnInit {
 
   displayedColumns = ['description', 'price', 'activo','actions'];
   exampleDatabase: OpcionesService | null;
+  platoService: PlatosService;
   dataSource: OpcionesDataSource | null;
   index: number;
   id: number;
@@ -47,6 +49,7 @@ export class OpcionesComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       // logged in so return true
 
+      this.platoService.checkEstadoComercio();
       this.loadData();
       return;
     }

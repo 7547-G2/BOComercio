@@ -1,0 +1,53 @@
+<h4>Administración de pedidos</h4>
+<div class="pedidos-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="fecha">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.fecha}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="monto">
+      <mat-header-cell *matHeaderCellDef>Monto</mat-header-cell>
+      <mat-cell *matCellDef="let element">${{element.monto}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="estado">
+      <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.estado}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="telefono">
+      <mat-header-cell *matHeaderCellDef> Teléfono </mat-header-cell>
+      <mat-cell *matCellDef="let element">15-5555-5555
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="direccion">
+      <mat-header-cell *matHeaderCellDef> Dirección </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.address}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="modificarEstado">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button class='btn btn-primary' color="primary" (click)="startEdit(element.id, element.fecha, element.monto, element.estado)">Modificar</button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="primary" (click)="viewDishes(row.id)">
+          <i class="material-icons">remove_red_eye</i>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <div class="no-results" [style.display]="dataSource.length == 0 ? '' : 'none'">
+    Sin resultados
+  </div>
+  <mat-paginator #paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>

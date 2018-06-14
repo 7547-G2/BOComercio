@@ -21,10 +21,23 @@
 
 .mat-dialog-content{
   min-height: 150px;
-} 
+}
 
-.mat-cell:nth-child(6),
-.mat-header-cell:nth-child(6),
-{
-flex: 0 0 25%;
+
+.mat-column-imagen {
+  flex: 0 0 55px;
+}
+
+.mat-column-description {
+  flex: 0 0 300px;
+}
+
+.mat-column-price {
+  flex: 0 0 55px;
+}
+.mat-column-activo {
+  flex: 0 0 55px;
+}
+.mat-column-actions {
+  flex: 0 0 300px;
 }

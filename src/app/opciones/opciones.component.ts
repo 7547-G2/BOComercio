@@ -30,7 +30,7 @@ export class OpcionesComponent implements OnInit {
 
   displayedColumns = ['description', 'price', 'activo','actions'];
   exampleDatabase: OpcionesService | null;
-  platoService: PlatosService;
+  //platoService: PlatosService;
   dataSource: OpcionesDataSource | null;
   index: number;
   id: number;
@@ -49,7 +49,7 @@ export class OpcionesComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       // logged in so return true
 
-      this.platoService.checkEstadoComercio();
+      //this.platoService.checkEstadoComercio();
       this.loadData();
       return;
     }

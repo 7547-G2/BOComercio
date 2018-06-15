@@ -30,7 +30,7 @@ export class PedidosComponent implements OnInit {
   pedidos: Pedido[];
   dataSource: PedidosDataSource | null;
   pedidoService: PedidosService | null;
-  platoService: PlatosService;
+//platoService: PlatosService;
 
   constructor(public httpClient: HttpClient,
     public dialog: MatDialog,
@@ -42,7 +42,7 @@ export class PedidosComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
-      this.platoService.checkEstadoComercio();
+      //this.platoService.checkEstadoComercio();
       this.loadData();
       return;
     }

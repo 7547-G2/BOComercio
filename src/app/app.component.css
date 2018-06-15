@@ -60,3 +60,7 @@ agm-map{
 .navbar-default .navbar-brand {
   color: #FFFFFF;
 }
+
+button.btn-block {
+  display: none !important;
+}

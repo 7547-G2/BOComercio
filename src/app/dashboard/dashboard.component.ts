@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   starList = [];
   conDecimal: boolean;
   dashInfo: DashBoardInfo = new DashBoardInfo();
-  platoService: PlatosService;
+  //platoService: PlatosService = new PlatosService(this.httpClient);
 
   constructor(public httpClient: HttpClient,
     public dataService: DashBoardService,
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
       this.loadData();
-      this.platoService.checkEstadoComercio();
+      //this.platoService.checkEstadoComercio();
       return;
     }
     this.router.navigate(['/login']);

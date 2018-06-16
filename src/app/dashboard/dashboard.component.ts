@@ -12,6 +12,7 @@ import { PlatosService } from '../services/platos.service';
 export class DashboardComponent implements OnInit {
   starList = [];
   conDecimal: boolean;
+  today = Date.now();
   dashInfo: DashBoardInfo = new DashBoardInfo();
   //platoService: PlatosService = new PlatosService(this.httpClient);
 
@@ -57,8 +58,13 @@ export class DashboardComponent implements OnInit {
       result => {
         this.dashInfo.leadtime = result[0].leadTime;
         this.dashInfo.rating = Math.floor(result[0].rating);
-        this.setStar(this.dashInfo.rating);
-        this.conDecimal = result[0].rating > this.dashInfo.rating;
+      }
+    )
+    this.dataService.getInfo().subscribe(
+      result => {
+        this.dashInfo.facturadoDia = result.facturadoDia;
+        this.dashInfo.facturadoMes = result.facturadoMes;
+        this.dashInfo.feeDelMes = result.facturadoMes*0.01;
       }
     )
   }
@@ -66,6 +72,9 @@ export class DashboardComponent implements OnInit {
 
 
 export class DashBoardInfo {
+  facturadoMes: number;
+  facturadoDia: number;
+  feeDelMes: number;
   rating: any;
   pedidosIngresados: number;
   pedidosEnPreparacion: number;

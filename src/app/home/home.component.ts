@@ -29,7 +29,7 @@ import { OpcionesService } from '../services/opciones.service';
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions'];
+  displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions','orden'];
   exampleDatabase: PlatosService | null;
   dataSource: ExampleDataSource | null;
   tiposDeComida: TipoComida[];
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-    increaseOrder(dish:Dish) {
+  increaseOrder(dish: Dish) {
 
     let dishes = this.exampleDatabase.dataChange.value.filter(x => x.orden < dish.orden && x.categoria === dish.categoria);
     if (dishes.length > 0) {
@@ -83,34 +83,34 @@ export class HomeComponent implements OnInit {
       this.dataService.updateIssue(dish);
 
       //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
-      
+
 
       this.dataService.updateIssue(dishPrevio);
       //await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
-      
+
       const IndexDish = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dish.id);
       const IndexDishPrevio = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dishPrevio.id);
-        //console.log("foundIndex: "+foundIndex);
-        // Then you update that record using data from dialogData (values you enetered)
+      //console.log("foundIndex: "+foundIndex);
+      // Then you update that record using data from dialogData (values you enetered)
       this.exampleDatabase.dataChange.value[IndexDish] = dishPrevio;
       this.exampleDatabase.dataChange.value[IndexDishPrevio] = dish;
-        // And lastly refresh table
-        this.refreshTable();
-      
-    /*let dish = new Dish();
-      dish.id = id;
-      dish.orden = maximum;
-      console.log("maximum: " +maximum);
-      this.dataService.updateIssue(dish);
+      // And lastly refresh table
+      this.refreshTable();
 
-      await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
-      let dish2 = new Dish();
-      dish2.id = dishPrevio;
-      dish2.orden = orden;
-      console.log("orden: " +orden);
-      this.dataService.updateIssue(dish2);
-      await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
-      this.refresh();*/
+      /*let dish = new Dish();
+        dish.id = id;
+        dish.orden = maximum;
+        console.log("maximum: " +maximum);
+        this.dataService.updateIssue(dish);
+  
+        await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
+        let dish2 = new Dish();
+        dish2.id = dishPrevio;
+        dish2.orden = orden;
+        console.log("orden: " +orden);
+        this.dataService.updateIssue(dish2);
+        await new Promise(resolve => setTimeout(()=>resolve(), 1000)).then(()=>console.log("fired"));
+        this.refresh();*/
     } else {
       alert("No hay un plato de orden mayor para esta categoría.");
     }
@@ -130,8 +130,8 @@ export class HomeComponent implements OnInit {
       this.dataService.updateIssue(dishPrevio);
       const IndexDish = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dish.id);
       const IndexDishPrevio = this.exampleDatabase.dataChange.value.findIndex(x => x.id === dishPrevio.id);
-        //console.log("foundIndex: "+foundIndex);
-        // Then you update that record using data from dialogData (values you enetered)
+      //console.log("foundIndex: "+foundIndex);
+      // Then you update that record using data from dialogData (values you enetered)
       this.exampleDatabase.dataChange.value[IndexDish] = dishPrevio;
       this.exampleDatabase.dataChange.value[IndexDishPrevio] = dish;
       this.refreshTable();
@@ -141,7 +141,7 @@ export class HomeComponent implements OnInit {
   }
 
   //TODO agregar platoState, cuando este en el get
-  startEdit(issue :Dish) {
+  startEdit(issue: Dish) {
     const dialogRef = this.dialog.open(EditDialogComponent, {
       data: { issue: issue }
     });
@@ -164,9 +164,9 @@ export class HomeComponent implements OnInit {
 
 
   //TODO agregar platoState, cuando este en el get
-  openOptions(dish:Dish) {
-    const dialogRef = this.dialog.open(ManageOpcionesDialogComponent,{
-      data:dish
+  openOptions(dish: Dish) {
+    const dialogRef = this.dialog.open(ManageOpcionesDialogComponent, {
+      data: dish
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -174,13 +174,12 @@ export class HomeComponent implements OnInit {
         // When using an edit things are little different, firstly we find record inside DataService by id
         //const foundIndex = this.exampleDatabase.dataChange.value.find(x => x.id === this.id).orden;
         //const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        //console.log("foundIndex: "+foundIndex);
         // Then you update that record using data from dialogData (values you enetered)
         //this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
         let target = [];
-        target =  this.opcionesService.getSelected();
-        dish.opcionalIds = target.map(function(a) {return a["id"];});
+        target = this.opcionesService.getSelected();
+        dish.opcionalIds = target.map(function (a) { return a["id"]; });
         this.dataService.updateIssue(dish);
         //this.dataSource.sortData(this.dataSource._exampleDatabase.data);
         //this.refresh();
@@ -235,14 +234,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  public onChange(value, i: number, id: number, imagen: string, nombre: string, precio: number) {
-    let dish = new Dish();
-    dish.id = id;
-    dish.imagen = imagen;
-    dish.nombre = nombre;
-    dish.precio = precio;
+  public onChange(value, dish: Dish) {
     dish.state = value.checked ? 'ACTIVO' : 'INACTIVO';
     this.dataService.updateIssue(dish);
+    console.log(dish.state);
   }
 }
 
@@ -317,7 +312,7 @@ export class ExampleDataSource extends DataSource<Dish> {
       let propertyB: number;
       let propertyBB: number;
 
-    
+
       [propertyA, propertyB] = [a.categoria, b.categoria];
       [propertyAA, propertyBB] = [a.orden, b.orden];
       /*const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
@@ -327,8 +322,8 @@ export class ExampleDataSource extends DataSource<Dish> {
 */
 
 
-      return ((propertyA == propertyB) ? (propertyAA < propertyBB ? -1 : 1) : 
-      ((propertyA < propertyB) ? -1 :1));
+      return ((propertyA == propertyB) ? (propertyAA < propertyBB ? -1 : 1) :
+        ((propertyA < propertyB) ? -1 : 1));
     });
   }
 }

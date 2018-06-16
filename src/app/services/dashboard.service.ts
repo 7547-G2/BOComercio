@@ -24,4 +24,9 @@ export class DashBoardService {
     return this.httpClient.get(this.API_URL + '/mobileUser/comercios?search=id:' + JSON.parse(localStorage.getItem('currentUser')).comercioId)
       .map(data => { return data; });
   }
+
+  getInfo(): any {
+    return this.httpClient.get(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/info')
+      .map(data => { return data; });
+  }
 }

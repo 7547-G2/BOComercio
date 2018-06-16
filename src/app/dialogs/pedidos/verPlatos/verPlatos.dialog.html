@@ -1,5 +1,4 @@
 <div class="container">
-  <div class="row">
   <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="Plato">
       <mat-header-cell *matHeaderCellDef>Plato</mat-header-cell>
@@ -20,8 +19,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
   </mat-table>
-    <div mat-dialog-actions  layout-align="end end">
-      <button mat-button (click)="onNoClick()" tabindex="-1" class="btn btn-sm btn-primary">Cerrar</button>
-    </div>
+  <div mat-dialog-actions layout-align="end end">
+    <button mat-button (click)="onNoClick()" tabindex="-1" class="btn btn-sm btn-primary">Cerrar</button>
   </div>
 </div>

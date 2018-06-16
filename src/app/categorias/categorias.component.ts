@@ -38,7 +38,7 @@ export class CategoriasComponent implements OnInit {
   constructor(public httpClient: HttpClient,
     public dialog: MatDialog,
     public dataService: CategoriaService,
-    public platoService: PlatosService,
+    //public platoService: PlatosService,
     private router: Router) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -47,7 +47,7 @@ export class CategoriasComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
-      this.platoService.checkEstadoComercio();
+      //this.platoService.checkEstadoComercio();
       this.loadData();
       return;
     }

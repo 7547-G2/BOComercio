@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy, trigger, state, style, transition, animate } from '@angular/core';
 import { PedidosService } from '../services/pedidos.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, MatSortModule } from '@angular/material';
@@ -17,26 +17,34 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { PlatosService } from '../services/platos.service';
 import { ComentariosService } from '../services/comentarios.service';
+import { ReplicaDialogComponent } from '../dialogs/replica/replica.dialog.component';
+import { Comentario } from '../models/Comentario';
 
 @Component({
   templateUrl: './comentarios.component.html',
-  styleUrls: ['../app.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./comentarios.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('expanded', style({ height: '*', visibility: 'visible' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ComentariosComponent implements OnInit {
-
+/*
   id: number;
   usuario: string;
   fecha: string;
   puntaje: number;
   comentario: string;
-  replica: string;
+  replica: string;*/
 
-  displayedColumns = ['id', 'usuario', 'fecha', 'puntaje', 'comentario'];
+  displayedColumns = ['id', 'usuario', 'fecha', 'puntaje', 'comentario','responder'];
   comentarios: Comentario[];
   dataSource: ComentariosDataSource | null;
   pedidoService: PedidosService | null;
-  platoService: PlatosService;
+  //platoService: PlatosService;
   comentariosService: ComentariosService | null;
   isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
   expandedElement: any;
@@ -50,7 +58,7 @@ export class ComentariosComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
-      this.platoService.checkEstadoComercio();
+      //this.platoService.checkEstadoComercio();
       this.loadData();
       return;
     }
@@ -62,23 +70,27 @@ export class ComentariosComponent implements OnInit {
   }
 
   public loadData() {
-    this.pedidoService = new PedidosService(this.httpClient);
+    //this.pedidoService = new PedidosService(this.httpClient);
     this.comentariosService = new ComentariosService(this.httpClient);
     this.dataSource = new ComentariosDataSource(this.comentariosService, this.paginator, this.sort);
     this.dataSource._sort.direction = "asc";
   }
 
-}
+    //TODO agregar platoState, cuando este en el get
+    replicar(comentario: Comentario) {
+      const dialogRef = this.dialog.open(ReplicaDialogComponent, {
+        data: {id: comentario.id,usuario: comentario.usuario,fecha: comentario.fecha,
+          puntaje: comentario.puntaje,comentario: comentario.comentario,replica:comentario.replica }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 1) {
+          this.refresh();
+        }
+      });
+    }
 
-export class Comentario {
-  id: number;
-  usuario: string;
-  fecha: string;
-  puntaje: number;
-  comentario: string;
-  replica: string;
 }
-
 
 export class ComentariosDataSource extends DataSource<Comentario> {
   _filterChange = new BehaviorSubject('');

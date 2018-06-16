@@ -108,13 +108,12 @@
                             <i class="material-icons">comment</i>
                         </div>
                         <p class="card-category">Comentarios</p>
-                        <h3 class="card-title">503
-                        </h3>
+                        <h3 class="card-title"></h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">rate_review</i>
-                            <a routerLink="/comentarios" routerLinkActive="active">22 comentarios sin réplicas</a>
+                            <a routerLink="/comentarios" routerLinkActive="active">Ir a comentarios</a>
                         </div>
                     </div>
                 </div>
@@ -144,7 +143,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">star</i>572 calificaciones
+                            <i class="material-icons">star</i>Promedio de 572 calificaciones
                         </div>
                     </div>
                 </div>
@@ -158,11 +157,11 @@
                             <i class="material-icons">store</i>
                         </div>
                         <p class="card-category">Facturado del Mes</p>
-                        <h3 class="card-title">$34245</h3>
+                        <h3 class="card-title">${{dashInfo.facturadoMes}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">date_range</i> Últimos 10 días
+                            <i class="material-icons">date_range</i> Últimos {{today | date:'d'}} días
                         </div>
                     </div>
                 </div>
@@ -174,7 +173,7 @@
                             <i class="material-icons">store</i>
                         </div>
                         <p class="card-category">Facturado del Día</p>
-                        <h3 class="card-title">$750</h3>
+                        <h3 class="card-title">${{dashInfo.facturadoDia}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -190,7 +189,7 @@
                             <i class="material-icons">attach_money</i>
                         </div>
                         <p class="card-category">Fee del mes</p>
-                        <h3 class="card-title">$342,45</h3>
+                        <h3 class="card-title">${{dashInfo.feeDelMes}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">

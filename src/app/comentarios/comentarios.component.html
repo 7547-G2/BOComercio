@@ -5,45 +5,51 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="fecha">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.fecha}}</mat-cell>
+    <ng-container matColumnDef="usuario">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Usuario</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.usuario}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="monto">
-      <mat-header-cell *matHeaderCellDef>Monto</mat-header-cell>
-      <mat-cell *matCellDef="let element">${{element.monto}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="estado">
-      <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.estado}}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="telefono">
-      <mat-header-cell *matHeaderCellDef> Teléfono </mat-header-cell>
-      <mat-cell *matCellDef="let element">15-5555-5555
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="direccion">
-      <mat-header-cell *matHeaderCellDef> Dirección </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.address}}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="modificarEstado">
+    <ng-container matColumnDef="puntaje">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button class='btn btn-primary' color="primary" (click)="startEdit(element.id, element.fecha, element.monto, element.estado)">Modificar</button>
+        <i *ngIf="element.puntaje == 1" class="material-icons md-18">star star_border star_border star_border star_border</i>
+        <i *ngIf="(2 >  element.puntaje) && (element.puntaje > 1)" class="material-icons md-18">star star_half star_border star_border star_border</i>
+        <i *ngIf="element.puntaje == 2" class="material-icons md-18">star star star_border star_border star_border</i>
+        <i *ngIf="(3 > element.puntaje) && (element.puntaje > 3)" class="material-icons md-18">star star star_half star_border star_border</i>
+        <i *ngIf="element.puntaje == 3" class="material-icons md-18">star star star star_border star_border</i>
+        <i *ngIf="(4 > element.puntaje) && (element.puntaje > 3)" class="material-icons md-18">star star star star_half star_border</i>
+        <i *ngIf="element.puntaje == 4" class="material-icons md-18">star star star star star_border</i>
+        <i *ngIf="(5 > element.puntaje) && (element.puntaje > 4)" class="material-icons md-18">star star star star star_half</i>
+        <i *ngIf="5 == element.puntaje" class="material-icons md-18">star star star star star</i>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="fecha">
+      <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.fecha}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="comentario">
+      <mat-header-cell *matHeaderCellDef>Comentario</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.comentario}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="responder">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary" (click)="viewDishes(row.id)">
-          <i class="material-icons">remove_red_eye</i>
-        </button>
+      <mat-cell *matCellDef="let element">
+        <button class='btn btn-primary' *ngIf="element.replica == '' || element.replica == undefined" color="primary" (click)="replicar(element)">Responder</button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let detail"> 
+         Réplica: {{detail.element.replica}}
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row" [class.expanded]="expandedElement == row"
+      (click)="expandedElement = row"></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+      [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden">
+    </mat-row>
   </mat-table>
   <div class="no-results" [style.display]="dataSource.length == 0 ? '' : 'none'">
     Sin resultados

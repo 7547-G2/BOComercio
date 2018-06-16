@@ -40,6 +40,8 @@ import { CategoriaService } from './services/categorias.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashBoardService } from './services/dashboard.service';
 import { ComentariosComponent } from './comentarios';
+import { ReplicaDialogComponent } from './dialogs/replica/replica.dialog.component';
+import { ComentariosService } from './services/comentarios.service';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,8 @@ import { ComentariosComponent } from './comentarios';
     CategoriasComponent,
     FirstLoginComponent,
     EditProfileComponent,
-    ManageOpcionesDialogComponent
+    ManageOpcionesDialogComponent,
+    ReplicaDialogComponent
   ],
   imports: [
     AngularDualListBoxModule,
@@ -102,7 +105,8 @@ import { ComentariosComponent } from './comentarios';
     EditOpcionDialogComponent,
     DeleteOpcionDialogComponent,
     viewCategoryDishesComponent,
-    ManageOpcionesDialogComponent
+    ManageOpcionesDialogComponent,
+    ReplicaDialogComponent
   ],
   providers: [
     PlatosService,
@@ -111,7 +115,8 @@ import { ComentariosComponent } from './comentarios';
     OpcionesService,
     PedidosService,
     DashBoardService,
-    AuthenticationService
+    AuthenticationService,
+    ComentariosService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,34 @@
+<div class="container">
+  <h4 id="" class="modal-title">Respuesta a {{data.usuario}}</h4>
+  <h4 id="" class="modal-title">
+    Calificación:
+    <i *ngIf="data.puntaje == 1" class="material-icons md-18">star star_border star_border star_border star_border</i>
+    <i *ngIf="(2 >  data.puntaje) && (data.puntaje > 1)" class="material-icons md-18">star star_half star_border star_border star_border</i>
+    <i *ngIf="data.puntaje == 2" class="material-icons md-18">star star star_border star_border star_border</i>
+    <i *ngIf="(3 > data.puntaje) && (data.puntaje > 3)" class="material-icons md-18">star star star_half star_border star_border</i>
+    <i *ngIf="data.puntaje == 3" class="material-icons md-18">star star star star_border star_border</i>
+    <i *ngIf="(4 > data.puntaje) && (data.puntaje > 3)" class="material-icons md-18">star star star star_half star_border</i>
+    <i *ngIf="data.puntaje == 4" class="material-icons md-18">star star star star star_border</i>
+    <i *ngIf="(5 > data.puntaje) && (data.puntaje > 4)" class="material-icons md-18">star star star star star_half</i>
+    <i *ngIf="5 == data.puntaje" class="material-icons md-18">star star star star star</i>
+  </h4>
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <div class="form">
+      <mat-form-field color="primary">
+        <label matInput>Comentario</label>
+        <textarea matInput #inputstate [(ngModel)]="data.comentario" name="title" readonly></textarea>
+      </mat-form-field>
+    </div>
+    <div class="form">
+      <mat-form-field color="primary">
+        <label matInput>Réplica</label>
+        <textarea matInput #inputstate [(ngModel)]="data.replica" maxlength="255" rows="5" name="replica" required></textarea>
+        <!--textarea matInput #inputstate [(ngModel)]="data.replica" maxlength="255" rows="5" md-select-on-focus required>{{data.replica}}</textarea-->
+      </mat-form-field>
+    </div>
+  </form>
+  <div mat-dialog-actions>
+    <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()" class="btn btn-sm btn-primary">Responder</button>
+    <button mat-button (click)="onNoClick()" tabindex="-1" class="btn btn-sm btn-default">Cancelar</button>
+  </div>
+</div>

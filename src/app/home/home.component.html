@@ -26,7 +26,7 @@
     <ng-container matColumnDef="activo">
       <mat-header-cell *matHeaderCellDef> Activo </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <mat-slide-toggle [checked]="row.state=='ACTIVO'" (change)="onChange($event, i, row.id, row.imagen, row.nombre, row.precio)"
+        <mat-slide-toggle [checked]="row.state=='ACTIVO'" (change)="onChange($event, row)"
           color="primary"></mat-slide-toggle>
       </mat-cell>
     </ng-container>
@@ -53,6 +53,10 @@
           <i class="material-icons">format_list_numbered</i>
         </button>
       </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="orden">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.categoria}}{{element.orden}} </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

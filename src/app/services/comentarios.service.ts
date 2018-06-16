@@ -4,7 +4,7 @@ import { Dish } from '../models/Dish';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TipoComida } from '../models/tipoComida';
 import { Observable } from 'rxjs/Observable';
-import { Comentario } from '../comentarios';
+import { Comentario } from '../models/Comentario';
 
 @Injectable()
 export class ComentariosService {
@@ -20,18 +20,21 @@ export class ComentariosService {
   }
 
   getComentarios(): void {
-    /*this.httpClient.get<Comentario[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/pedidos').subscribe(data => {
+    this.httpClient.get<Comentario[]>(this.API_URL + '/backofficeComercio/' + JSON.parse(localStorage.getItem('currentUser')).comercioId + '/comentarios').subscribe(data => {
       this.dataChange.next(data);
     },
       (error: HttpErrorResponse) => {
-      });*/
+      });
   }
 
-  updatePedido(comentario: Comentario): void {
-    /*this.httpClient.put(this.API_URL + "/backofficeComercio/pedidos/" + pedido.id, pedido.estado).subscribe(data => {
+  replyCustomer(comentario: Comentario): void {
+    console.log(comentario);
+    //comentario.replica = "Esperamos tus nuevos pedidos";
+    let replica = {"replica": comentario.replica};
+    this.httpClient.put(this.API_URL + "/backofficeComercio/" +  JSON.parse(localStorage.getItem('currentUser')).comercioId + "/comentarios/"+comentario.id, replica).subscribe(data => {
     },
       (err: HttpErrorResponse) => {
       }
-    );*/
+    );
   }
 }

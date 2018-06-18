@@ -15,7 +15,7 @@
     </ng-container>
     <ng-container matColumnDef="estado">
       <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.estado}}
+      <mat-cell *matCellDef="let element">{{element.estado == "EnPreparacion" ? "En Preparación":element.estado}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="telefono">

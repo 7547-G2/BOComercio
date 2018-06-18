@@ -32,15 +32,15 @@ import { Comentario } from '../models/Comentario';
   ],
 })
 export class ComentariosComponent implements OnInit {
-/*
-  id: number;
-  usuario: string;
-  fecha: string;
-  puntaje: number;
-  comentario: string;
-  replica: string;*/
+  /*
+    id: number;
+    usuario: string;
+    fecha: string;
+    puntaje: number;
+    comentario: string;
+    replica: string;*/
 
-  displayedColumns = ['id', 'usuario', 'fecha', 'puntaje', 'comentario','responder'];
+  displayedColumns = ['id', 'usuario', 'fecha', 'puntaje', 'comentario', 'responder'];
   comentarios: Comentario[];
   dataSource: ComentariosDataSource | null;
   pedidoService: PedidosService | null;
@@ -76,19 +76,21 @@ export class ComentariosComponent implements OnInit {
     this.dataSource._sort.direction = "asc";
   }
 
-    //TODO agregar platoState, cuando este en el get
-    replicar(comentario: Comentario) {
-      const dialogRef = this.dialog.open(ReplicaDialogComponent, {
-        data: {id: comentario.id,usuario: comentario.usuario,fecha: comentario.fecha,
-          puntaje: comentario.puntaje,comentario: comentario.comentario,replica:comentario.replica }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === 1) {
-          this.refresh();
-        }
-      });
-    }
+  //TODO agregar platoState, cuando este en el get
+  replicar(comentario: Comentario) {
+    const dialogRef = this.dialog.open(ReplicaDialogComponent, {
+      data: {
+        id: comentario.id, usuario: comentario.usuario, fecha: comentario.fecha,
+        puntaje: comentario.puntaje, comentario: comentario.comentario, replica: comentario.replica
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.refresh();
+      }
+    });
+  }
 
 }
 
@@ -102,7 +104,7 @@ export class ComentariosDataSource extends DataSource<Comentario> {
   set filter(filter: string) {
     this._filterChange.next(filter);
   }
-
+  filteredData: Comentario[] = [];
   renderedData: Comentario[] = [];
 
   constructor(public comentariosDatabase: ComentariosService,
@@ -128,15 +130,18 @@ export class ComentariosDataSource extends DataSource<Comentario> {
 
     return Observable.merge(...displayDataChanges).switchMap(() => {
 
-
-      const sortedData = [];
+      let commentData = [];
       // Sort filtered data
-      this.comentariosDatabase.data.slice().forEach(element => sortedData.push(element, { detailRow: true, element }));
-      
+      this.filteredData = this.comentariosDatabase.data.slice();
+      const sortedData = this.sortData(this.filteredData.slice());
+
+      sortedData.forEach(element => commentData.push(element, { detailRow: true, element }));
+
+
 
       // Grab the page's slice of the filtered sorted data.
       const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
+      this.renderedData = commentData.splice(startIndex, this._paginator.pageSize);
       //this._paginator._changePageSize(this._paginator.pageSize); 
       return Observable.of(this.renderedData);
     });
@@ -149,6 +154,9 @@ export class ComentariosDataSource extends DataSource<Comentario> {
   /** Returns a sorted copy of the database data. */
   sortData(data: Comentario[]): Comentario[] {
 
+
+    this._sort.active = 'id';
+    this._sort.direction = "desc";
     return data.sort((a, b) => {
       let propertyA: number;
       let propertyB: number;
@@ -161,7 +169,7 @@ export class ComentariosDataSource extends DataSource<Comentario> {
 
 
 
-      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'desc' ? 1 : -1);
+      return (valueA < valueB ? 1 : -1);
     });
   }
 }

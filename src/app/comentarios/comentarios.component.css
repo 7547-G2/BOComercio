@@ -4,3 +4,22 @@ color: yellow }
 .card-title.left {
     text-align: left;
 }
+
+.mat-column-id {
+    display: none;
+  }
+  
+  .mat-column-usuario {
+    flex: 0 0 250px;
+  }
+  
+  .mat-column-fecha {
+    flex: 0 0 100px;
+  }
+  .mat-column-puntaje {
+    flex: 0 0 120px;
+  }
+
+  .mat-column-comentario {
+    flex: 0 0 450px;
+  }

@@ -127,6 +127,7 @@ export class PedidosDataSource extends DataSource<Pedido> {
     this._filterChange.next(filter);
   }
 
+  filteredData: Pedido[] = [];
   renderedData: Pedido[] = [];
 
   constructor(public pedidoDatabase: PedidosService,
@@ -152,8 +153,10 @@ export class PedidosDataSource extends DataSource<Pedido> {
 
     return Observable.merge(...displayDataChanges).switchMap(() => {
 
+      this.filteredData = this.pedidoDatabase.data.slice();
+
       // Sort filtered data
-      const sortedData = this.sortData(this.pedidoDatabase.data.slice());
+      const sortedData = this.sortData(this.filteredData.slice());
 
       // Grab the page's slice of the filtered sorted data.
       const startIndex = this._paginator.pageIndex * this._paginator.pageSize;

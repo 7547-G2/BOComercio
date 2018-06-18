@@ -45,26 +45,19 @@ export class DashboardComponent implements OnInit {
 }  
 
   public loadData() {
-    this.dataService.getPedidos().subscribe(
-      result => {
-        this.dashInfo.pedidosCancelados = result.filter(x => x.estado == "Cancelado").length;
-        this.dashInfo.pedidosIngresados =  result.filter(x => x.estado == "Ingresado").length;
-        this.dashInfo.pedidosEnPreparacion = result.filter(x => x.estado == "EnPreparacion").length;
-        this.dashInfo.pedidosDespachados = result.filter(x => x.estado == "Despachado").length;
-        this.dashInfo.pedidosEntregados = result.filter(x => x.estado == "Entregado").length;
-      }
-    );
-    this.dataService.getLeadTime().subscribe(
-      result => {
-        this.dashInfo.leadtime = result[0].leadTime;
-        this.dashInfo.rating = Math.floor(result[0].rating);
-      }
-    )
     this.dataService.getInfo().subscribe(
       result => {
         this.dashInfo.facturadoDia = result.facturadoDia;
         this.dashInfo.facturadoMes = result.facturadoMes;
         this.dashInfo.feeDelMes = result.facturadoMes*0.01;
+        this.dashInfo.pedidosCancelados = result.cancelados;
+        this.dashInfo.pedidosIngresados =  result.ingresados;
+        this.dashInfo.pedidosEnPreparacion = result.enPreparacion;
+        this.dashInfo.pedidosDespachados = result.despachados;
+        this.dashInfo.pedidosEntregados = result.entregados;
+        this.dashInfo.leadtime = result.leadTime;
+        this.dashInfo.rating = result.rating;
+        this.dashInfo.cantidadComentarios = result.cantidadComentarios;
       }
     )
   }
@@ -72,6 +65,7 @@ export class DashboardComponent implements OnInit {
 
 
 export class DashBoardInfo {
+  cantidadComentarios: number;
   facturadoMes: number;
   facturadoDia: number;
   feeDelMes: number;

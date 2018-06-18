@@ -1,7 +1,7 @@
-<h4>Administración de pedidos</h4>
+<h4>Comentarios</h4>
 <div class="pedidos-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
+    <ng-container matColumnDef="id" hidden>
       <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
     </ng-container>
@@ -54,6 +54,6 @@
   <div class="no-results" [style.display]="dataSource.length == 0 ? '' : 'none'">
     Sin resultados
   </div>
-  <mat-paginator #paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
 </div>

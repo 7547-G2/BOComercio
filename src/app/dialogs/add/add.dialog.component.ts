@@ -19,6 +19,7 @@ export class AddDialogComponent {
                 this.dataService.getTiposDeComida().subscribe(
                   result => { this.tiposDeComida = result; }
                 );
+                console.log(this.tiposDeComida);
               }
 
   formControl = new FormControl('', [

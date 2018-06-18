@@ -29,7 +29,7 @@ import { OpcionesService } from '../services/opciones.service';
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions','orden'];
+  displayedColumns = ['imagen', 'description', 'price', 'activo', 'categoria', 'actions'];
   exampleDatabase: PlatosService | null;
   dataSource: ExampleDataSource | null;
   tiposDeComida: TipoComida[];

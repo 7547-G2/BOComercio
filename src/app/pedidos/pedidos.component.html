@@ -48,6 +48,6 @@
   <div class="no-results" [style.display]="dataSource.length == 0 ? '' : 'none'">
     Sin resultados
   </div>
-  <mat-paginator #paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
 </div>

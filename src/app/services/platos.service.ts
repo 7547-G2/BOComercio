@@ -20,7 +20,7 @@ export class PlatosService {
   // Temporarily stores data from dialogs
   dialogData: Dish;
   nuevoEstado: string;
-  tiposComidas: TipoComida[];
+  tiposComidas: TipoComida[] = new Array<TipoComida>();
 
   constructor(private httpClient: HttpClient) { }//, private changeDetectorRefs: ChangeDetectorRef) { }
 

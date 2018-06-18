@@ -9,18 +9,18 @@ import { OpcionesComponent } from './opciones/index'
 import { CategoriasComponent } from './categorias/index';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ComentariosComponent } from './comentarios/index';
+import { AuthGuard } from './auth/auth.guard';
 
 const appRoutes: Routes = [
-    { path: 'home', component: HomeComponent },
-    { path: '', component: LoginComponent },
-    { path: 'firstlogin', component: FirstLoginComponent },
-    { path: 'editprofile', component: EditProfileComponent },
-    { path: 'pedidos', component: PedidosComponent },
-    { path: 'opciones', component: OpcionesComponent },
-    { path: 'categorias', component: CategoriasComponent },
-    // otherwise redirect to login
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'comentarios', component: ComentariosComponent },
+    { path: 'home', component: HomeComponent },// canActivate: [AuthGuard]},
+    { path: '', component: LoginComponent  },//canActivate: [AuthGuard]},
+    { path: 'firstlogin', component: FirstLoginComponent },// canActivate: [AuthGuard]},
+    { path: 'editprofile', component: EditProfileComponent  },//canActivate: [AuthGuard]},
+    { path: 'pedidos', component: PedidosComponent  },//canActivate: [AuthGuard]},
+    { path: 'opciones', component: OpcionesComponent  },//canActivate: [AuthGuard]},
+    { path: 'categorias', component: CategoriasComponent  },// canActivate: [AuthGuard]},
+    { path: 'dashboard', component: DashboardComponent  },//canActivate: [AuthGuard]},
+    { path: 'comentarios', component: ComentariosComponent  },// canActivate: [AuthGuard]},
  
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

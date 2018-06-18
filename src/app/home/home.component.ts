@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit {
     if (localStorage.getItem('currentUser')) {
       // logged in so return true
       this.loadData();
-      this.dataService.checkEstadoComercio();
       return;
     }
     this.router.navigate(['/login']);

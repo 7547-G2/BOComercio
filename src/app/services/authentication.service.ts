@@ -4,9 +4,16 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { User } from '../models/user'
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthenticationService {
+    private habilitado = new BehaviorSubject<boolean>(false); // {1}
+
+    get isHabilitado() {
+      return this.habilitado.asObservable(); // {2}
+    }
+
     firstlogin(username: string, password: string, hash: string) {
         return this.http.put('https://hoy-como-backend.herokuapp.com/api/backofficeComercio/passwordUpdate',
             { email: username, newPassword: password, oldPassword: hash })
@@ -15,6 +22,7 @@ export class AuthenticationService {
                 if (user) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
+                    //this.habilitado.next(true);
                 }
 
             })
@@ -32,6 +40,7 @@ export class AuthenticationService {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     console.log(user.motivoDeshabilitacion);
+                    //this.habilitado.next(typeof user.motivoDeshabilitacion!='undefined' && user.motivoDeshabilitacion);
                     localStorage.setItem('estadoComercio', JSON.stringify(user.estadoComercio));
                 }
                 return user;

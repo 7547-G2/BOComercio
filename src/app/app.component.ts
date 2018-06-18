@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PlatosService } from './services/platos.service';
 @Component({
     moduleId: module.id,
     selector: 'app',
@@ -11,7 +12,8 @@ export class AppComponent {
     nombre: string;
     motivo: string;
     estado: string;
-    constructor(private router: Router) {
+    constructor(private router: Router, 
+        public dataService: PlatosService,) {
         if (localStorage.getItem('currentUser')) {
             let currentUser = JSON.parse(localStorage.getItem('currentUser'))
             this.nombre = currentUser.name
@@ -33,6 +35,7 @@ export class AppComponent {
     }
 
     get isBanned() {
+      this.dataService.checkEstadoComercio();
         return JSON.parse(localStorage.getItem('estadoComercio')) == "deshabilitado";
     }
 

@@ -4,3 +4,12 @@ color: yellow }
 .card-title.left {
     text-align: left;
 }
+
+.btn-green {
+    background: linear-gradient(60deg, #66bb6a , #43a047);
+    color: white;
+}
+
+.fill-space {
+    flex: 1 1 auto;
+  }

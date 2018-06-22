@@ -31,7 +31,7 @@
         <i class="material-icons">power_settings_new</i>
     </button>
     <a class="navbar-right">
-        <i>{{nombre}}</i>
+        <i>{{getNombre()}}</i>
     </a>
 </mat-toolbar>
 <div class="jumbotron">
@@ -40,7 +40,7 @@
             <router-outlet>
                 <div class="alert alert-danger" role="alert" *ngIf="isLoggedIn && isBanned">
                     <strong>Su comercio se encuentra deshabilitado, comuniquese con el administrador de Hoy Como</strong> <br>
-                    <strong>Motivo: </strong>{{motivo}}
+                    <strong>Motivo: </strong>{{getMotivo()}}
                 </div>
             </router-outlet>
         </div>

@@ -26,9 +26,13 @@ export class AppComponent {
         }
     }
 
-    /*getNombre(){
-        return JSON.parse(localStorage.getItem('currentUser')).nombre;
-    }*/
+    getNombre(){
+        return JSON.parse(localStorage.getItem('currentUser')).name;
+    }
+
+    getMotivo(){
+        return JSON.parse(localStorage.getItem('currentUser')).motivoDeshabilitacion;
+    }
 
     get isLoggedIn() {
         return localStorage.getItem('currentUser');

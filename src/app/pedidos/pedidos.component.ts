@@ -65,11 +65,13 @@ export class PedidosComponent implements OnInit {
     pedido.estado = this.dataService.getNuevoEstado();
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        this.refresh();
+        const foundIndex = this.dataSource.pedidoDatabase.dataChange.value.findIndex(x => x.id === id);
+        this.dataSource.pedidoDatabase.dataChange.value[foundIndex].estado = this.dataService.getNuevoEstado();
+        this.refreshTable();
       }
     });
   }
-/*
+
   private refreshTable() {
     // if there's a paginator active we're using it for refresh
     if (this.dataSource._paginator.hasNextPage()) {
@@ -83,7 +85,7 @@ export class PedidosComponent implements OnInit {
     } else {
       this.dataSource.filter = '';
     }
-  }*/
+  }
 
   viewDishes(id: number) {
     const dialogRef = this.dialog.open(viewDishesComponent, {

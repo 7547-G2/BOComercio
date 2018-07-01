@@ -63,8 +63,8 @@ export class PedidosService {
     }
   
     updatePedido(pedido: Pedido): void {
+      this.nuevoEstado = pedido.estado;
       this.httpClient.put(this.API_URL + "/backofficeComercio/pedidos/" +pedido.id, pedido.estado).subscribe(data => {
-        this.dialogData = pedido;
       },
         (err: HttpErrorResponse) => {
         }
